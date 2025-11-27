@@ -1,6 +1,6 @@
 import { X } from 'lucide-react';
 import { PageSection, ThemeConfig } from '../types';
-import { generateStandaloneHTML } from '../utils/export';
+import { generateStandaloneHTML } from '../utils/export'; // YOUR ORIGINAL EXPORT
 import { useEffect, useState } from 'react';
 
 interface PreviewModalProps {
@@ -13,6 +13,7 @@ export default function PreviewModal({ sections, theme, onClose }: PreviewModalP
   const [htmlContent, setHtmlContent] = useState('');
 
   useEffect(() => {
+    // USE YOUR ORIGINAL EXPORT FUNCTION - PERFECT!
     const html = generateStandaloneHTML(sections, theme);
     setHtmlContent(html);
   }, [sections, theme]);
@@ -35,7 +36,7 @@ export default function PreviewModal({ sections, theme, onClose }: PreviewModalP
           srcDoc={htmlContent}
           className="w-full h-full border-0"
           title="Page Preview"
-          sandbox="allow-same-origin"
+          sandbox="allow-same-origin allow-scripts"
         />
       </div>
     </div>

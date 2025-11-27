@@ -82,6 +82,85 @@ export const sectionTemplates: SectionTemplate[] = [
     }
   },
   {
+    id: 'navbar-1',
+    name: 'Navbar',
+    category: 'hero',
+    description: 'Top navigation with logo and links',
+    html: `
+      <header class="site-navbar">
+        <div class="nav-inner">
+          <div class="nav-brand">
+            <img src="{{logoSrc}}" alt="{{logoAlt}}" class="nav-logo" />
+            <span class="nav-name">{{siteName}}</span>
+          </div>
+          <nav class="nav-links">
+            {{navLinksHTML}}
+          </nav>
+        </div>
+      </header>
+    `,
+    defaultContent: {
+      siteName: 'My Brand',
+      logoAlt: 'Brand logo',
+      nav1Label: 'Home',
+      nav1Href: '#',
+      nav2Label: 'Products',
+      nav2Href: '#',
+      nav3Label: 'Contact',
+      nav3Href: '#'
+    }
+  },
+
+  // Hero with configurable image side
+  {
+    id: 'hero-image-advanced',
+    name: 'Hero with Image',
+    category: 'hero',
+    description: 'Hero section with text and uploadable image with left/right layout toggle',
+    html: `
+      <section class="hero-advanced">
+        <div class="hero-inner flex {{variantClass}}">
+          <div class="hero-text">
+            <h1>{{title}}</h1>
+            <p>{{subtitle}}</p>
+            {{#if showButton}}<a href="{{buttonHref}}" class="btn-primary">{{buttonLabel}}</a>{{/if}}
+          </div>
+          <div class="hero-image">
+            <img src="{{imageSrc}}" alt="{{imageAlt}}" />
+          </div>
+        </div>
+      </section>
+    `,
+    defaultContent: {
+      title: 'Welcome to Pagentum',
+      subtitle: 'Create beautiful landing pages in minutes',
+      buttonLabel: 'Start Building',
+      buttonHref: '#',
+    }
+  },
+
+  // Product Carousel
+  {
+    id: 'product-carousel',
+    name: 'Product Carousel',
+    category: 'features',
+    description: 'Product carousel with multiple animation options',
+    html: `
+      <section class="product-carousel {{carouselStyleClass}}">
+        <h2>{{title}}</h2>
+        <p>{{subtitle}}</p>
+        <div class="product-track">
+          {{productsHTML}}
+        </div>
+      </section>
+    `,
+    defaultContent: {
+      title: 'Our Products',
+      subtitle: 'Discover our best products',
+    }
+  },
+
+  {
     id: 'cta-1',
     name: 'Call to Action',
     category: 'cta',
