@@ -39,7 +39,7 @@ export const sectionTemplates: SectionTemplate[] = [
       </section>
     `,
     defaultContent: {
-      title: 'Welcome to PageWhirl',
+      title: 'Welcome to Pagentum',
       subtitle: 'Create beautiful landing pages in minutes',
       ctaText: 'Start Building'
     }

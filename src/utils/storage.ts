@@ -1,7 +1,7 @@
 import { Project } from '../types';
 
-const STORAGE_KEY = 'pagewhirl_project';
-const PROJECTS_LIST_KEY = 'pagewhirl_projects_list';
+const STORAGE_KEY = 'pagentum_project';
+const PROJECTS_LIST_KEY = 'pagentum_projects_list';
 
 export function saveProject(project: Project): void {
   try {
@@ -75,7 +75,7 @@ export function importProjectJSON(file: File): Promise<Project> {
           throw new Error('Invalid project file format');
         }
         resolve(project);
-      } catch (error) {
+      } catch {
         reject(new Error('Failed to parse project file'));
       }
     };

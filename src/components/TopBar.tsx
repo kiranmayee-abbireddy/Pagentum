@@ -24,7 +24,7 @@ export default function TopBar({
       <div className="flex items-center gap-3">
         <div className="flex items-center gap-2">
           <Sparkles className="w-6 h-6 text-blue-600" />
-          <h1 className="text-xl font-bold text-gray-900">PageWhirl</h1>
+          <h1 className="text-xl font-bold text-gray-900">Pagentum</h1>
         </div>
         <span className="text-sm text-gray-500 hidden sm:inline">
           Whirl your ideas into pages
