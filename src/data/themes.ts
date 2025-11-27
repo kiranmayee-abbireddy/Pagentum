@@ -42,6 +42,19 @@ export const themePresets: Record<string, ThemeConfig> = {
     spacing: '1rem'
   }
 };
+function getCarouselClasses(style: string): string {
+  switch (style) {
+    case 'rail':
+      return 'flex overflow-hidden snap-x snap-mandatory scrollbar-hide auto-scroll-rail';
+    case 'auto-scroll':
+      return 'flex overflow-hidden snap-x snap-mandatory scrollbar-hide highlight-scroll';
+    case 'grid':
+      return 'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 bookshelf-grid';
+    default:
+      return 'flex overflow-hidden snap-x snap-mandatory scrollbar-hide auto-scroll-rail';
+  }
+}
+
 
 export const generateCSS = (theme: ThemeConfig): string => {
   return `
@@ -408,7 +421,7 @@ section {
 /* Product Carousel */
 .product-carousel {
   padding: calc(var(--spacing) * 5) calc(var(--spacing) * 1);
-  max-width: 80rem;
+  overflow-x: hidden;
   margin: 0 auto;
 }
 
@@ -420,7 +433,7 @@ section {
   color: var(--text-color);
 }
 
-.product-carousel > p {
+.product-carousel-text{
   font-size: calc(var(--font-size) * 1.25);
   color: var(--secondary-color);
   text-align: center;
@@ -429,7 +442,8 @@ section {
 
 .product-track {
   display: flex;
-  overflow-x: auto;
+  overflow-x: visible;
+  align-items: stretch; 
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   gap: calc(var(--spacing) * 1.5);
@@ -443,6 +457,9 @@ section {
 }
 
 .product-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   flex: 0 0 17.5rem;
   scroll-snap-align: center;
   background: ${theme.backgroundColor === '#ffffff' ? '#f8fafc' : 'rgba(255,255,255,0.05)'};
@@ -461,30 +478,17 @@ section {
   padding: calc(var(--spacing) * 1.5);
   display: flex;
   flex-direction: column;
-  height: 100%;
-}
-
-.product-info h3 {
-  font-size: calc(var(--font-size) * 1.125);
-  font-weight: 700;
-  margin-bottom: calc(var(--spacing) * 0.5);
-  color: var(--text-color);
-}
-
-.product-info .price {
-  font-size: calc(var(--font-size) * 1.5);
-  font-weight: 800;
-  color: var(--primary-color);
-  margin-bottom: calc(var(--spacing) * 0.75);
+  flex-grow: 1;
 }
 
 .product-info p {
   color: var(--secondary-color);
-  flex: 1;
   margin-bottom: calc(var(--spacing) * 1);
+  flex-grow: 1; /* pushes button down */
 }
 
 .product-info a {
+  margin-top: auto; /* forces button to bottom */
   display: inline-block;
   background: var(--primary-color);
   color: white;
@@ -493,7 +497,6 @@ section {
   font-weight: 600;
   text-decoration: none;
   text-align: center;
-  margin-top: auto;
   transition: all 0.2s;
 }
 
@@ -555,6 +558,35 @@ section {
 .nav-links a:hover {
   color: var(--primary-color);
 }
+.hero-advanced a {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+.hero-advanced a:hover {
+  background-color: #1e40af; /* darker shade */
+}
+.product-carousel > p {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  color: var(--secondary-color);
+  text-align: center;
+}
+
+@keyframes auto-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.product-track.animate-auto-scroll {
+  animation: auto-scroll 30s linear infinite;
+}
+
 
 @media (max-width: 768px) {
   .nav-links { 

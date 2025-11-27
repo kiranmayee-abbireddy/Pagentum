@@ -28,19 +28,24 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files?.length) return;
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onload = () => {
-      const base64 = reader.result as string;
-      const newImage: PageImage = {
-        id: `img-${Date.now()}`,
-        fileName: file.name,
-        src: base64,
-        alt: content.title || content.siteName || file.name.replace(/\.[^/.]+$/, ''),
-      };
-      setImages([newImage]);
-    };
-    reader.readAsDataURL(file);
+    const files = Array.from(e.target.files);
+    const readers = files.map(file => {
+      return new Promise<PageImage>(resolve => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          resolve({
+            id: `img-${Date.now()}-${Math.random()}`,
+            fileName: file.name,
+            src: reader.result as string,
+            alt: content.title || content.siteName || file.name.replace(/\.[^/.]+$/, ''),
+          });
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+    Promise.all(readers).then(imagesFromFiles => {
+      setImages(prev => [...prev, ...imagesFromFiles]);
+    });
   };
 
   const handleLayoutChange = (field: keyof SectionLayout) => (value: any) => {

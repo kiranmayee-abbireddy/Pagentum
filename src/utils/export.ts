@@ -77,7 +77,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
           <section class="product-carousel py-20 px-4 max-w-7xl mx-auto">
             <div class="text-center mb-12">
               <h2 class="text-3xl lg:text-4xl font-bold mb-4">${section.content.title}</h2>
-              <p class="text-xl text-gray-600">${section.content.subtitle}</p>
+              <p class="product-carousel-text text-xl text-gray-600">${section.content.subtitle}</p>
             </div>
             <div class="product-track ${getCarouselClasses(carouselStyle)}">
               ${section.images?.map((img, idx) => {
