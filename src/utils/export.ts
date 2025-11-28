@@ -36,7 +36,6 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
   const sectionsHTML = sections
     .sort((a, b) => a.order - b.order)
     .map(section => {
-      // NEW TEMPLATES - HANDLE FIRST
       if (section.templateId === 'hero-image-advanced') {
         const variant = (section.layout as any)?.variant || 'image-right';
         const img = section.images?.[0];
@@ -72,6 +71,60 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
       if (section.templateId === 'product-carousel') {
         const carouselStyle = (section.layout as any)?.carouselStyle || 'auto-scroll';
         const showButton = (section.layout as any)?.showButton ?? false;
+        const buttonHref = (section.layout as any)?.buttonHref || '#';
+        const buttonLabel = (section.layout as any)?.buttonLabel || 'Buy Now';
+
+        if (carouselStyle === 'grid') {
+          return `
+            <section class="bookshelf-section py-20 px-4 max-w-7xl mx-auto">
+              <div class="text-center mb-16">
+                <h2 style="text-align:center;" class="text-3xl lg:text-4xl font-bold mb-4">${section.content.title}</h2>
+                <p style="margin-bottom:50px; text-align:center;" class="text-xl text-gray-600 max-w-2xl mx-auto">${section.content.subtitle}</p>
+              </div>
+              
+              <div class="bookshelf-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 items-start justify-items-center">
+                ${section.images?.map((img, idx) => {
+                  const productNum = idx + 1;
+                  const title = section.content[`product${productNum}Title`] || `Product ${productNum}`;
+                  const price = section.content[`product${productNum}Price`] || '$19.99';
+                  const desc = section.content[`product${productNum}Description`] || 'Great product.';
+                  
+                  return `
+                    <div class="book-card group relative w-44 h-80 flex flex-col rounded-2xl shadow-xl
+                                transition-all duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.1)]
+                                hover:scale-110 hover:-translate-y-3 hover:shadow-2xl hover:z-20
+                                bg-white border border-gray-100 overflow-hidden">
+                      
+                      <img src="${img.src}" alt="${img.alt || title}" 
+                          class="w-full h-40 object-cover rounded-t-2xl group-hover:scale-105 transition-transform duration-500" />
+                      
+                      <div class="p-5 flex-1 flex flex-col">
+                        <h3 class="font-bold text-lg text-gray-900 mb-2 line-clamp-2 leading-tight">${title}</h3>
+                        <p class="text-2xl font-black text-primary mb-3">${price}</p>
+                        <p class="text-sm text-gray-600 leading-relaxed line-clamp-3 flex-1 mb-4">${desc}</p>
+                        ${showButton ? 
+                          `<a href="${buttonHref}" class="mt-auto inline-flex items-center justify-center
+                                  bg-primary hover:bg-primary/90 text-white
+                                  px-4 py-2 rounded-xl font-semibold shadow-lg hover:shadow-xl 
+                                  transition-all duration-300 transform hover:-translate-y-1">
+                            ${buttonLabel}
+                          </a>` : ''
+                        }
+                      </div>
+                    </div>
+                  `;
+                }).join('') || `
+                  <div class="col-span-full text-center py-20">
+                    <div class="inline-block p-12 bg-gray-100 rounded-3xl">
+                      <span class="text-5xl">📚</span>
+                      <p class="text-gray-500 mt-4 text-lg">Upload products to fill the bookshelf</p>
+                    </div>
+                  </div>
+                `}
+              </div>
+            </section>
+          `;
+        }
         
         return `
           <section class="product-carousel py-20 px-4 max-w-7xl mx-auto">
@@ -91,7 +144,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                       <h3 class="font-bold text-lg mb-2">${section.content[`product${productNum}Title`] || `Product ${productNum}`}</h3>
                       <p class="text-2xl font-bold text-blue-600 mb-3">${section.content[`product${productNum}Price`] || '$99'}</p>
                       <p class="text-gray-600 mb-4 flex-1">${section.content[`product${productNum}Description`] || 'Amazing product'}</p>
-                      ${showButton ? 
+                      ${(section.layout as any)?.showButton ? 
                         `<a href="${(section.layout as any)?.buttonHref || '#'}" class="mt-auto inline-block bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors text-center">${(section.layout as any)?.buttonLabel || 'Buy Now'}</a>` : ''
                       }
                     </div>
@@ -137,7 +190,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
         `;
       }
 
-      // YOUR ORIGINAL FALLBACK FOR ALL OTHER TEMPLATES
+      // Fallback for other templates
       const template = sectionTemplates.find(t => t.id === section.templateId);
       if (!template) return '';
 
@@ -168,7 +221,6 @@ ${sectionsHTML}
 </html>`;
 }
 
-// Add carousel helper function
 function getCarouselClasses(style: string): string {
   switch (style) {
     case 'auto-scroll':
