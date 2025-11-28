@@ -162,6 +162,52 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
             </section>
           `;
         }
+        if (carouselStyle === 'rail') {
+          return `
+            <section class="product-carousel py-20 px-4 max-w-7xl mx-auto">
+              <div class="text-center mb-12">
+                <h2 class="text-3xl lg:text-4xl font-bold mb-4">${section.content.title}</h2>
+                <p class="product-carousel-text text-xl text-gray-600 max-w-2xl mx-auto">${section.content.subtitle}</p>
+              </div>
+              
+              <div class="rail-grid">
+                ${section.images?.map((img, idx) => {
+                  const productNum = idx + 1;
+                  const title = section.content[`product${productNum}Title`] || `Product ${productNum}`;
+                  const price = section.content[`product${productNum}Price`] || '$99';
+                  const desc = section.content[`product${productNum}Description`] || 'Amazing product with premium quality.';
+                  
+                  return `
+                    <div class="rail-card-box">
+                      <div class="rail-card">
+                        <div class="rail-image">
+                          <img src="${img.src}" alt="${img.alt || title}" />
+                        </div>
+                        <div class="rail-body">
+                          <div class="rail-content">
+                            <div class="rail-title">${title}</div>
+                            <div class="rail-desc">${desc}</div>
+                            <div class="rail-price">${price}</div>
+                          </div>
+                          ${showButton ? `<a href="${buttonHref}" class="rail-cta">${buttonLabel}</a>` : ''}
+                        </div>
+                      </div>
+                    </div>
+                  `;
+                }).join('') || `
+                  <div class="rail-card-box">
+                    <div class="rail-card rail-empty">
+                      <div class="text-4xl mb-4">📦</div>
+                      <p class="text-white text-lg font-semibold">Upload products</p>
+                      <p class="text-white/70 text-sm">for rail carousel view</p>
+                    </div>
+                  </div>
+                `}
+              </div>
+            </section>
+          `;
+        }
+
         if (carouselStyle === 'auto-scroll') {
           const quantity = Math.max(1, section.images?.length || 1);
           return `

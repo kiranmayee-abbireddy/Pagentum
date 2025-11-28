@@ -1023,6 +1023,196 @@ section {
   justify-content: center;
   padding: calc(var(--spacing) * 2);
 }
+/* === RAIL CAROUSEL THEMED === */
+
+.rail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: calc(var(--spacing) * 2);
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 calc(var(--spacing) * 1);
+}
+
+.rail-card-box {
+  width: 260px;
+  height: 376px;
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 24px;
+  box-shadow:
+    rgba(0, 0, 0, 0.4) 0px 2px 10px 0px,
+    rgba(0, 0, 0, 0.5) 0px 2px 25px 0px;
+  transition: transform 0.3s ease;
+}
+
+.rail-card-box:hover {
+  transform: translateY(-8px);
+}
+
+.rail-card {
+  position: relative;
+  width: 95%;
+  height: 95%;
+  background: color-mix(in srgb, var(--bg-color) 70%, #000 30%);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  cursor: pointer;
+  backdrop-filter: blur(20px);
+  border: 1px solid color-mix(in srgb, var(--text-color) 10%, transparent);
+}
+
+/* IMAGE (unchanged behavior) */
+.rail-image {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  transition: all 0.4s ease;
+}
+
+.rail-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+/* BOTTOM PANEL */
+.rail-body {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1rem 1rem 1.2rem;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.4s ease;
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--bg-color) 90%, #000 10%),
+    transparent
+  );
+}
+
+.rail-content {
+  width: 100%;
+  text-align: center;
+}
+
+.rail-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  margin-bottom: 0.35rem;
+  color: var(--text-color);
+}
+
+.rail-desc {
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: color-mix(in srgb, var(--text-color) 80%, #ffffff 20%);
+  margin-bottom: 0.5rem;
+}
+
+.rail-price {
+  font-size: 1.15rem;
+  font-weight: 900;
+  margin-top: 0.25rem;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* CTA uses primary color tint */
+.rail-cta {
+  margin-top: 0.7rem;
+  padding: 0.6rem 1.4rem;
+  background: color-mix(in srgb, var(--primary-color) 40%, #ffffff 10%, transparent);
+  color: #ffffff;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: 1px solid color-mix(in srgb, var(--primary-color) 50%, #ffffff 20%);
+  backdrop-filter: blur(12px);
+  transition: all 0.25s ease;
+}
+
+.rail-cta:hover {
+  background: color-mix(in srgb, var(--primary-color) 55%, #ffffff 20%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+
+/* HOVER: SHRINK IMAGE + REVEAL BODY */
+.rail-card:hover .rail-image {
+  width: 70%;
+  height: 45%;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.55);
+}
+
+.rail-card:hover .rail-body {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ROTATING GLOW BORDER USES PRIMARY/SECONDARY */
+.rail-card-box::before {
+  content: "";
+  position: absolute;
+  width: 45%;
+  height: 160%;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  transform-origin: center;
+  animation: railGlow 4s linear infinite;
+  filter: blur(10px);
+  opacity: 0.5;
+  z-index: 0;
+  border-radius: 50%;
+}
+
+@keyframes railGlow {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.rail-empty {
+  background: color-mix(in srgb, var(--bg-color) 70%, #ffffff 10%) !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.5rem;
+  padding-top: 2rem;
+  color: var(--text-color);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .rail-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: calc(var(--spacing) * 1.5);
+  }
+
+  .rail-card-box {
+    width: 220px;
+    height: 300px;
+  }
+}
+
 
 
   `.trim();
