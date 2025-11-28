@@ -125,6 +125,44 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
             </section>
           `;
         }
+        if (carouselStyle === 'glowing') {
+          return `
+            <section class="glowing-bookshelf py-20 px-4 max-w-7xl mx-auto">
+              <!-- Title & Subtitle OUTSIDE cards - normal styling -->
+              <div class="text-center mb-16">
+                        <h2 style="text-align:center;" class="text-3xl lg:text-4xl font-bold mb-4">${section.content.title}</h2>
+                        <p style="margin-bottom:50px; text-align:center;" class="text-xl text-gray-600 max-w-2xl mx-auto">${section.content.subtitle}</p>
+                      </div>
+              
+              <!-- ONLY CARDS get glowing -->
+              <div class="cards">
+                ${section.images?.map((img, idx) => {
+                  const productNum = idx + 1;
+                  const title = section.content[`product${productNum}Title`] || `Product ${productNum}`;
+                  const price = section.content[`product${productNum}Price`] || '$19.99';
+                  const desc = section.content[`product${productNum}Description`] || 'Great product.';
+                  
+                  return `
+                    <div class="card" style="--hue: ${200 + idx * 30}; --saturation: 80%; --lightness: 50%;">
+                      <img src="${img.src}" alt="${img.alt || title}" class="card__image" />
+                      <p class="card__heading">${title}</p>
+                      <p class="card__price">${price}</p>
+                      <p class="card__description">${desc}</p>
+                      ${showButton ? `<a href="${buttonHref}" class="cta">${buttonLabel}</a>` : ''}
+                    </div>
+                  `;
+                }).join('') || `
+                  <div class="empty-card text-center py-12">
+                    <span class="text-6xl block mb-6">✨</span>
+                    <p class="text-xl font-bold mb-2">Upload products</p>
+                    <p>to see the glowing magic!</p>
+                  </div>
+                `}
+              </div>
+            </section>
+          `;
+        }
+
         
         return `
           <section class="product-carousel py-20 px-4 max-w-7xl mx-auto">

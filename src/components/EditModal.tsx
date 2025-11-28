@@ -222,6 +222,7 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                 <option value="auto-scroll">Auto-scroll (Continuous)</option>
                 <option value="rail">Rail (Horizontal scroll)</option>
                 <option value="grid">Grid (Bookshelf style)</option>
+                <option value="glowing">Glowing</option>
               </select>
               
               <div className="mt-6 space-y-4">

@@ -742,5 +742,150 @@ section {
   }
 }
 
+.glowing-bookshelf {
+  padding: calc(var(--spacing) * 5) calc(var(--spacing) * 1);
+  max-width: 80rem;
+  margin: 0 auto;
+}
+
+.main__heading {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: calc(var(--spacing) * 1);
+  color: var(--text-color);
+}
+
+.product-carousel-text {
+  font-size: calc(var(--font-size) * 1.25);
+  color: var(--secondary-color);
+  text-align: center;
+  margin-bottom: calc(var(--spacing) * 3);
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: calc(var(--spacing) * 1.5);
+}
+
+@media (min-width: 768px) { .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .cards { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (min-width: 1280px) { .cards { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+
+.card {
+  /* EXACT .product-card sizes */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 24rem; /* Matches product-card with 12rem img + padding */
+  flex: 1 1 17.5rem; /* EXACT product-card flex */
+  
+  /* Uiverse base styling */
+  --flow-space: 0.5em;
+  --hsl: var(--hue), var(--saturation), var(--lightness);
+  padding: calc(var(--spacing) * 1.5); /* Matches .product-info */
+  color: var(--text-color);
+  border: 1px solid var(--primary-color);
+  border-radius: 1rem; /* Matches product-card/book-card */
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  transition: all ease-in-out 0.3s;
+}
+  .card__description {
+  color: var(--secondary-color);
+  line-height: 1.5;
+  margin-bottom: calc(var(--spacing) * 1);
+  flex-grow: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: calc(var(--font-size) * 0.95);
+}
+
+.empty-card {
+  grid-column: 1 / -1;
+  padding: 3rem 2rem;
+  border: 2px dashed rgba(255,255,255,0.3);
+  border-radius: 1rem;
+  text-align: center;
+  color: var(--text-color);
+  background: rgba(255,255,255,0.05);
+}
+
+
+.card__image {
+  width: 100%;
+  height: 12rem; /* EXACT .product-image img height */
+  object-fit: cover;
+  border-radius: 0.5rem; /* Smaller radius for image */
+  margin-bottom: calc(var(--spacing) * 0.5);
+}
+
+.card__heading {
+  font-size: calc(var(--font-size) * 1.1); /* Matches product title */
+  font-weight: 600;
+  margin: 0 0 calc(var(--spacing) * 0.5) 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card__price {
+  font-size: calc(var(--font-size) * 1.5); /* Slightly larger than heading */
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 calc(var(--spacing) * 0.5) 0;
+}
+
+
+
+.cta {
+  /* EXACT .product-info a styling */
+  margin-top: auto;
+  display: inline-block;
+  background: var(--primary-color);
+  color: white;
+  padding: calc(var(--spacing) * 0.75) calc(var(--spacing) * 1.5);
+  border-radius: 0.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.cta:hover {
+  background: ${theme.primaryColor?.replace(/[\d]{2,3}$/, (match) => {
+    const num = parseInt(match) - 20;
+    return num.toString().padStart(3, '0');
+  }) || '#1d4ed8'};
+  transform: translateY(-1px);
+}
+
+/* UIVERSE MAGIC GLOW - ONLY ON HOVER */
+.card:hover {
+  --lightness: 80%;
+  background: rgba(255,255,255,0.125);
+  outline: 1px solid rgba(255,255,255,0.5);
+  box-shadow: 
+    inset 0 0 80px rgba(255,255,255,0.2),
+    inset 20px 0 80px var(--primary-color),
+    inset -20px 0 80px var(--bg-color),
+    inset 20px 0 300px var(--secondary-color),
+    inset -20px 0 300px var(--bg-color),
+    0 0 50px rgba(255,255,255,0.5),
+    -10px 0 80px var(--secondary-color),
+    10px 0 80px var(--bg-color);
+  
+  z-index: 10;
+}
+
+
   `.trim();
 };
