@@ -162,6 +162,51 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
             </section>
           `;
         }
+        if (carouselStyle === 'auto-scroll') {
+          const quantity = Math.max(1, section.images?.length || 1);
+          return `
+            <section class="product-carousel py-20 px-4 max-w-7xl mx-auto">
+              <div class="text-center mb-12">
+                <h2 class="text-3xl lg:text-4xl font-bold mb-4">${section.content.title}</h2>
+                <p class="product-carousel-text text-xl text-gray-600">${section.content.subtitle}</p>
+              </div>
+              
+              <div class="slider" style="--width: 280px; --height: 360px; --quantity: ${quantity};">
+                <div class="list">
+                  ${section.images?.map((img, idx) => {
+                    const productNum = idx + 1;
+                    const title = section.content[`product${productNum}Title`] || `Product ${productNum}`;
+                    const price = section.content[`product${productNum}Price`] || '$99';
+                    const desc = section.content[`product${productNum}Description`] || 'Amazing product';
+                    
+                    return `
+                      <div class="item" style="--position: ${idx + 1}">
+                        <div class="auto-card">
+                          <div class="auto-card-image">
+                            <img src="${img.src}" alt="${img.alt || title}" />
+                          </div>
+                          <div class="auto-card-content">
+                            <h3 class="auto-card-title">${title}</h3>
+                            <p class="auto-card-price">${price}</p>
+                            <p class="auto-card-desc">${desc}</p>
+                            ${showButton ? `<a href="${buttonHref}" class="auto-card-cta">${buttonLabel}</a>` : ''}
+                          </div>
+                        </div>
+                      </div>
+                    `;
+                  }).join('') || `
+                    <div class="item" style="--position: 1">
+                      <div class="auto-card empty-auto-card">
+                        <div class="text-4xl mb-4">📦</div>
+                        <p>Upload products to see auto-scroll</p>
+                      </div>
+                    </div>
+                  `}
+                </div>
+              </div>
+            </section>
+          `;
+        }
 
         
         return `
