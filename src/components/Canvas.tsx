@@ -82,40 +82,49 @@ export default function Canvas({ sections, onSectionsChange, onEditSection, show
               onDragStart={() => handleDragStart(index)}
               onDragOver={(e) => handleDragOver(e, index)}
               onDragEnd={handleDragEnd}
-              className={`relative group mb-4 transition-all ${
-                draggedIndex === index ? 'opacity-50' : ''
+              className={`relative group mb-6 transition-all duration-200 ease-in-out ${
+                draggedIndex === index ? 'opacity-50 scale-95' : 'hover:scale-[1.01]'
               }`}
             >
-              <div className="absolute -left-12 top-4 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col gap-2">
-                <button
-                  className="p-2 bg-white rounded-lg shadow-md hover:bg-gray-50 cursor-grab active:cursor-grabbing"
-                  title="Drag to reorder"
-                >
-                  <GripVertical className="w-4 h-4 text-gray-600" />
-                </button>
-                <button
-                  onClick={() => onEditSection(section)}
-                  className="p-2 bg-white rounded-lg shadow-md hover:bg-blue-50"
-                  title="Edit section"
-                >
-                  <Edit3 className="w-4 h-4 text-blue-600" />
-                </button>
-                <button
-                  onClick={() => handleDelete(section.id)}
-                  className="p-2 bg-white rounded-lg shadow-md hover:bg-red-50"
-                  title="Delete section"
-                >
-                  <Trash2 className="w-4 h-4 text-red-600" />
-                </button>
-              </div>
 
-              <div className="border-2 border-dashed border-transparent group-hover:border-blue-400 rounded-lg overflow-hidden bg-white shadow-sm">
-                <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <span className="px-3 py-1 bg-blue-600 text-white text-xs font-medium rounded-full">
+              <div className="border-2 border-dashed border-transparent group-hover:border-blue-300 rounded-xl overflow-hidden bg-white shadow-md transition-all duration-200 hover:shadow-lg">
+                <div className="absolute top-3 right-3 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-200">
+                  <span className="px-3 py-1.5 bg-blue-600 text-white text-xs font-medium rounded-full shadow-md">
                     {template?.name}
                   </span>
+                  <div className="flex items-center gap-1 bg-white/90 backdrop-blur-sm rounded-lg p-1 shadow-md">
+                    <button
+                      className="p-2 hover:bg-gray-100 rounded-lg cursor-grab active:cursor-grabbing transition-colors"
+                      title="Drag to reorder"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <GripVertical className="w-4 h-4 text-gray-600" />
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onEditSection(section);
+                      }}
+                      className="p-2 hover:bg-blue-50 rounded-lg transition-colors"
+                      title="Edit section"
+                    >
+                      <Edit3 className="w-4 h-4 text-blue-600" />
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDelete(section.id);
+                      }}
+                      className="p-2 hover:bg-red-50 rounded-lg transition-colors"
+                      title="Delete section"
+                    >
+                      <Trash2 className="w-4 h-4 text-red-600" />
+                    </button>
+                  </div>
                 </div>
-                {renderSection(section)}
+                <div className="p-6">
+                  {renderSection(section)}
+                </div>
               </div>
             </div>
           );

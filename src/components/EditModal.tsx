@@ -257,22 +257,6 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
             </div>
           )}
 
-          {/* Theme Selector */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Section Theme</h3>
-            <select
-              value={layout.themeId || ''}
-              onChange={(e) => handleLayoutChange('themeId')(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="">Use Page Default</option>
-              {Object.keys(themePresets).map((themeKey) => (
-                <option key={themeKey} value={themeKey}>
-                  {themePresets[themeKey as keyof typeof themePresets].name}
-                </option>
-              ))}
-            </select>
-          </div>
 
           {/* Product Fields for Carousel */}
           {section.templateId === 'product-carousel' && images.length > 0 && (

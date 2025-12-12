@@ -49,6 +49,11 @@ export interface SectionLayout {
   buttonLabel?: string;
   buttonHref?: string;
   themeId?: string;
+  primaryColor?: string;
+  secondaryColor?: string;
+  backgroundColor?: string;
+  textColor?: string;
+
 }
 
 export interface PageSection {
