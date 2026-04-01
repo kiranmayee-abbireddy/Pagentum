@@ -85,6 +85,40 @@ export default function ExportModal({ sections, theme, onClose }: ExportModalPro
             </div>
           </button>
 
+          <button
+            onClick={() => {
+              const projectData = {
+                id: `project-${Date.now()}`,
+                name: 'My Exported Page',
+                sections,
+                theme,
+                createdAt: Date.now(),
+                updatedAt: Date.now()
+              };
+              downloadFile('project.json', JSON.stringify(projectData, null, 2));
+              alert('Project JSON downloaded! You can re-import this file later using the Import button.');
+            }}
+            className="w-full p-4 border-2 border-gray-200 rounded-lg hover:border-blue-300 hover:bg-yellow-50 transition-all text-left group"
+          >
+            <div className="flex items-start gap-4">
+              <div className="p-3 bg-yellow-100 rounded-lg group-hover:bg-yellow-200 transition-colors">
+                <Download className="w-6 h-6 text-yellow-600" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-semibold text-gray-900 mb-1">
+                  Project Data (JSON)
+                </h3>
+                <p className="text-sm text-gray-600">
+                  Save your work-in-progress. Import this file later to continue editing.
+                </p>
+                <div className="mt-2 flex items-center gap-2 text-sm text-yellow-600 font-medium">
+                  <Download className="w-4 h-4" />
+                  Download project.json
+                </div>
+              </div>
+            </div>
+          </button>
+
           <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
             <h4 className="font-semibold text-gray-900 mb-2 text-sm">Export Info</h4>
             <ul className="text-sm text-gray-600 space-y-1">
