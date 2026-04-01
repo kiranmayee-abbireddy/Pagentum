@@ -54,7 +54,7 @@ function getSectionBackgroundHTML(section: PageSection) {
       </div>
     `;
   }
-  
+
   if (layout.backgroundType === 'image' && layout.backgroundImage) {
     const opacity = (layout.overlayOpacity ?? 0) / 100;
     if (opacity > 0) {
@@ -91,6 +91,7 @@ export function generateHTML(sections: PageSection[], theme: ThemeConfig): strin
 </head>
 <body>
 ${sectionsHTML}
+  <div class="mobile-overlay" onclick="document.querySelector('.nav-links').classList.remove('active'); document.querySelector('.mobile-menu-btn').classList.remove('active'); this.classList.remove('active')"></div>
   <script>
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
@@ -101,10 +102,21 @@ ${sectionsHTML}
           const targetElement = document.getElementById(targetId) || document.querySelector('[id="'+targetId+'"]');
           if (targetElement) {
             targetElement.scrollIntoView({ behavior: 'smooth' });
+            // Close mobile menu if open
+            document.querySelector('.nav-links').classList.remove('active');
+            document.querySelector('.mobile-menu-btn').classList.remove('active');
+            document.querySelector('.mobile-overlay').classList.remove('active');
           }
         }
       });
     });
+
+    const menuBtn = document.querySelector('.mobile-menu-btn');
+    if (menuBtn) {
+      menuBtn.addEventListener('click', () => {
+        document.querySelector('.mobile-overlay').classList.toggle('active');
+      });
+    }
   </script>
 </body>
 </html>`;
@@ -125,27 +137,26 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
         const showButton = (section.layout as any)?.showButton ?? true;
         const buttonLabel = (section.layout as any)?.buttonLabel || section.content.ctaText || 'Get Started';
         const buttonHref = (section.layout as any)?.buttonHref || '#';
-        
+
         return `
           <section id="section-${section.id}" class="hero-advanced py-20 px-4" ${combinedStyle}>
             ${bgHTML}
-            <div class="hero-inner max-w-7xl mx-auto flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-16 ${
-              variant === 'image-left' ? 'lg:flex-row' : 'lg:flex-row-reverse'
-            }" style="position: relative; z-index: 1;">
+            <div class="hero-inner max-w-7xl mx-auto flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-16 ${variant === 'image-left' ? 'lg:flex-row' : 'lg:flex-row-reverse'
+          }" style="position: relative; z-index: 1;">
               <div class="hero-text flex-1 text-center lg:text-left">
                 <h1 class="text-4xl lg:text-5xl font-bold mb-6">${section.content.title}</h1>
                 <p class="text-xl mb-8 max-w-lg opacity-90">${section.content.subtitle}</p>
-                ${showButton ? 
-                   `<a href="${buttonHref}" class="inline-block bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition-all">${buttonLabel}</a>` : ''
-                }
+                ${showButton ?
+            `<a href="${buttonHref}" class="inline-block bg-primary text-white px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition-all">${buttonLabel}</a>` : ''
+          }
               </div>
               <div class="hero-image flex-1 flex justify-center lg:justify-end">
-                ${img ? 
-                  `<img src="${img.src}" alt="${img.alt || section.content.title}" class="w-full max-w-md lg:max-w-lg h-64 lg:h-80 object-cover rounded-2xl shadow-2xl" />` :
-                  `<div class="w-full max-w-md lg:max-w-lg h-64 lg:h-80 bg-gray-200 rounded-2xl flex items-center justify-center">
+                ${img ?
+            `<img src="${img.src}" alt="${img.alt || section.content.title}" class="w-full max-w-md lg:max-w-lg h-64 lg:h-80 object-cover rounded-2xl shadow-2xl" />` :
+            `<div class="w-full max-w-md lg:max-w-lg h-64 lg:h-80 bg-gray-200 rounded-2xl flex items-center justify-center">
                     <span class="text-gray-500">Image</span>
                   </div>`
-                }
+          }
               </div>
             </div>
           </section>
@@ -172,12 +183,12 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                 
                 <div class="bookshelf-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 items-start justify-items-center">
                   ${displayImages.map((img, idx) => {
-                    const productNum = idx + 1;
-                    const title = section.content[`product${productNum}Title`] || `Product ${productNum}`;
-                    const price = section.content[`product${productNum}Price`] || '$19.99';
-                    const desc = section.content[`product${productNum}Description`] || 'Great product.';
-                    
-                    return `
+            const productNum = idx + 1;
+            const title = section.content[`product${productNum}Title`] || `Product ${productNum}`;
+            const price = section.content[`product${productNum}Price`] || '$19.99';
+            const desc = section.content[`product${productNum}Description`] || 'Great product.';
+
+            return `
                       <div class="book-card group relative w-44 h-80 flex flex-col rounded-2xl shadow-xl
                                   transition-all duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.1)]
                                   hover:scale-110 hover:-translate-y-3 hover:shadow-2xl hover:z-20
@@ -190,18 +201,18 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                           <h3 class="font-bold text-lg text-gray-900 mb-2 line-clamp-2 leading-tight">${title}</h3>
                           <p class="text-2xl font-black text-primary mb-3">${price}</p>
                           <p class="text-sm text-gray-600 leading-relaxed line-clamp-3 flex-1 mb-4">${desc}</p>
-                          ${showButton ? 
-                            `<a href="${buttonHref}" class="mt-auto inline-flex items-center justify-center
+                          ${showButton ?
+                `<a href="${buttonHref}" class="mt-auto inline-flex items-center justify-center
                                     bg-primary hover:bg-primary/90 text-white
                                     px-4 py-2 rounded-xl font-semibold shadow-lg hover:shadow-xl 
                                     transition-all duration-300 transform hover:-translate-y-1">
                               ${buttonLabel}
                             </a>` : ''
-                          }
+              }
                         </div>
                       </div>
                     `;
-                  }).join('') || `
+          }).join('') || `
                     <div class="col-span-full text-center py-20">
                       <div class="inline-block p-12 bg-gray-100 rounded-3xl">
                         <span class="text-5xl">📚</span>
@@ -225,12 +236,12 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                 </div>
                 <div class="cards">
                   ${displayImages.map((img, idx) => {
-                    const productNum = idx + 1;
-                    const title = section.content[`product${productNum}Title`] || `Product ${productNum}`;
-                    const price = section.content[`product${productNum}Price`] || '$19.99';
-                    const desc = section.content[`product${productNum}Description`] || 'Great product.';
-                    
-                    return `
+            const productNum = idx + 1;
+            const title = section.content[`product${productNum}Title`] || `Product ${productNum}`;
+            const price = section.content[`product${productNum}Price`] || '$19.99';
+            const desc = section.content[`product${productNum}Description`] || 'Great product.';
+
+            return `
                       <div class="card" style="--hue: ${200 + idx * 30}; --saturation: 80%; --lightness: 50%;">
                         <img src="${img.src}" alt="${img.alt || title}" class="card__image" />
                         <p class="card__heading">${title}</p>
@@ -239,7 +250,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                         ${showButton ? `<a href="${buttonHref}" class="cta">${buttonLabel}</a>` : ''}
                       </div>
                     `;
-                  }).join('') || `
+          }).join('') || `
                     <div class="empty-card text-center py-12">
                       <span class="text-6xl block mb-6">✨</span>
                       <p class="text-xl font-bold mb-2">Upload products</p>
@@ -261,12 +272,12 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                 </div>
                 <div class="rail-grid">
                   ${displayImages.map((img, idx) => {
-                    const productNum = idx + 1;
-                    const title = section.content[`product${productNum}Title`] || `Product ${productNum}`;
-                    const price = section.content[`product${productNum}Price`] || '$99';
-                    const desc = section.content[`product${productNum}Description`] || 'Amazing product.';
-                    
-                    return `
+            const productNum = idx + 1;
+            const title = section.content[`product${productNum}Title`] || `Product ${productNum}`;
+            const price = section.content[`product${productNum}Price`] || '$99';
+            const desc = section.content[`product${productNum}Description`] || 'Amazing product.';
+
+            return `
                       <div class="rail-card-box">
                         <div class="rail-card">
                           <div class="rail-image">
@@ -283,7 +294,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                         </div>
                       </div>
                     `;
-                  }).join('') || `
+          }).join('') || `
                     <div class="rail-card-box"><div class="rail-card rail-empty">Empty</div></div>
                   `}
                 </div>
@@ -305,12 +316,12 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                 <div class="slider" style="--width: 280px; --height: 360px; --quantity: ${quantity};">
                   <div class="list">
                     ${displayImages.map((img, idx) => {
-                      const productNum = idx + 1;
-                      const title = section.content[`product${productNum}Title`] || `Product ${productNum}`;
-                      const price = section.content[`product${productNum}Price`] || '$99';
-                      const desc = section.content[`product${productNum}Description`] || 'Product';
-                      
-                      return `
+            const productNum = idx + 1;
+            const title = section.content[`product${productNum}Title`] || `Product ${productNum}`;
+            const price = section.content[`product${productNum}Price`] || '$99';
+            const desc = section.content[`product${productNum}Description`] || 'Product';
+
+            return `
                         <div class="item" style="--position: ${idx + 1}">
                           <div class="auto-card">
                             <div class="auto-card-image"><img src="${img.src}" /></div>
@@ -323,7 +334,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                           </div>
                         </div>
                       `;
-                    }).join('')}
+          }).join('')}
                   </div>
                 </div>
               </div>
@@ -338,43 +349,46 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
           <header class="site-navbar" ${combinedStyle}>
             <div class="nav-inner max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
               <div class="nav-brand flex items-center space-x-3">
-                ${logo ? 
-                  `<img src="${logo.src}" alt="${logo.alt || section.content.logoAlt || 'Logo'}" class="h-10 w-auto" />` :
-                  `<div class="h-10 w-10 bg-gray-200 rounded-lg flex items-center justify-center">
+                ${logo ?
+            `<img src="${logo.src}" alt="${logo.alt || section.content.logoAlt || 'Logo'}" class="h-10 w-auto" />` :
+            `<div class="h-10 w-10 bg-gray-200 rounded-lg flex items-center justify-center">
                     <span class="text-sm font-bold">LOGO</span>
                   </div>`
-                }
+          }
                 <span class="text-xl font-bold">${section.content.siteName}</span>
               </div>
               <nav class="nav-links flex space-x-6">
                 ${(() => {
-                  let heroCount = 0;
-                  return sections
-                    .filter(s => s.templateId !== 'navbar-1' && s.templateId !== 'footer-1')
-                    .map(s => {
-                      let label = s.content.title;
-                      if (s.templateId.includes('hero')) {
-                        heroCount++;
-                        if (heroCount === 1) label = 'Home';
-                        else if (heroCount === 2) label = 'About';
-                        else return null;
-                      }
-                      if (!label) return null;
-                      return `<a href="#section-${s.id}" class="hover:text-blue-600 font-medium transition-colors" style="color: inherit;">${label}</a>`;
-                    })
-                    .filter(Boolean)
-                    .join('');
-                })()}
+            let heroCount = 0;
+            return sections
+              .filter(s => s.templateId !== 'navbar-1' && s.templateId !== 'footer-1')
+              .map(s => {
+                let label = s.content.title;
+                if (s.templateId.includes('hero')) {
+                  heroCount++;
+                  if (heroCount === 1) label = 'Home';
+                  else if (heroCount === 2) label = 'About';
+                  else return null;
+                }
+                if (!label) return null;
+                return `<a href="#section-${s.id}" class="hover:text-blue-600 font-medium transition-colors" style="color: inherit;">${label}</a>`;
+              })
+              .filter(Boolean)
+              .join('');
+          })()}
                 ${[
-                  { label: 'nav1Label', href: 'nav1Href' },
-                  { label: 'nav2Label', href: 'nav2Href' },
-                  { label: 'nav3Label', href: 'nav3Href' }
-                ].map((nav: any) => {
-                  const label = section.content[nav.label as keyof typeof section.content];
-                  const href = section.content[nav.href as keyof typeof section.content];
-                  return label ? `<a href="${href || '#'}" class="hover:text-blue-600 font-medium transition-colors" style="color: inherit;">${label}</a>` : '';
-                }).filter(Boolean).join('')}
+            { label: 'nav1Label', href: 'nav1Href' },
+            { label: 'nav2Label', href: 'nav2Href' },
+            { label: 'nav3Label', href: 'nav3Href' }
+          ].map((nav: any) => {
+            const label = section.content[nav.label as keyof typeof section.content];
+            const href = section.content[nav.href as keyof typeof section.content];
+            return label ? `<a href="${href || '#'}" class="hover:text-blue-600 font-medium transition-colors" style="color: inherit;">${label}</a>` : '';
+          }).filter(Boolean).join('')}
               </nav>
+              <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active'); this.classList.toggle('active')">
+                <span></span><span></span><span></span>
+              </button>
             </div>
           </header>
         `;
@@ -387,28 +401,28 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
             <div class="footer-content max-w-7xl mx-auto px-4 text-center">
               <div class="footer-links flex flex-wrap justify-center gap-6 mb-8">
                 ${(() => {
-                  let heroCount = 0;
-                  return sections
-                    .filter(s => s.templateId !== 'navbar-1' && s.templateId !== 'footer-1')
-                    .map(s => {
-                      let label = s.content.title;
-                      if (s.templateId.includes('hero')) {
-                        heroCount++;
-                        if (heroCount === 1) label = 'Home';
-                        else if (heroCount === 2) label = 'About';
-                        else return null;
-                      }
-                      if (!label) return null;
-                      return `<a href="#section-${s.id}" class="hover:text-primary transition-colors" style="color: inherit; text-decoration: none;">${label}</a>`;
-                    })
-                    .filter(Boolean)
-                    .join('');
-                })()}
+            let heroCount = 0;
+            return sections
+              .filter(s => s.templateId !== 'navbar-1' && s.templateId !== 'footer-1')
+              .map(s => {
+                let label = s.content.title;
+                if (s.templateId.includes('hero')) {
+                  heroCount++;
+                  if (heroCount === 1) label = 'Home';
+                  else if (heroCount === 2) label = 'About';
+                  else return null;
+                }
+                if (!label) return null;
+                return `<a href="#section-${s.id}" class="hover:text-primary transition-colors" style="color: inherit; text-decoration: none;">${label}</a>`;
+              })
+              .filter(Boolean)
+              .join('');
+          })()}
                 ${['link1', 'link2', 'link3', 'link4'].map(key => {
-                  const label = section.content[key as keyof typeof section.content];
-                  const href = section.content[`${key}Href` as keyof typeof section.content] || '#';
-                  return label ? `<a href="${href}" class="hover:text-primary transition-colors" style="color: inherit; text-decoration: none;">${label}</a>` : '';
-                }).filter(Boolean).join('')}
+            const label = section.content[key as keyof typeof section.content];
+            const href = section.content[`${key}Href` as keyof typeof section.content] || '#';
+            return label ? `<a href="${href}" class="hover:text-primary transition-colors" style="color: inherit; text-decoration: none;">${label}</a>` : '';
+          }).filter(Boolean).join('')}
               </div>
               <p class="footer-copyright opacity-80">${copyright}</p>
             </div>
@@ -423,7 +437,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
       Object.entries(section.content).forEach(([key, value]) => {
         html = html.replace(new RegExp(`{{${key}}}`, 'g'), value || '');
       });
-      
+
       // Inject styles into the main container if possible
       if (html.includes('<section')) {
         html = html.replace('<section', `<section id="section-${section.id}" ${combinedStyle}`);
@@ -453,6 +467,7 @@ ${css}
 </head>
 <body>
 ${sectionsHTML}
+  <div class="mobile-overlay" onclick="document.querySelector('.nav-links').classList.remove('active'); document.querySelector('.mobile-menu-btn').classList.remove('active'); this.classList.remove('active')"></div>
   <script>
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
@@ -463,10 +478,21 @@ ${sectionsHTML}
           const targetElement = document.getElementById(targetId) || document.querySelector('[id="'+targetId+'"]');
           if (targetElement) {
             targetElement.scrollIntoView({ behavior: 'smooth' });
+            // Close mobile menu if open
+            document.querySelector('.nav-links').classList.remove('active');
+            document.querySelector('.mobile-menu-btn').classList.remove('active');
+            document.querySelector('.mobile-overlay').classList.remove('active');
           }
         }
       });
     });
+
+    const menuBtn = document.querySelector('.mobile-menu-btn');
+    if (menuBtn) {
+      menuBtn.addEventListener('click', () => {
+        document.querySelector('.mobile-overlay').classList.toggle('active');
+      });
+    }
   </script>
 </body>
 </html>`;
