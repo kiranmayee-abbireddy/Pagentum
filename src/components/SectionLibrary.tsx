@@ -1,6 +1,5 @@
 import { Plus } from 'lucide-react';
 import { sectionTemplates } from '../data/templates';
-import { PageSection } from '../types';
 
 interface SectionLibraryProps {
   onAddSection: (templateId: string) => void;
@@ -10,8 +9,8 @@ export default function SectionLibrary({ onAddSection }: SectionLibraryProps) {
   const categories = Array.from(new Set(sectionTemplates.map(t => t.category)));
 
   return (
-    <div className="w-72 bg-white border-r border-gray-200 overflow-y-auto">
-      <div className="p-4 border-b border-gray-200">
+    <div className="w-72 bg-white overflow-y-auto">
+      <div className="p-4">
         <h2 className="text-lg font-semibold text-gray-900">Section Library</h2>
         <p className="text-sm text-gray-500 mt-1">Drag or click to add</p>
       </div>
@@ -30,7 +29,7 @@ export default function SectionLibrary({ onAddSection }: SectionLibraryProps) {
                   <button
                     key={template.id}
                     onClick={() => onAddSection(template.id)}
-                    className="w-full text-left p-3 bg-gray-50 hover:bg-blue-50 rounded-lg border border-gray-200 hover:border-blue-300 transition-colors group"
+                    className="w-full text-left p-3 hover:bg-blue-50 rounded-lg border-2 border-transparent hover:border-blue-100 transition-all group"
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">

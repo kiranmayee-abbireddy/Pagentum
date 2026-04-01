@@ -1,4 +1,4 @@
-import { Palette, Eye, Download, Save, Sparkles } from 'lucide-react';
+import { Palette, Eye, Download, Save, Sparkles, ChevronUp, ChevronDown } from 'lucide-react';
 
 interface TopBarProps {
   onThemeClick: () => void;
@@ -6,6 +6,8 @@ interface TopBarProps {
   onExportClick: () => void;
   onSaveClick: () => void;
   isPreviewMode: boolean;
+  isHeaderCollapsed: boolean;
+  onCollapseToggle: () => void;
 }
 
 export default function TopBar({
@@ -13,10 +15,12 @@ export default function TopBar({
   onPreviewClick,
   onExportClick,
   onSaveClick,
-  isPreviewMode
+  isPreviewMode,
+  isHeaderCollapsed,
+  onCollapseToggle
 }: TopBarProps) {
   return (
-    <div className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6">
+    <div className="h-16 bg-white flex items-center justify-between px-6 shadow-sm">
       <div className="flex items-center gap-3">
         <div className="flex items-center gap-2">
           <Sparkles className="w-6 h-6 text-blue-600" />
@@ -25,6 +29,20 @@ export default function TopBar({
         <span className="text-sm text-gray-500 hidden sm:inline">
           Whirl your ideas into pages
         </span>
+
+        {!isPreviewMode && (
+          <button 
+            onClick={onCollapseToggle}
+            className="ml-4 p-1.5 hover:bg-gray-100 rounded-lg transition-colors text-gray-500 flex items-center gap-1 text-xs font-medium"
+            title={isHeaderCollapsed ? "Show magic bar" : "Hide magic bar"}
+          >
+            {isHeaderCollapsed ? (
+              <><Sparkles className="w-4 h-4 text-blue-600" /> <ChevronDown className="w-4 h-4" /></>
+            ) : (
+              <ChevronUp className="w-4 h-4" />
+            )}
+          </button>
+        )}
       </div>
 
       <div className="flex items-center gap-2">

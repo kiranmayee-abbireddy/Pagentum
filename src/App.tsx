@@ -111,17 +111,33 @@ function App() {
     }
   };
 
-  return (
-    <div className="h-screen flex flex-col bg-gray-100">
-      <TopBar
-        onThemeClick={() => setShowThemeSelector(true)}
-        onPreviewClick={() => setShowPreview(!showPreview)}
-        onExportClick={() => setShowExportModal(true)}
-        onSaveClick={handleSave}
-        isPreviewMode={showPreview}
-      />
+  const [isHeaderCollapsed, setIsHeaderCollapsed] = useState(false);
 
-      {!showPreview && <InputBar onGenerate={handleGenerate} onImport={handleImport} />}
+  return (
+    <div className="h-screen flex flex-col bg-[#f8fafc]">
+      <div className="bg-white">
+        <TopBar
+          onThemeClick={() => setShowThemeSelector(true)}
+          onPreviewClick={() => setShowPreview(!showPreview)}
+          onExportClick={() => setShowExportModal(true)}
+          onSaveClick={handleSave}
+          isPreviewMode={showPreview}
+          isHeaderCollapsed={isHeaderCollapsed}
+          onCollapseToggle={() => setIsHeaderCollapsed(!isHeaderCollapsed)}
+        />
+
+        {!showPreview && (
+          <div className={`bg-gradient-to-br from-blue-50 via-white to-indigo-50 overflow-hidden transition-all duration-500 ease-in-out ${isHeaderCollapsed ? 'max-h-0' : 'max-h-[500px]'
+            }`}>
+            <div className="max-w-5xl mx-auto w-full px-6 py-12">
+              <h2 className="text-4xl font-black text-gray-900 tracking-tight mb-8">
+                Design with <span className="text-blue-600">Magic.</span>
+              </h2>
+              <InputBar onGenerate={handleGenerate} onImport={handleImport} />
+            </div>
+          </div>
+        )}
+      </div>
 
       <div className="flex-1 flex overflow-hidden">
         {!showPreview && (

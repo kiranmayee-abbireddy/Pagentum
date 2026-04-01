@@ -7,9 +7,9 @@ export function parseInputToSections(input: string): PageSection[] {
 
   const lines = input
     .toLowerCase()
-    .split(/[,\n]+/)
+    .split(/[,\n]|\s+and\s+|\s+with\s+|\s+then\s+|\s+also\s+/)
     .map(line => line.trim())
-    .filter(line => line.length > 0);
+    .filter(line => line.length > 2); // Avoid tiny noise words
 
   lines.forEach((line, index) => {
     let matchedCategory: string | null = null;
