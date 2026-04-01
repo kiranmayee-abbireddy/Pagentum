@@ -256,6 +256,8 @@ div[style*="background"] > section {
   text-align: center;
   margin-bottom: calc(var(--spacing) * 3);
   color: var(--text-color);
+  position: relative;
+  z-index: 5;
 }
 
 .features-grid, .testimonials-grid, .pricing-grid {
