@@ -53,15 +53,49 @@ export default function Canvas({ sections, onSectionsChange, onEditSection, show
     let html = template.html;
     const layout = section.layout as any;
 
-    // Handle template specific logic
+    if (section.templateId === 'navbar-1') {
+      const logo = section.images?.[0];
+      const logoHTML = logo
+        ? `<img src="${logo.src}" alt="${logo.alt || 'Logo'}" style="height: 20px !important; width: auto !important; display: block;" />`
+        : `<div class="h-4 w-4 bg-gray-200 rounded-full flex items-center justify-center text-[6px] font-bold">L</div>`;
+
+      // Replace the img tag BEFORE replacing individual placeholders
+      html = html.replace(/<img src="{{logoSrc}}".*?\/>/, logoHTML);
+      html = html.replace('{{logoSrc}}', logo ? logo.src : '');
+
+      // Force navbar-1 inner structure for editor
+      html = html.replace('class="nav-inner"', 'class="nav-inner flex items-center justify-between px-2 py-1"');
+      html = html.replace('class="nav-brand"', 'class="nav-brand flex items-center space-x-2"');
+      html = html.replace('class="nav-links"', 'class="nav-links flex space-x-3"');
+
+      const navLinks = [
+        { label: 'nav1Label', href: 'nav1Href' },
+        { label: 'nav2Label', href: 'nav2Href' },
+        { label: 'nav3Label', href: 'nav3Href' }
+      ].map(nav => {
+        const label = section.content[nav.label as keyof typeof section.content];
+        const href = section.content[nav.href as keyof typeof section.content];
+        return label ? `<a href="${href || '#'}" class="text-gray-500 hover:text-blue-600 font-bold text-[8px] uppercase tracking-wider">${label}</a>` : '';
+      }).join('');
+
+      html = html.replace('{{navLinksHTML}}', navLinks);
+    }
+
     if (section.templateId === 'hero-image-advanced') {
       const variant = layout?.variant || 'image-right';
-      html = html.replace('{{variantClass}}', variant === 'image-left' ? 'lg:flex-row' : 'lg:flex-row-reverse');
-      html = html.replace('{{imageSrc}}', section.images?.[0]?.src || '');
-      html = html.replace('{{imageAlt}}', section.images?.[0]?.alt || section.content.title);
+      html = html.replace('{{variantClass}}', variant === 'image-left' ? 'lg:flex-row flex-col' : 'lg:flex-row-reverse flex-col');
+
+      const imageSrc = section.images?.[0]?.src || '';
+      const imageAlt = section.images?.[0]?.alt || section.content.title;
+
+      // Force hero image to be truly tiny
+      html = html.replace(/<div class="hero-image">[\s\S]*?<\/div>/,
+        `<div class="hero-image flex justify-center py-1"><img src="${imageSrc}" alt="${imageAlt}" class="h-30 w-40 object-cover rounded shadow-sm border border-gray-50" /></div>`
+      );
+
       html = html.replace('{{buttonLabel}}', layout?.buttonLabel || section.content.ctaText || 'Get Started');
       html = html.replace('{{buttonHref}}', layout?.buttonHref || '#');
-      
+
       const showButton = layout?.showButton ?? true;
       if (!showButton) {
         html = html.replace(/{{#if showButton}}[\s\S]*?{{\/if}}/, '');
@@ -70,10 +104,22 @@ export default function Canvas({ sections, onSectionsChange, onEditSection, show
       }
     }
 
-    if (section.templateId === 'product-carousel') {
-      const carouselStyle = layout?.carouselStyle || 'auto-scroll';
-      html = html.replace('{{carouselStyleClass}}', carouselStyle);
+    if (section.templateId === 'pricing-3tier') {
+      html = html.replace('class="pricing-grid"', 'class="pricing-grid grid grid-cols-3 gap-3 px-2 py-4"');
+      html = html.replace(/class="pricing-card"/g, 'class="pricing-card p-3 bg-gray-50 rounded-xl border border-gray-100 flex flex-col items-center"');
+      html = html.replace('class="pricing-card pricing-featured"', 'class="pricing-card p-3 bg-blue-50 rounded-xl border border-blue-200 flex flex-col items-center scale-105 shadow-sm"');
       
+      // Inline typography scaling for editor
+      html = html.replace(/class="pricing-tier"/g, 'class="font-bold text-[10px] text-gray-900 mb-1"');
+      html = html.replace(/class="pricing-price"/g, 'class="text-xs font-black text-blue-600 mb-2"');
+      html = html.replace(/class="pricing-features"/g, 'class="space-y-1 mb-3 text-[8px] text-gray-500 list-none p-0"');
+      html = html.replace(/class="pricing-button"/g, 'class="mt-auto w-full py-1 bg-gray-800 text-white text-[8px] rounded font-bold"');
+    }
+
+    if (section.templateId === 'product-carousel') {
+      // Apply flexbox directly to the product-track inside the template HTML
+      html = html.replace('class="product-track"', 'class="product-track flex flex-wrap gap-3 justify-center px-2 py-2"');
+
       const imageCount = layout?.imageCount || section.images?.length || 5;
       const displayImages = section.images?.slice(0, imageCount) || [];
       const showButton = layout?.showButton ?? false;
@@ -85,22 +131,30 @@ export default function Canvas({ sections, onSectionsChange, onEditSection, show
         const title = section.content[`product${productNum}Title`] || `Product ${productNum}`;
         const price = section.content[`product${productNum}Price`] || '$99';
         const desc = section.content[`product${productNum}Description`] || 'Amazing product';
-        
+
         return `
-          <div class="product-card flex flex-col min-w-[280px] mx-2 snap-center">
-            <div class="product-image mb-4">
-              <img src="${img.src}" alt="${img.alt || title}" class="w-full h-48 object-cover rounded-xl shadow-lg" />
+          <div class="product-card flex flex-col w-[120px] bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden transition-transform hover:scale-105">
+            <div class="h-12 w-full bg-gray-100 relative group overflow-hidden">
+              <img src="${img.src}" alt="${img.alt || title}" class="w-full h-full object-cover" />
+              <div class="absolute bottom-0.5 right-0.5 bg-white/95 backdrop-blur-sm px-1 py-0.5 rounded-[2px] text-[8px] font-bold text-gray-800">
+                ${price}
+              </div>
             </div>
-            <div class="product-info p-4 flex-1 flex flex-col">
-              <h3 class="font-bold text-lg mb-2 text-gray-900">${title}</h3>
-              <p class="text-2xl font-bold text-blue-600 mb-3">${price}</p>
-              <p class="text-gray-600 mb-4 flex-1 text-sm">${desc}</p>
-              ${showButton ? `<a href="${buttonHref}" class="mt-auto bg-blue-600 text-white px-4 py-2 rounded font-semibold text-center">${buttonLabel}</a>` : ''}
+            <div class="p-1.5 flex-1 flex flex-col bg-white">
+              <h3 class="font-bold text-[9px] text-gray-900 mb-0.5 line-clamp-1">${title}</h3>
+              <p class="text-[8px] text-gray-500 line-clamp-1 mb-1.5">${desc}</p>
+              ${showButton ? `
+                <div class="mt-auto border-t border-gray-50 pt-1">
+                  <a href="${buttonHref}" class="w-full inline-block bg-blue-600 text-white text-[7px] py-1 rounded font-bold text-center">
+                    ${buttonLabel}
+                  </a>
+                </div>
+              ` : ''}
             </div>
           </div>
         `;
       }).join('');
-      
+
       html = html.replace('{{productsHTML}}', productsHTML);
     }
 
@@ -109,17 +163,8 @@ export default function Canvas({ sections, onSectionsChange, onEditSection, show
       html = html.replace(new RegExp(`{{${key}}}`, 'g'), value);
     });
 
-    // Handle section specific gradient style
-    const sectionStyle = layout?.gradientEnabled
-      ? { 
-          background: `linear-gradient(135deg, ${layout.gradientStart}, ${layout.gradientEnd})`,
-          '--gradient-start': layout.gradientStart,
-          '--gradient-end': layout.gradientEnd,
-          color: (section.templateId === 'hero-image-advanced' || section.templateId.includes('carousel')) ? 'white' : undefined
-        }
-      : {};
-
-    return <div style={sectionStyle as any} dangerouslySetInnerHTML={{ __html: html }} />;
+    // Simplified Canvas view: No colors/gradients (reserved for preview only)
+    return <div dangerouslySetInnerHTML={{ __html: html }} className="rounded-xl bg-white" />;
   };
 
   if (sections.length === 0) {
@@ -146,9 +191,8 @@ export default function Canvas({ sections, onSectionsChange, onEditSection, show
               onDragStart={() => handleDragStart(index)}
               onDragOver={(e) => handleDragOver(e, index)}
               onDragEnd={handleDragEnd}
-              className={`relative group mb-6 transition-all duration-200 ease-in-out ${
-                draggedIndex === index ? 'opacity-50 scale-95' : 'hover:scale-[1.01]'
-              }`}
+              className={`relative group mb-6 transition-all duration-200 ease-in-out ${draggedIndex === index ? 'opacity-50 scale-95' : 'hover:scale-[1.01]'
+                }`}
             >
 
               <div className="border-2 border-dashed border-transparent group-hover:border-blue-300 rounded-xl overflow-hidden bg-white shadow-md transition-all duration-200 hover:shadow-lg">
