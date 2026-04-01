@@ -22,29 +22,6 @@ export const sectionTemplates: SectionTemplate[] = [
     }
   },
   {
-    id: 'hero-2',
-    name: 'Hero with Image',
-    category: 'hero',
-    description: 'Hero section with text on left and image placeholder on right',
-    html: `
-      <section class="hero-section hero-split">
-        <div class="hero-text">
-          <h1 class="hero-title">{{title}}</h1>
-          <p class="hero-subtitle">{{subtitle}}</p>
-          <button class="hero-cta">{{ctaText}}</button>
-        </div>
-        <div class="hero-image">
-          <div class="image-placeholder">🖼️ Image</div>
-        </div>
-      </section>
-    `,
-    defaultContent: {
-      title: 'Welcome to Pagentum',
-      subtitle: 'Create beautiful landing pages in minutes',
-      ctaText: 'Start Building'
-    }
-  },
-  {
     id: 'features-3col',
     name: 'Features Grid (3 Columns)',
     category: 'features',

@@ -5,8 +5,11 @@ export const themePresets: Record<string, ThemeConfig> = {
     name: 'Clean',
     primaryColor: '#2563eb',
     secondaryColor: '#64748b',
+    accentColor: '#3b82f6',
     backgroundColor: '#ffffff',
     textColor: '#1e293b',
+    gradientStart: '#2563eb',
+    gradientEnd: '#60a5fa',
     fontFamily: 'system-ui, -apple-system, sans-serif',
     fontSize: '16px',
     spacing: '1rem'
@@ -15,8 +18,11 @@ export const themePresets: Record<string, ThemeConfig> = {
     name: 'Bold',
     primaryColor: '#dc2626',
     secondaryColor: '#f97316',
+    accentColor: '#ef4444',
     backgroundColor: '#0f172a',
     textColor: '#f1f5f9',
+    gradientStart: '#dc2626',
+    gradientEnd: '#f97316',
     fontFamily: 'system-ui, -apple-system, sans-serif',
     fontSize: '18px',
     spacing: '1.25rem'
@@ -25,8 +31,11 @@ export const themePresets: Record<string, ThemeConfig> = {
     name: 'Soft',
     primaryColor: '#8b5cf6',
     secondaryColor: '#a78bfa',
+    accentColor: '#c084fc',
     backgroundColor: '#faf5ff',
     textColor: '#4c1d95',
+    gradientStart: '#8b5cf6',
+    gradientEnd: '#d8b4fe',
     fontFamily: 'system-ui, -apple-system, sans-serif',
     fontSize: '16px',
     spacing: '1rem'
@@ -35,8 +44,11 @@ export const themePresets: Record<string, ThemeConfig> = {
     name: 'Dark',
     primaryColor: '#06b6d4',
     secondaryColor: '#0891b2',
+    accentColor: '#22d3ee',
     backgroundColor: '#111827',
     textColor: '#f9fafb',
+    gradientStart: '#06b6d4',
+    gradientEnd: '#0891b2',
     fontFamily: 'system-ui, -apple-system, sans-serif',
     fontSize: '16px',
     spacing: '1rem'
@@ -49,8 +61,11 @@ export const generateCSS = (theme: ThemeConfig): string => {
 :root {
   --primary-color: ${theme.primaryColor};
   --secondary-color: ${theme.secondaryColor};
+  --accent-color: ${theme.accentColor || theme.primaryColor};
   --bg-color: ${theme.backgroundColor};
   --text-color: ${theme.textColor};
+  --gradient-start: ${theme.gradientStart || theme.primaryColor};
+  --gradient-end: ${theme.gradientEnd || theme.secondaryColor};
   --font-family: ${theme.fontFamily};
   --font-size: ${theme.fontSize};
   --spacing: ${theme.spacing};
@@ -68,6 +83,7 @@ body {
   color: var(--text-color);
   background: var(--bg-color);
   line-height: 1.6;
+  overflow-x: hidden !important;
 }
 
 section {
@@ -80,7 +96,7 @@ section {
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
   color: white;
 }
 
@@ -118,6 +134,67 @@ section {
 .hero-cta:hover, .cta-button:hover, .pricing-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* --- FULL WIDTH SECTIONS & BREAKOUT --- */
+.hero-advanced, 
+section[style*="background"], 
+div[style*="background"] {
+  width: 100vw !important;
+  max-width: 100vw !important;
+  position: relative !important;
+  left: 50% !important;
+  right: 50% !important;
+  margin-left: -50vw !important;
+  margin-right: -50vw !important;
+  box-sizing: border-box !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* Ensure content stays centered within broken-out sections */
+.hero-inner, 
+.hero-advanced > div, 
+section[style*="background"] > div:not(.product-track),
+div[style*="background"] > section {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  width: 100% !important;
+  padding-left: calc(var(--spacing) * 2) !important;
+  padding-right: calc(var(--spacing) * 2) !important;
+  box-sizing: border-box !important;
+}
+
+.hero-advanced {
+  padding-top: calc(var(--spacing) * 4) !important;
+  padding-bottom: calc(var(--spacing) * 4) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.hero-inner {
+  display: flex !important;
+  align-items: center !important;
+  gap: 4rem !important;
+  width: 100% !important;
+}
+
+.hero-text {
+  flex: 1;
+}
+
+.hero-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.hero-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 1.5rem;
+  shadow: 0 20px 40px rgba(0,0,0,0.3);
 }
 
 .hero-split {
@@ -201,7 +278,7 @@ section {
 }
 
 .cta-section {
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
   color: white;
   text-align: center;
   padding: calc(var(--spacing) * 5) calc(var(--spacing) * 2);
@@ -837,7 +914,7 @@ section {
 .card__price {
   font-size: calc(var(--font-size) * 1.5); /* Slightly larger than heading */
   font-weight: 700;
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -929,7 +1006,7 @@ section {
   width: 100%;
 
   padding: calc(var(--spacing) * 1);
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
   border-radius: 1rem;
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
   color: white;
@@ -1125,7 +1202,7 @@ section {
   font-size: 1.15rem;
   font-weight: 900;
   margin-top: 0.25rem;
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

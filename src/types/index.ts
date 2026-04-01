@@ -28,8 +28,11 @@ export interface ThemeConfig {
   name: string;
   primaryColor: string;
   secondaryColor: string;
+  accentColor: string;
   backgroundColor: string;
   textColor: string;
+  gradientStart?: string;
+  gradientEnd?: string;
   fontFamily: string;
   fontSize: string;
   spacing: string;
@@ -44,7 +47,7 @@ export interface PageImage {
 
 export interface SectionLayout {
   variant?: 'image-left' | 'image-right';
-  carouselStyle?: 'auto-scroll' | 'rail' | 'grid';
+  carouselStyle?: 'auto-scroll' | 'rail' | 'grid' | 'glowing';
   showButton?: boolean;
   buttonLabel?: string;
   buttonHref?: string;
@@ -53,7 +56,11 @@ export interface SectionLayout {
   secondaryColor?: string;
   backgroundColor?: string;
   textColor?: string;
-
+  accentColor?: string;
+  gradientEnabled?: boolean;
+  gradientStart?: string;
+  gradientEnd?: string;
+  imageCount?: number;
 }
 
 export interface PageSection {
@@ -65,3 +72,4 @@ export interface PageSection {
   images?: PageImage[];
   layout?: SectionLayout;
 }
+

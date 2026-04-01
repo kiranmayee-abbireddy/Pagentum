@@ -206,6 +206,40 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                     />
                   </>
                 )}
+
+                <div className="pt-4 border-t border-gray-100">
+                  <label className="flex items-center space-x-3">
+                    <input
+                      type="checkbox"
+                      checked={layout.gradientEnabled || false}
+                      onChange={(e) => handleLayoutChange('gradientEnabled')(e.target.checked)}
+                      className="w-4 h-4 text-blue-600 rounded"
+                    />
+                    <span className="font-medium text-gray-700">Use Custom Section Gradient</span>
+                  </label>
+                  {layout.gradientEnabled && (
+                    <div className="grid grid-cols-2 gap-4 mt-3 ml-7">
+                      <div>
+                        <label className="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wider">Start Color</label>
+                        <input
+                          type="color"
+                          value={layout.gradientStart || themePresets.clean.primaryColor}
+                          onChange={(e) => handleLayoutChange('gradientStart')(e.target.value)}
+                          className="w-full h-10 rounded-lg border border-gray-300 cursor-pointer"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wider">End Color</label>
+                        <input
+                          type="color"
+                          value={layout.gradientEnd || themePresets.clean.secondaryColor}
+                          onChange={(e) => handleLayoutChange('gradientEnd')(e.target.value)}
+                          className="w-full h-10 rounded-lg border border-gray-300 cursor-pointer"
+                        />
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           )}
@@ -225,34 +259,91 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                 <option value="glowing">Glowing</option>
               </select>
               
-              <div className="mt-6 space-y-4">
-                <label className="flex items-center space-x-3">
+              <div className="mt-6 space-y-6">
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center text-sm">
+                    <label className="font-semibold text-gray-700">Display Image Count</label>
+                    <span className="bg-blue-50 text-blue-700 px-2.5 py-0.5 rounded-full font-bold">
+                      {layout.imageCount || images.length || 5}
+                    </span>
+                  </div>
                   <input
-                    type="checkbox"
-                    checked={layout.showButton || false}
-                    onChange={(e) => handleLayoutChange('showButton')(e.target.checked)}
-                    className="w-4 h-4 text-blue-600"
+                    type="range"
+                    min="1"
+                    max="10"
+                    value={layout.imageCount || images.length || 5}
+                    onChange={(e) => handleLayoutChange('imageCount')(parseInt(e.target.value))}
+                    className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
                   />
-                  <span className="font-medium">Show Buy Button on Cards</span>
-                </label>
-                {layout.showButton && (
-                  <>
+                  <div className="flex justify-between text-[10px] text-gray-400 uppercase tracking-widest font-bold">
+                    <span>1 Image</span>
+                    <span>10 Images</span>
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-gray-100">
+                  <label className="flex items-center space-x-3">
                     <input
-                      type="text"
-                      placeholder="Button Text"
-                      value={layout.buttonLabel || 'Buy Now'}
-                      onChange={(e) => handleLayoutChange('buttonLabel')(e.target.value)}
-                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                      type="checkbox"
+                      checked={layout.showButton || false}
+                      onChange={(e) => handleLayoutChange('showButton')(e.target.checked)}
+                      className="w-4 h-4 text-blue-600 rounded"
                     />
+                    <span className="font-medium text-gray-700">Show Buy Button on Cards</span>
+                  </label>
+                  {layout.showButton && (
+                    <div className="mt-3 ml-7 space-y-3">
+                      <input
+                        type="text"
+                        placeholder="Button Text"
+                        value={layout.buttonLabel || 'Buy Now'}
+                        onChange={(e) => handleLayoutChange('buttonLabel')(e.target.value)}
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                      />
+                      <input
+                        type="url"
+                        placeholder="Button Link"
+                        value={layout.buttonHref || ''}
+                        onChange={(e) => handleLayoutChange('buttonHref')(e.target.value)}
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                  )}
+                </div>
+
+                <div className="pt-4 border-t border-gray-100">
+                  <label className="flex items-center space-x-3">
                     <input
-                      type="url"
-                      placeholder="Button Link"
-                      value={layout.buttonHref || ''}
-                      onChange={(e) => handleLayoutChange('buttonHref')(e.target.value)}
-                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                      type="checkbox"
+                      checked={layout.gradientEnabled || false}
+                      onChange={(e) => handleLayoutChange('gradientEnabled')(e.target.checked)}
+                      className="w-4 h-4 text-blue-600 rounded"
                     />
-                  </>
-                )}
+                    <span className="font-medium text-gray-700">Use Custom Section Gradient</span>
+                  </label>
+                  {layout.gradientEnabled && (
+                    <div className="grid grid-cols-2 gap-4 mt-3 ml-7">
+                      <div>
+                        <label className="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wider">Start Color</label>
+                        <input
+                          type="color"
+                          value={layout.gradientStart || themePresets.clean.primaryColor}
+                          onChange={(e) => handleLayoutChange('gradientStart')(e.target.value)}
+                          className="w-full h-10 rounded-lg border border-gray-300 cursor-pointer"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wider">End Color</label>
+                        <input
+                          type="color"
+                          value={layout.gradientEnd || themePresets.clean.secondaryColor}
+                          onChange={(e) => handleLayoutChange('gradientEnd')(e.target.value)}
+                          className="w-full h-10 rounded-lg border border-gray-300 cursor-pointer"
+                        />
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           )}
@@ -263,7 +354,7 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
             <div>
               <h3 className="text-lg font-semibold mb-4">Product Details</h3>
               <div className="space-y-4">
-                {images.slice(0, 6).map((_, idx) => {
+                {images.slice(0, layout.imageCount || images.length).map((_, idx) => {
                   const productNum = idx + 1;
                   return (
                     <div key={productNum} className="border p-4 rounded-lg">

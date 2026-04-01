@@ -51,11 +51,75 @@ export default function Canvas({ sections, onSectionsChange, onEditSection, show
     if (!template) return null;
 
     let html = template.html;
+    const layout = section.layout as any;
+
+    // Handle template specific logic
+    if (section.templateId === 'hero-image-advanced') {
+      const variant = layout?.variant || 'image-right';
+      html = html.replace('{{variantClass}}', variant === 'image-left' ? 'lg:flex-row' : 'lg:flex-row-reverse');
+      html = html.replace('{{imageSrc}}', section.images?.[0]?.src || '');
+      html = html.replace('{{imageAlt}}', section.images?.[0]?.alt || section.content.title);
+      html = html.replace('{{buttonLabel}}', layout?.buttonLabel || section.content.ctaText || 'Get Started');
+      html = html.replace('{{buttonHref}}', layout?.buttonHref || '#');
+      
+      const showButton = layout?.showButton ?? true;
+      if (!showButton) {
+        html = html.replace(/{{#if showButton}}[\s\S]*?{{\/if}}/, '');
+      } else {
+        html = html.replace(/{{#if showButton}}(.*){{\/if}}/, '$1');
+      }
+    }
+
+    if (section.templateId === 'product-carousel') {
+      const carouselStyle = layout?.carouselStyle || 'auto-scroll';
+      html = html.replace('{{carouselStyleClass}}', carouselStyle);
+      
+      const imageCount = layout?.imageCount || section.images?.length || 5;
+      const displayImages = section.images?.slice(0, imageCount) || [];
+      const showButton = layout?.showButton ?? false;
+      const buttonHref = layout?.buttonHref || '#';
+      const buttonLabel = layout?.buttonLabel || 'Buy Now';
+
+      const productsHTML = displayImages.map((img, idx) => {
+        const productNum = idx + 1;
+        const title = section.content[`product${productNum}Title`] || `Product ${productNum}`;
+        const price = section.content[`product${productNum}Price`] || '$99';
+        const desc = section.content[`product${productNum}Description`] || 'Amazing product';
+        
+        return `
+          <div class="product-card flex flex-col min-w-[280px] mx-2 snap-center">
+            <div class="product-image mb-4">
+              <img src="${img.src}" alt="${img.alt || title}" class="w-full h-48 object-cover rounded-xl shadow-lg" />
+            </div>
+            <div class="product-info p-4 flex-1 flex flex-col">
+              <h3 class="font-bold text-lg mb-2 text-gray-900">${title}</h3>
+              <p class="text-2xl font-bold text-blue-600 mb-3">${price}</p>
+              <p class="text-gray-600 mb-4 flex-1 text-sm">${desc}</p>
+              ${showButton ? `<a href="${buttonHref}" class="mt-auto bg-blue-600 text-white px-4 py-2 rounded font-semibold text-center">${buttonLabel}</a>` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      html = html.replace('{{productsHTML}}', productsHTML);
+    }
+
+    // Standard replacements
     Object.entries(section.content).forEach(([key, value]) => {
       html = html.replace(new RegExp(`{{${key}}}`, 'g'), value);
     });
 
-    return <div dangerouslySetInnerHTML={{ __html: html }} />;
+    // Handle section specific gradient style
+    const sectionStyle = layout?.gradientEnabled
+      ? { 
+          background: `linear-gradient(135deg, ${layout.gradientStart}, ${layout.gradientEnd})`,
+          '--gradient-start': layout.gradientStart,
+          '--gradient-end': layout.gradientEnd,
+          color: (section.templateId === 'hero-image-advanced' || section.templateId.includes('carousel')) ? 'white' : undefined
+        }
+      : {};
+
+    return <div style={sectionStyle as any} dangerouslySetInnerHTML={{ __html: html }} />;
   };
 
   if (sections.length === 0) {

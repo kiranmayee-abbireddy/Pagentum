@@ -114,6 +114,19 @@ export default function ThemeSelector({ currentTheme, onThemeChange, onClose }: 
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Accent Color
+                </label>
+                <input
+                  type="color"
+                  value={currentTheme.accentColor || currentTheme.primaryColor}
+                  onChange={(e) =>
+                    onThemeChange({ ...currentTheme, accentColor: e.target.value })
+                  }
+                  className="w-full h-10 rounded border border-gray-300 cursor-pointer"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Background Color
                 </label>
                 <input
@@ -134,6 +147,32 @@ export default function ThemeSelector({ currentTheme, onThemeChange, onClose }: 
                   value={currentTheme.textColor}
                   onChange={(e) =>
                     onThemeChange({ ...currentTheme, textColor: e.target.value })
+                  }
+                  className="w-full h-10 rounded border border-gray-300 cursor-pointer"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Gradient Start
+                </label>
+                <input
+                  type="color"
+                  value={currentTheme.gradientStart || currentTheme.primaryColor}
+                  onChange={(e) =>
+                    onThemeChange({ ...currentTheme, gradientStart: e.target.value })
+                  }
+                  className="w-full h-10 rounded border border-gray-300 cursor-pointer"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Gradient End
+                </label>
+                <input
+                  type="color"
+                  value={currentTheme.gradientEnd || currentTheme.secondaryColor}
+                  onChange={(e) =>
+                    onThemeChange({ ...currentTheme, gradientEnd: e.target.value })
                   }
                   className="w-full h-10 rounded border border-gray-300 cursor-pointer"
                 />

@@ -43,16 +43,20 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
         const buttonLabel = (section.layout as any)?.buttonLabel || section.content.ctaText || 'Get Started';
         const buttonHref = (section.layout as any)?.buttonHref || '#';
         
+        const sectionStyle = (section.layout as any)?.gradientEnabled
+          ? `style="--gradient-start: ${(section.layout as any).gradientStart}; --gradient-end: ${(section.layout as any).gradientEnd}; background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); color: white;"`
+          : '';
+
         return `
-          <section class="hero-advanced py-20 px-4 max-w-7xl mx-auto">
+          <section class="hero-advanced py-20 px-4 max-w-7xl mx-auto" ${sectionStyle}>
             <div class="hero-inner flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-16 ${
               variant === 'image-left' ? 'lg:flex-row' : 'lg:flex-row-reverse'
             }">
               <div class="hero-text flex-1 text-center lg:text-left">
                 <h1 class="text-4xl lg:text-5xl font-bold mb-6">${section.content.title}</h1>
-                <p class="text-xl text-gray-600 mb-8 max-w-lg">${section.content.subtitle}</p>
+                <p class="text-xl ${sectionStyle ? 'text-white/80' : 'text-gray-600'} mb-8 max-w-lg">${section.content.subtitle}</p>
                 ${showButton ? 
-                  `<a href="${buttonHref}" class="inline-block bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors">${buttonLabel}</a>` : ''
+                   `<a href="${buttonHref}" class="inline-block ${sectionStyle ? 'bg-white text-blue-600' : 'bg-blue-600 text-white'} px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition-all">${buttonLabel}</a>` : ''
                 }
               </div>
               <div class="hero-image flex-1 flex justify-center lg:justify-end">
@@ -73,17 +77,23 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
         const showButton = (section.layout as any)?.showButton ?? false;
         const buttonHref = (section.layout as any)?.buttonHref || '#';
         const buttonLabel = (section.layout as any)?.buttonLabel || 'Buy Now';
+        const imageCount = (section.layout as any)?.imageCount || section.images?.length || 5;
+        const displayImages = section.images?.slice(0, imageCount) || [];
+
+        const sectionStyle = (section.layout as any)?.gradientEnabled
+          ? `style="--gradient-start: ${(section.layout as any).gradientStart}; --gradient-end: ${(section.layout as any).gradientEnd};"`
+          : '';
 
         if (carouselStyle === 'grid') {
           return `
-            <section class="bookshelf-section py-20 px-4 max-w-7xl mx-auto">
+            <section class="bookshelf-section py-20 px-4 max-w-7xl mx-auto" ${sectionStyle}>
               <div class="text-center mb-16">
                 <h2 style="text-align:center;" class="text-3xl lg:text-4xl font-bold mb-4">${section.content.title}</h2>
                 <p style="margin-bottom:50px; text-align:center;" class="text-xl text-gray-600 max-w-2xl mx-auto">${section.content.subtitle}</p>
               </div>
               
               <div class="bookshelf-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 items-start justify-items-center">
-                ${section.images?.map((img, idx) => {
+                ${displayImages.map((img, idx) => {
                   const productNum = idx + 1;
                   const title = section.content[`product${productNum}Title`] || `Product ${productNum}`;
                   const price = section.content[`product${productNum}Price`] || '$19.99';
@@ -127,7 +137,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
         }
         if (carouselStyle === 'glowing') {
           return `
-            <section class="glowing-bookshelf py-20 px-4 max-w-7xl mx-auto">
+            <section class="glowing-bookshelf py-20 px-4 max-w-7xl mx-auto" ${sectionStyle}>
               <!-- Title & Subtitle OUTSIDE cards - normal styling -->
               <div class="text-center mb-16">
                         <h2 style="text-align:center;" class="text-3xl lg:text-4xl font-bold mb-4">${section.content.title}</h2>
@@ -136,7 +146,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
               
               <!-- ONLY CARDS get glowing -->
               <div class="cards">
-                ${section.images?.map((img, idx) => {
+                ${displayImages.map((img, idx) => {
                   const productNum = idx + 1;
                   const title = section.content[`product${productNum}Title`] || `Product ${productNum}`;
                   const price = section.content[`product${productNum}Price`] || '$19.99';
@@ -164,14 +174,14 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
         }
         if (carouselStyle === 'rail') {
           return `
-            <section class="product-carousel py-20 px-4 max-w-7xl mx-auto">
+            <section class="product-carousel py-20 px-4 max-w-7xl mx-auto" ${sectionStyle}>
               <div class="text-center mb-12">
                 <h2 class="text-3xl lg:text-4xl font-bold mb-4">${section.content.title}</h2>
                 <p class="product-carousel-text text-xl text-gray-600 max-w-2xl mx-auto">${section.content.subtitle}</p>
               </div>
               
               <div class="rail-grid">
-                ${section.images?.map((img, idx) => {
+                ${displayImages.map((img, idx) => {
                   const productNum = idx + 1;
                   const title = section.content[`product${productNum}Title`] || `Product ${productNum}`;
                   const price = section.content[`product${productNum}Price`] || '$99';
@@ -209,9 +219,9 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
         }
 
         if (carouselStyle === 'auto-scroll') {
-          const quantity = Math.max(1, section.images?.length || 1);
+          const quantity = Math.max(1, displayImages.length || 1);
           return `
-            <section class="product-carousel py-20 px-4 max-w-7xl mx-auto">
+            <section class="product-carousel py-20 px-4 max-w-7xl mx-auto" ${sectionStyle}>
               <div class="text-center mb-12">
                 <h2 class="text-3xl lg:text-4xl font-bold mb-4">${section.content.title}</h2>
                 <p class="product-carousel-text text-xl text-gray-600">${section.content.subtitle}</p>
@@ -219,7 +229,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
               
               <div class="slider" style="--width: 280px; --height: 360px; --quantity: ${quantity};">
                 <div class="list">
-                  ${section.images?.map((img, idx) => {
+                  ${displayImages.map((img, idx) => {
                     const productNum = idx + 1;
                     const title = section.content[`product${productNum}Title`] || `Product ${productNum}`;
                     const price = section.content[`product${productNum}Price`] || '$99';
@@ -254,7 +264,6 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
           `;
         }
 
-        
         return `
           <section class="product-carousel py-20 px-4 max-w-7xl mx-auto">
             <div class="text-center mb-12">
@@ -262,7 +271,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
               <p class="product-carousel-text text-xl text-gray-600">${section.content.subtitle}</p>
             </div>
             <div class="product-track ${getCarouselClasses(carouselStyle)}">
-              ${section.images?.map((img, idx) => {
+              ${displayImages.map((img, idx) => {
                 const productNum = idx + 1;
                 return `
                   <div class="product-card flex flex-col min-w-[280px] mx-2 snap-center">
@@ -273,8 +282,8 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                       <h3 class="font-bold text-lg mb-2">${section.content[`product${productNum}Title`] || `Product ${productNum}`}</h3>
                       <p class="text-2xl font-bold text-blue-600 mb-3">${section.content[`product${productNum}Price`] || '$99'}</p>
                       <p class="text-gray-600 mb-4 flex-1">${section.content[`product${productNum}Description`] || 'Amazing product'}</p>
-                      ${(section.layout as any)?.showButton ? 
-                        `<a href="${(section.layout as any)?.buttonHref || '#'}" class="mt-auto inline-block bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors text-center">${(section.layout as any)?.buttonLabel || 'Buy Now'}</a>` : ''
+                      ${showButton ? 
+                        `<a href="${buttonHref}" class="mt-auto inline-block bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors text-center">${buttonLabel}</a>` : ''
                       }
                     </div>
                   </div>
