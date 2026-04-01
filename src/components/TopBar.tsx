@@ -1,12 +1,10 @@
-import { Palette, Eye, Download, Save, Grid3x3, Sparkles } from 'lucide-react';
+import { Palette, Eye, Download, Save, Sparkles } from 'lucide-react';
 
 interface TopBarProps {
   onThemeClick: () => void;
   onPreviewClick: () => void;
   onExportClick: () => void;
   onSaveClick: () => void;
-  showGrid: boolean;
-  onGridToggle: () => void;
   isPreviewMode: boolean;
 }
 
@@ -15,8 +13,6 @@ export default function TopBar({
   onPreviewClick,
   onExportClick,
   onSaveClick,
-  showGrid,
-  onGridToggle,
   isPreviewMode
 }: TopBarProps) {
   return (
@@ -32,19 +28,6 @@ export default function TopBar({
       </div>
 
       <div className="flex items-center gap-2">
-        {!isPreviewMode && (
-          <button
-            onClick={onGridToggle}
-            className={`p-2 rounded-lg transition-colors ${
-              showGrid
-                ? 'bg-blue-100 text-blue-700'
-                : 'text-gray-600 hover:bg-gray-100'
-            }`}
-            title="Toggle grid overlay"
-          >
-            <Grid3x3 className="w-5 h-5" />
-          </button>
-        )}
 
         <button
           onClick={onThemeClick}

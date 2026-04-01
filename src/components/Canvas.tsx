@@ -7,10 +7,9 @@ interface CanvasProps {
   sections: PageSection[];
   onSectionsChange: (sections: PageSection[]) => void;
   onEditSection: (section: PageSection) => void;
-  showGrid: boolean;
 }
 
-export default function Canvas({ sections, onSectionsChange, onEditSection, showGrid }: CanvasProps) {
+export default function Canvas({ sections, onSectionsChange, onEditSection }: CanvasProps) {
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
 
   const handleDragStart = (index: number) => {
@@ -245,7 +244,7 @@ export default function Canvas({ sections, onSectionsChange, onEditSection, show
   }
 
   return (
-    <div className={`flex-1 bg-gray-50 overflow-y-auto scroll-smooth ${showGrid ? 'grid-overlay' : ''}`}>
+    <div className="flex-1 bg-gray-50 overflow-y-auto scroll-smooth">
       <div className="max-w-6xl mx-auto py-8">
         {sections.map((section, index) => {
           const template = sectionTemplates.find(t => t.id === section.templateId);
@@ -313,13 +312,6 @@ export default function Canvas({ sections, onSectionsChange, onEditSection, show
         })}
       </div>
 
-      <style>{`
-        .grid-overlay {
-          background-image:
-            repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(59, 130, 246, 0.1) 79px, rgba(59, 130, 246, 0.1) 80px),
-            repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(59, 130, 246, 0.1) 79px, rgba(59, 130, 246, 0.1) 80px);
-        }
-      `}</style>
     </div>
   );
 }

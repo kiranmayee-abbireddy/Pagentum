@@ -27,7 +27,6 @@ function App() {
   const [showThemeSelector, setShowThemeSelector] = useState(false);
   const [showExportModal, setShowExportModal] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
-  const [showGrid, setShowGrid] = useState(false);
 
   useEffect(() => {
     const savedProject = loadProject();
@@ -119,8 +118,6 @@ function App() {
         onPreviewClick={() => setShowPreview(!showPreview)}
         onExportClick={() => setShowExportModal(true)}
         onSaveClick={handleSave}
-        showGrid={showGrid}
-        onGridToggle={() => setShowGrid(!showGrid)}
         isPreviewMode={showPreview}
       />
 
@@ -135,7 +132,6 @@ function App() {
           sections={project.sections}
           onSectionsChange={handleSectionsChange}
           onEditSection={handleEditSection}
-          showGrid={showGrid}
         />
       </div>
 
