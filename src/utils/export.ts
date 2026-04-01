@@ -25,8 +25,8 @@ function getSectionStyleRules(section: PageSection) {
     rules += `background: linear-gradient(${angle}deg, ${start} 0%, ${end} ${intensity}%) !important; `;
   } else if (bgType === 'image') {
     if (layout.backgroundImage) {
-      // Use shorthand for maximum override power
-      rules += `background: url("${layout.backgroundImage}") center / cover no-repeat !important; `;
+      // Use single quotes for url() to avoid breaking the style="" attribute
+      rules += `background: url('${layout.backgroundImage}') center / cover no-repeat !important; `;
     } else if (layout.backgroundColor) {
       rules += `background: ${layout.backgroundColor} !important; `;
     }
