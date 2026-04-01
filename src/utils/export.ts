@@ -151,8 +151,8 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
               ${bgHTML}
               <div class="max-w-7xl mx-auto" style="position: relative; z-index: 1;">
                 <div class="text-center mb-16">
-                  <h2 style="text-align:center;" class="text-3xl lg:text-4xl font-bold mb-4">${section.content.title}</h2>
-                  <p style="margin-bottom:50px; text-align:center;" class="text-xl opacity-80 max-w-2xl mx-auto">${section.content.subtitle}</p>
+                  <h2 class="text-3xl lg:text-4xl font-bold mb-4 text-center">${section.content.title}</h2>
+                  <p class="text-xl opacity-80 max-w-2xl mx-auto text-center mb-12">${section.content.subtitle}</p>
                 </div>
                 
                 <div class="bookshelf-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 items-start justify-items-center">
@@ -205,8 +205,8 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
               ${bgHTML}
               <div class="max-w-7xl mx-auto" style="position: relative; z-index: 1;">
                 <div class="text-center mb-16">
-                  <h2 style="text-align:center;" class="text-3xl lg:text-4xl font-bold mb-4">${section.content.title}</h2>
-                  <p style="margin-bottom:50px; text-align:center;" class="text-xl opacity-80 max-w-2xl mx-auto">${section.content.subtitle}</p>
+                  <h2 class="text-3xl lg:text-4xl font-bold mb-4 text-center">${section.content.title}</h2>
+                  <p class="text-xl opacity-80 max-w-2xl mx-auto text-center mb-12">${section.content.subtitle}</p>
                 </div>
                 <div class="cards">
                   ${displayImages.map((img, idx) => {
@@ -241,8 +241,8 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
               ${bgHTML}
               <div class="max-w-7xl mx-auto" style="position: relative; z-index: 1;">
                 <div class="text-center mb-12">
-                  <h2 class="text-3xl lg:text-4xl font-bold mb-4">${section.content.title}</h2>
-                  <p class="text-xl opacity-80 max-w-2xl mx-auto">${section.content.subtitle}</p>
+                  <h2 class="text-3xl lg:text-4xl font-bold mb-4 text-center">${section.content.title}</h2>
+                  <p class="text-xl opacity-80 max-w-2xl mx-auto text-center mb-12">${section.content.subtitle}</p>
                 </div>
                 <div class="rail-grid">
                   ${displayImages.map((img, idx) => {
@@ -284,8 +284,8 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
               ${bgHTML}
               <div class="max-w-7xl mx-auto" style="position: relative; z-index: 1;">
                 <div class="text-center mb-12">
-                  <h2 class="text-3xl lg:text-4xl font-bold mb-4">${section.content.title}</h2>
-                  <p class="text-xl opacity-80">${section.content.subtitle}</p>
+                  <h2 class="text-3xl lg:text-4xl font-bold mb-4 text-center">${section.content.title}</h2>
+                  <p class="text-xl opacity-80 max-w-2xl mx-auto text-center mb-12">${section.content.subtitle}</p>
                 </div>
                 <div class="slider" style="--width: 280px; --height: 360px; --quantity: ${quantity};">
                   <div class="list">
@@ -320,7 +320,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
       if (section.templateId === 'navbar-1') {
         const logo = section.images?.[0];
         return `
-          <header class="site-navbar shadow-sm sticky top-0 z-50" ${combinedStyle}>
+          <header class="site-navbar" ${combinedStyle}>
             <div class="nav-inner max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
               <div class="nav-brand flex items-center space-x-3">
                 ${logo ? 
@@ -386,19 +386,6 @@ ${css}
 ${sectionsHTML}
 </body>
 </html>`;
-}
-
-function getCarouselClasses(style: string): string {
-  switch (style) {
-    case 'auto-scroll':
-      return 'flex overflow-hidden [scroll-behavior:smooth] snap-x snap-mandatory scrollbar-hide animate-auto-scroll';
-    case 'rail':
-      return 'flex overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4';
-    case 'grid':
-      return 'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6';
-    default:
-      return 'flex overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4';
-  }
 }
 
 export function downloadFile(filename: string, content: string) {
