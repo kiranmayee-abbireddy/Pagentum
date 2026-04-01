@@ -77,6 +77,10 @@ export const generateCSS = (theme: ThemeConfig): string => {
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: var(--font-family);
   font-size: var(--font-size);

@@ -91,6 +91,21 @@ export function generateHTML(sections: PageSection[], theme: ThemeConfig): strin
 </head>
 <body>
 ${sectionsHTML}
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href && href.startsWith('#section-')) {
+          e.preventDefault();
+          const targetId = href.slice(1);
+          const targetElement = document.getElementById(targetId) || document.querySelector('[id="'+targetId+'"]');
+          if (targetElement) {
+            targetElement.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      });
+    });
+  </script>
 </body>
 </html>`;
 }
@@ -112,7 +127,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
         const buttonHref = (section.layout as any)?.buttonHref || '#';
         
         return `
-          <section class="hero-advanced py-20 px-4" ${combinedStyle}>
+          <section id="section-${section.id}" class="hero-advanced py-20 px-4" ${combinedStyle}>
             ${bgHTML}
             <div class="hero-inner max-w-7xl mx-auto flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-16 ${
               variant === 'image-left' ? 'lg:flex-row' : 'lg:flex-row-reverse'
@@ -147,7 +162,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
 
         if (carouselStyle === 'grid') {
           return `
-            <section class="bookshelf-section py-20 px-4" ${combinedStyle}>
+            <section id="section-${section.id}" class="bookshelf-section py-20 px-4" ${combinedStyle}>
               ${bgHTML}
               <div class="max-w-7xl mx-auto" style="position: relative; z-index: 1;">
                 <div class="text-center mb-16">
@@ -201,7 +216,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
         }
         if (carouselStyle === 'glowing') {
           return `
-            <section class="glowing-bookshelf py-20 px-4" ${combinedStyle}>
+            <section id="section-${section.id}" class="glowing-bookshelf py-20 px-4" ${combinedStyle}>
               ${bgHTML}
               <div class="max-w-7xl mx-auto" style="position: relative; z-index: 1;">
                 <div class="text-center mb-16">
@@ -237,7 +252,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
         }
         if (carouselStyle === 'rail') {
           return `
-            <section class="product-carousel py-20 px-4" ${combinedStyle}>
+            <section id="section-${section.id}" class="product-carousel py-20 px-4" ${combinedStyle}>
               ${bgHTML}
               <div class="max-w-7xl mx-auto" style="position: relative; z-index: 1;">
                 <div class="text-center mb-12">
@@ -280,7 +295,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
         if (carouselStyle === 'auto-scroll') {
           const quantity = Math.max(1, displayImages.length || 1);
           return `
-            <section class="product-carousel py-20 px-4" ${combinedStyle}>
+            <section id="section-${section.id}" class="product-carousel py-20 px-4" ${combinedStyle}>
               ${bgHTML}
               <div class="max-w-7xl mx-auto" style="position: relative; z-index: 1;">
                 <div class="text-center mb-12">
@@ -332,6 +347,24 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                 <span class="text-xl font-bold">${section.content.siteName}</span>
               </div>
               <nav class="nav-links flex space-x-6">
+                ${(() => {
+                  let heroCount = 0;
+                  return sections
+                    .filter(s => s.templateId !== 'navbar-1' && s.templateId !== 'footer-1')
+                    .map(s => {
+                      let label = s.content.title;
+                      if (s.templateId.includes('hero')) {
+                        heroCount++;
+                        if (heroCount === 1) label = 'Home';
+                        else if (heroCount === 2) label = 'About';
+                        else return null;
+                      }
+                      if (!label) return null;
+                      return `<a href="#section-${s.id}" class="hover:text-blue-600 font-medium transition-colors" style="color: inherit;">${label}</a>`;
+                    })
+                    .filter(Boolean)
+                    .join('');
+                })()}
                 ${[
                   { label: 'nav1Label', href: 'nav1Href' },
                   { label: 'nav2Label', href: 'nav2Href' },
@@ -347,6 +380,42 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
         `;
       }
 
+      if (section.templateId === 'footer-1') {
+        const copyright = section.content.copyright || `© ${new Date().getFullYear()} ${theme.name || 'Pagentum'}. All rights reserved.`;
+        return `
+          <footer class="footer-section py-12" ${combinedStyle}>
+            <div class="footer-content max-w-7xl mx-auto px-4 text-center">
+              <div class="footer-links flex flex-wrap justify-center gap-6 mb-8">
+                ${(() => {
+                  let heroCount = 0;
+                  return sections
+                    .filter(s => s.templateId !== 'navbar-1' && s.templateId !== 'footer-1')
+                    .map(s => {
+                      let label = s.content.title;
+                      if (s.templateId.includes('hero')) {
+                        heroCount++;
+                        if (heroCount === 1) label = 'Home';
+                        else if (heroCount === 2) label = 'About';
+                        else return null;
+                      }
+                      if (!label) return null;
+                      return `<a href="#section-${s.id}" class="hover:text-primary transition-colors" style="color: inherit; text-decoration: none;">${label}</a>`;
+                    })
+                    .filter(Boolean)
+                    .join('');
+                })()}
+                ${['link1', 'link2', 'link3', 'link4'].map(key => {
+                  const label = section.content[key as keyof typeof section.content];
+                  const href = section.content[`${key}Href` as keyof typeof section.content] || '#';
+                  return label ? `<a href="${href}" class="hover:text-primary transition-colors" style="color: inherit; text-decoration: none;">${label}</a>` : '';
+                }).filter(Boolean).join('')}
+              </div>
+              <p class="footer-copyright opacity-80">${copyright}</p>
+            </div>
+          </footer>
+        `;
+      }
+
       // Default rendering
       const template = sectionTemplates.find(t => t.id === section.templateId);
       if (!template) return '';
@@ -357,7 +426,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
       
       // Inject styles into the main container if possible
       if (html.includes('<section')) {
-        html = html.replace('<section', `<section ${combinedStyle}`);
+        html = html.replace('<section', `<section id="section-${section.id}" ${combinedStyle}`);
         if (bgHTML) {
           const firstTagEnd = html.indexOf('>') + 1;
           html = html.slice(0, firstTagEnd) + bgHTML + html.slice(firstTagEnd);
@@ -384,6 +453,21 @@ ${css}
 </head>
 <body>
 ${sectionsHTML}
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href && href.startsWith('#section-')) {
+          e.preventDefault();
+          const targetId = href.slice(1);
+          const targetElement = document.getElementById(targetId) || document.querySelector('[id="'+targetId+'"]');
+          if (targetElement) {
+            targetElement.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      });
+    });
+  </script>
 </body>
 </html>`;
 }

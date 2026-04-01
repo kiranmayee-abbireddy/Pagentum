@@ -79,11 +79,11 @@ export const sectionTemplates: SectionTemplate[] = [
     defaultContent: {
       siteName: 'My Brand',
       logoAlt: 'Brand logo',
-      nav1Label: 'Home',
+      nav1Label: '',
       nav1Href: '#',
-      nav2Label: 'Products',
+      nav2Label: '',
       nav2Href: '#',
-      nav3Label: 'Contact',
+      nav3Label: '',
       nav3Href: '#'
     }
   },
@@ -274,10 +274,10 @@ export const sectionTemplates: SectionTemplate[] = [
       </footer>
     `,
     defaultContent: {
-      link1: 'About',
-      link2: 'Features',
-      link3: 'Pricing',
-      link4: 'Contact',
+      link1: '',
+      link2: '',
+      link3: '',
+      link4: '',
       copyright: '© 2024 Your Company. All rights reserved.'
     }
   }

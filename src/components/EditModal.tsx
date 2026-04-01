@@ -181,10 +181,12 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
               <section>
                 <div className="flex items-center space-x-2 mb-4 border-b pb-2">
                   <TypeIcon className="w-4 h-4 text-gray-400" />
-                  <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Text Content</h3>
+                  <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest text-left">Text Content</h3>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-2">
-                  {Object.entries(template.defaultContent).map(([key, defaultValue]) => (
+                  {Object.entries(template.defaultContent)
+                    .filter(([key]) => !key.includes('nav') && !key.includes('link')) // Filter out nav/footer links
+                    .map(([key, defaultValue]) => (
                     <div key={key} className={`${(key.includes('Description') || key.includes('quote')) ? 'md:col-span-2' : ''} space-y-1`}>
                       <label className="text-[9px] font-bold text-gray-400 uppercase tracking-wider ml-1">
                         {key.replace(/([A-Z])/g, ' $1').trim()}
@@ -209,12 +211,64 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                 </div>
               </section>
 
+              {/* Custom Links Manager */}
+              {['navbar-1', 'footer-1'].includes(section.templateId) && (
+                <section>
+                   <div className="flex items-center space-x-2 mb-4 border-b pb-2">
+                    <MousePointer2 className="w-4 h-4 text-gray-400" />
+                    <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest text-left">Additional Links</h3>
+                  </div>
+                  <div className="space-y-4">
+                    {[1, 2, 3, 4, 5, 6].map(i => {
+                      const prefix = section.templateId === 'navbar-1' ? 'nav' : 'link';
+                      const labelKey = section.templateId === 'navbar-1' ? `${prefix}${i}Label` : `link${i}`;
+                      const hrefKey = section.templateId === 'navbar-1' ? `${prefix}${i}Href` : `link${i}Href`;
+                      
+                      const isActive = !!content[labelKey];
+                      if (!isActive && i > 1 && !content[`${prefix}${i-1}Label`] && !content[`link${i-1}`]) return null;
+
+                      return (
+                        <div key={i} className="flex flex-col space-y-2 p-4 bg-gray-50/50 rounded-xl border border-gray-100 hover:border-gray-200 transition-colors">
+                          <div className="flex items-center justify-between">
+                            <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Link {i}</span>
+                            {isActive && (
+                              <button 
+                                onClick={() => setContent(prev => ({ ...prev, [labelKey]: '', [hrefKey]: '#' }))}
+                                className="text-red-500 hover:text-red-600 transition-colors"
+                              >
+                                <Trash2 className="w-3 h-3" />
+                              </button>
+                            )}
+                          </div>
+                          <div className="grid grid-cols-2 gap-3">
+                            <input
+                              type="text"
+                              placeholder="Label (e.g. Help)"
+                              className="w-full p-2.5 bg-white border border-gray-200 rounded-lg text-[10px] font-bold focus:border-blue-400 outline-none"
+                              value={content[labelKey] || ''}
+                              onChange={handleContentChange(labelKey)}
+                            />
+                            <input
+                              type="text"
+                              placeholder="Link (e.g. #support)"
+                              className="w-full p-2.5 bg-white border border-gray-200 rounded-lg text-[10px] font-bold focus:border-blue-400 outline-none"
+                              value={content[hrefKey] || ''}
+                              onChange={handleContentChange(hrefKey)}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </section>
+              )}
+
               {/* Product Entries */}
               {section.templateId === 'product-carousel' && images.length > 0 && (
                 <section>
                   <div className="flex items-center space-x-2 mb-4 border-b pb-2">
                     <Layout className="w-4 h-4 text-gray-400" />
-                    <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Product Catalog</h3>
+                    <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest text-left">Product Catalog</h3>
                   </div>
                   <div className="space-y-3">
                     {images.slice(0, layout.imageCount || images.length).map((_, idx) => {

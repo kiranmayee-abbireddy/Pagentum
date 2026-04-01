@@ -67,16 +67,45 @@ export default function Canvas({ sections, onSectionsChange, onEditSection, show
       html = html.replace('class="nav-inner"', 'class="nav-inner flex items-center justify-between px-2 py-1"');
       html = html.replace('class="nav-brand"', 'class="nav-brand flex items-center space-x-2"');
       html = html.replace('class="nav-links"', 'class="nav-links flex space-x-3"');
-
       const navLinks = [
-        { label: 'nav1Label', href: 'nav1Href' },
-        { label: 'nav2Label', href: 'nav2Href' },
-        { label: 'nav3Label', href: 'nav3Href' }
-      ].map(nav => {
-        const label = section.content[nav.label as keyof typeof section.content];
-        const href = section.content[nav.href as keyof typeof section.content];
-        return label ? `<a href="${href || '#'}" class="text-gray-500 hover:text-blue-600 font-bold text-[8px] uppercase tracking-wider">${label}</a>` : '';
-      }).join('');
+        ...(() => {
+          let heroCount = 0;
+          return sections
+            .filter(s => s.templateId !== 'navbar-1' && s.templateId !== 'footer-1')
+            .map(s => {
+              let label = s.content.title;
+              if (s.templateId.includes('hero')) {
+                heroCount++;
+                if (heroCount === 1) label = 'Home';
+                else if (heroCount === 2) label = 'About';
+                else return null;
+              }
+              if (!label) return null;
+              return `
+                <a href="#section-${s.id}" 
+                   onClick="document.getElementById('section-${s.id}')?.scrollIntoView({ behavior: 'smooth' })" 
+                   class="text-gray-500 hover:text-blue-600 font-bold text-[8px] uppercase tracking-wider"
+                   style="cursor: pointer;"
+                >
+                  ${label}
+                </a>
+              `;
+            })
+            .filter(Boolean);
+        })(),
+        ...[
+          { label: 'nav1Label', href: 'nav1Href' },
+          { label: 'nav2Label', href: 'nav2Href' },
+          { label: 'nav3Label', href: 'nav3Href' },
+          { label: 'nav4Label', href: 'nav4Href' },
+          { label: 'nav5Label', href: 'nav5Href' },
+          { label: 'nav6Label', href: 'nav6Href' }
+        ].map(nav => {
+          const label = section.content[nav.label as keyof typeof section.content];
+          const href = section.content[nav.href as keyof typeof section.content];
+          return label ? `<a href="${href || '#'}" class="text-gray-500 hover:text-blue-600 font-bold text-[8px] uppercase tracking-wider">${label}</a>` : '';
+        })
+      ].join('');
 
       html = html.replace('{{navLinksHTML}}', navLinks);
     }
@@ -158,6 +187,42 @@ export default function Canvas({ sections, onSectionsChange, onEditSection, show
       html = html.replace('{{productsHTML}}', productsHTML);
     }
 
+    if (section.templateId === 'footer-1') {
+      const links = [
+        ...(() => {
+          let heroCount = 0;
+          return sections
+            .filter(s => s.templateId !== 'navbar-1' && s.templateId !== 'footer-1')
+            .map(s => {
+              let label = s.content.title;
+              if (s.templateId.includes('hero')) {
+                heroCount++;
+                if (heroCount === 1) label = 'Home';
+                else if (heroCount === 2) label = 'About';
+                else return null;
+              }
+              if (!label) return null;
+              return `
+                <a href="#section-${s.id}" 
+                   onClick="document.getElementById('section-${s.id}')?.scrollIntoView({ behavior: 'smooth' })" 
+                   class="text-gray-500 hover:text-blue-600 font-bold text-[8px] uppercase tracking-wider mx-2"
+                   style="cursor: pointer;"
+                >
+                  ${label}
+                </a>
+              `;
+            })
+            .filter(Boolean);
+        })(),
+        ...['link1', 'link2', 'link3', 'link4', 'link5', 'link6'].map(key => {
+          const label = section.content[key as keyof typeof section.content];
+          return label ? `<a href="#" class="text-gray-500 hover:text-blue-600 font-bold text-[8px] uppercase tracking-wider mx-2">${label}</a>` : '';
+        })
+      ].join('');
+
+      html = html.replace(/<div class="footer-links">[\s\S]*?<\/div>/, `<div class="footer-links flex flex-wrap justify-center py-2">${links}</div>`);
+    }
+
     // Standard replacements
     Object.entries(section.content).forEach(([key, value]) => {
       html = html.replace(new RegExp(`{{${key}}}`, 'g'), value);
@@ -180,13 +245,14 @@ export default function Canvas({ sections, onSectionsChange, onEditSection, show
   }
 
   return (
-    <div className={`flex-1 bg-gray-50 overflow-y-auto ${showGrid ? 'grid-overlay' : ''}`}>
+    <div className={`flex-1 bg-gray-50 overflow-y-auto scroll-smooth ${showGrid ? 'grid-overlay' : ''}`}>
       <div className="max-w-6xl mx-auto py-8">
         {sections.map((section, index) => {
           const template = sectionTemplates.find(t => t.id === section.templateId);
           return (
             <div
               key={section.id}
+              id={`section-${section.id}`}
               draggable
               onDragStart={() => handleDragStart(index)}
               onDragOver={(e) => handleDragOver(e, index)}
