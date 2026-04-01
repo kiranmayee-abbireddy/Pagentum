@@ -60,6 +60,12 @@ export interface SectionLayout {
   gradientEnabled?: boolean;
   gradientStart?: string;
   gradientEnd?: string;
+  gradientDirection?: string;
+  gradientDomination?: number;
+  backgroundType?: 'plain' | 'gradient' | 'image' | 'video';
+  backgroundImage?: string;
+  backgroundVideo?: string;
+  overlayOpacity?: number;
   imageCount?: number;
 }
 

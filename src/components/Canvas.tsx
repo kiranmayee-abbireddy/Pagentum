@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { GripVertical, Trash2, Edit3 } from 'lucide-react';
+import { GripVertical, Trash2, Edit3, Palette, Video, Image as ImageIcon } from 'lucide-react';
 import { PageSection } from '../types';
 import { sectionTemplates } from '../data/templates';
 
@@ -197,8 +197,16 @@ export default function Canvas({ sections, onSectionsChange, onEditSection, show
 
               <div className="border-2 border-dashed border-transparent group-hover:border-blue-300 rounded-xl overflow-hidden bg-white shadow-md transition-all duration-200 hover:shadow-lg">
                 <div className="absolute top-3 right-3 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-200">
-                  <span className="px-3 py-1.5 bg-blue-600 text-white text-xs font-medium rounded-full shadow-md">
+                  <span className="px-3 py-1.5 bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest rounded-full shadow-md flex items-center gap-1.5">
                     {template?.name}
+                    {section.layout?.backgroundType && section.layout?.backgroundType !== 'plain' && (
+                      <span className="flex items-center gap-1 ml-1 pl-1.5 border-l border-white/20 text-[8px] font-bold text-blue-200">
+                        {section.layout.backgroundType === 'gradient' && <Palette className="w-2.5 h-2.5" />}
+                        {section.layout.backgroundType === 'video' && <Video className="w-2.5 h-2.5" />}
+                        {section.layout.backgroundType === 'image' && <ImageIcon className="w-2.5 h-2.5" />}
+                        {section.layout.backgroundType.toUpperCase()}
+                      </span>
+                    )}
                   </span>
                   <div className="flex items-center gap-1 bg-white/90 backdrop-blur-sm rounded-lg p-1 shadow-md">
                     <button

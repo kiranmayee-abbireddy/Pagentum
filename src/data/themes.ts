@@ -154,8 +154,8 @@ div[style*="background"] {
 
 /* Ensure content stays centered within broken-out sections */
 .hero-inner, 
-.hero-advanced > div, 
-section[style*="background"] > div:not(.product-track),
+.hero-advanced > div:not(.video-background-container, .overlay), 
+section[style*="background"] > div:not(.product-track, .video-background-container, .overlay),
 div[style*="background"] > section {
   max-width: 1200px !important;
   margin: 0 auto !important;
@@ -163,6 +163,8 @@ div[style*="background"] > section {
   padding-left: calc(var(--spacing) * 2) !important;
   padding-right: calc(var(--spacing) * 2) !important;
   box-sizing: border-box !important;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-advanced {
@@ -396,10 +398,9 @@ div[style*="background"] > section {
   font-size: calc(var(--font-size) * 0.9);
   opacity: 0.8;
 }
-  .hero-advanced {
-  padding: calc(var(--spacing) * 5) calc(var(--spacing) * 1);
-  max-width: 80rem;
-  margin: 0 auto;
+.hero-advanced {
+  padding: calc(var(--spacing) * 5) 0;
+  width: 100%;
 }
 
 .hero-inner {
