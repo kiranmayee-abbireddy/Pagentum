@@ -114,8 +114,8 @@ function App() {
   const [isHeaderCollapsed, setIsHeaderCollapsed] = useState(false);
 
   return (
-    <div className="h-screen flex flex-col bg-[#f8fafc]">
-      <div className="bg-white">
+    <div className="h-screen flex flex-col bg-gradient-to-br from-[#f8fafc] via-white to-blue-50/50">
+      <div className="bg-white/80 backdrop-blur-md border-b border-white/40">
         <TopBar
           onThemeClick={() => setShowThemeSelector(true)}
           onPreviewClick={() => setShowPreview(!showPreview)}
@@ -127,7 +127,7 @@ function App() {
         />
 
         {!showPreview && (
-          <div className={`bg-gradient-to-br from-blue-50 via-white to-indigo-50 overflow-hidden transition-all duration-500 ease-in-out ${isHeaderCollapsed ? 'max-h-0' : 'max-h-[500px]'
+          <div className={`bg-gradient-to-br from-blue-50/40 via-white to-indigo-50/40 overflow-hidden transition-all duration-500 ease-in-out ${isHeaderCollapsed ? 'max-h-0' : 'max-h-[500px]'
             }`}>
             <div className="max-w-5xl mx-auto w-full px-6 py-12">
               <h2 className="text-4xl font-black text-gray-900 tracking-tight mb-8">
@@ -140,9 +140,11 @@ function App() {
       </div>
 
       <div className="flex-1 flex overflow-hidden">
-        {!showPreview && (
-          <SectionLibrary onAddSection={handleAddSection} />
-        )}
+        <div className="w-72 bg-white/40 backdrop-blur-xl border-r border-white/20 overflow-y-auto">
+          {!showPreview && (
+            <SectionLibrary onAddSection={handleAddSection} />
+          )}
+        </div>
 
         <Canvas
           sections={project.sections}

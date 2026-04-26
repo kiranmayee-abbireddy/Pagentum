@@ -9,7 +9,7 @@ export default function SectionLibrary({ onAddSection }: SectionLibraryProps) {
   const categories = Array.from(new Set(sectionTemplates.map(t => t.category)));
 
   return (
-    <div className="w-72 bg-white overflow-y-auto">
+    <div className="w-72 bg-gradient-to-br from-slate-50/30 via-white to-blue-50/30 backdrop-blur-xl overflow-y-auto">
       <div className="p-4">
         <h2 className="text-lg font-semibold text-gray-900">Section Library</h2>
         <p className="text-sm text-gray-500 mt-1">Drag or click to add</p>
@@ -31,7 +31,7 @@ export default function SectionLibrary({ onAddSection }: SectionLibraryProps) {
                     onClick={() => onAddSection(template.id)}
                     className="w-full text-left p-3 hover:bg-blue-50 rounded-lg border-2 border-transparent hover:border-blue-100 transition-all group"
                   >
-                    <div className="flex items-start justify-between">
+                    <div className="flex-1 flex items-center justify-center bg-transparent">
                       <div className="flex-1">
                         <div className="font-medium text-gray-900 text-sm mb-1 group-hover:text-blue-700">
                           {template.name}

@@ -136,7 +136,7 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
       html = html.replace('class="pricing-grid"', 'class="pricing-grid grid grid-cols-3 gap-3 px-2 py-4"');
       html = html.replace(/class="pricing-card"/g, 'class="pricing-card p-3 bg-gray-50 rounded-xl border border-gray-100 flex flex-col items-center"');
       html = html.replace('class="pricing-card pricing-featured"', 'class="pricing-card p-3 bg-blue-50 rounded-xl border border-blue-200 flex flex-col items-center scale-105 shadow-sm"');
-      
+
       // Inline typography scaling for editor
       html = html.replace(/class="pricing-tier"/g, 'class="font-bold text-[10px] text-gray-900 mb-1"');
       html = html.replace(/class="pricing-price"/g, 'class="text-xs font-black text-blue-600 mb-2"');
@@ -233,7 +233,7 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
 
   if (sections.length === 0) {
     return (
-      <div className="flex-1 flex items-center justify-center bg-gray-50">
+      <div className="flex-1 flex items-center justify-center bg-transparent">
         <div className="text-center">
           <div className="text-6xl mb-4">🌪️</div>
           <h3 className="text-xl font-semibold text-gray-700 mb-2">Start Building Your Page</h3>
@@ -244,7 +244,7 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
   }
 
   return (
-    <div className="flex-1 bg-gray-50 overflow-y-auto scroll-smooth">
+    <div className="flex-1 overflow-y-auto scroll-smooth bg-transparent">
       <div className="max-w-6xl mx-auto py-8">
         {sections.map((section, index) => {
           const template = sectionTemplates.find(t => t.id === section.templateId);
