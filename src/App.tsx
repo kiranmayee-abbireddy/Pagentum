@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus } from 'lucide-react';
+import { Plus, ChevronUp, ChevronDown } from 'lucide-react';
 import TopBar from './components/TopBar';
 import InputBar from './components/InputBar';
 import SectionLibrary from './components/SectionLibrary';
@@ -159,7 +159,7 @@ function App() {
 
   return (
     <div className="h-screen flex flex-col bg-gradient-to-br from-[#f8fafc] via-white to-blue-50/50">
-      <div className="bg-white/80 backdrop-blur-md border-b border-white/40">
+      <div className="bg-white/80 backdrop-blur-md border-b border-white/40 relative z-20">
         <TopBar
           onThemeClick={() => setShowThemeSelector(true)}
           onPreviewClick={() => setShowPreview(!showPreview)}
@@ -167,8 +167,6 @@ function App() {
           onSaveClick={handleSave}
           onProjectsClick={() => setShowProjectsModal(true)}
           isPreviewMode={showPreview}
-          isHeaderCollapsed={isHeaderCollapsed}
-          onCollapseToggle={() => setIsHeaderCollapsed(!isHeaderCollapsed)}
         />
 
         {!showPreview && (
@@ -180,6 +178,18 @@ function App() {
               </h2>
               <InputBar onGenerate={handleGenerate} onImport={handleImport} />
             </div>
+          </div>
+        )}
+
+        {!showPreview && (
+          <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 flex justify-center z-30">
+            <button 
+              onClick={() => setIsHeaderCollapsed(!isHeaderCollapsed)}
+              className="bg-white border border-gray-200 text-gray-400 hover:text-blue-600 shadow-sm rounded-full p-1 transition-all hover:scale-110 hover:shadow-md flex items-center justify-center"
+              title={isHeaderCollapsed ? "Show magic bar" : "Hide magic bar"}
+            >
+              {isHeaderCollapsed ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
+            </button>
           </div>
         )}
       </div>

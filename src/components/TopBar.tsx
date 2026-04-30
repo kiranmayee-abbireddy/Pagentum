@@ -1,4 +1,4 @@
-import { Palette, Eye, Download, Save, Sparkles, ChevronUp, ChevronDown, FolderOpen } from 'lucide-react';
+import { Palette, Eye, Download, Save, Sparkles, FolderOpen } from 'lucide-react';
 
 interface TopBarProps {
   onThemeClick: () => void;
@@ -7,8 +7,6 @@ interface TopBarProps {
   onSaveClick: () => void;
   onProjectsClick: () => void;
   isPreviewMode: boolean;
-  isHeaderCollapsed: boolean;
-  onCollapseToggle: () => void;
 }
 
 export default function TopBar({
@@ -17,9 +15,7 @@ export default function TopBar({
   onExportClick,
   onSaveClick,
   onProjectsClick,
-  isPreviewMode,
-  isHeaderCollapsed,
-  onCollapseToggle
+  isPreviewMode
 }: TopBarProps) {
   return (
     <div className="h-16 bg-white flex items-center justify-between px-3 sm:px-6 shadow-sm">
@@ -31,20 +27,6 @@ export default function TopBar({
         <span className="text-sm text-gray-500 hidden sm:inline">
           Whirl your ideas into pages
         </span>
-
-        {!isPreviewMode && (
-          <button 
-            onClick={onCollapseToggle}
-            className="ml-4 p-1.5 hover:bg-gray-100 rounded-lg transition-colors text-gray-500 flex items-center gap-1 text-xs font-medium"
-            title={isHeaderCollapsed ? "Show magic bar" : "Hide magic bar"}
-          >
-            {isHeaderCollapsed ? (
-              <><Sparkles className="w-4 h-4 text-blue-600" /> <ChevronDown className="w-4 h-4" /></>
-            ) : (
-              <ChevronUp className="w-4 h-4" />
-            )}
-          </button>
-        )}
       </div>
 
       <div className="flex items-center gap-1 sm:gap-2">
