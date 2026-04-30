@@ -259,31 +259,6 @@ export const sectionTemplates: SectionTemplate[] = [
     }
   },
   {
-    id: 'hero-video',
-    name: 'Hero Video',
-    category: 'hero',
-    description: 'Hero section with immersive background video and centered content',
-    html: `
-      <section class="hero-video-section relative overflow-hidden flex items-center justify-center min-h-[600px] py-24">
-        <div class="hero-content relative z-10 text-center px-4 max-w-4xl">
-          <h1 class="hero-title text-4xl md:text-6xl font-black text-white mb-6">{{title}}</h1>
-          <p class="hero-subtitle text-xl text-white/90 mb-10 max-w-2xl mx-auto">{{subtitle}}</p>
-          <button class="hero-cta bg-white text-black px-10 py-4 rounded-full font-bold hover:scale-105 transition-all shadow-xl shadow-black/20">{{ctaText}}</button>
-        </div>
-      </section>
-    `,
-    defaultContent: {
-      title: 'Experience The Future',
-      subtitle: 'Premium designs with seamless video backgrounds and high-performance streaming',
-      ctaText: 'Explore More'
-    },
-    defaultLayout: {
-      backgroundType: 'video',
-      backgroundVideo: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
-      overlayOpacity: 40
-    }
-  },
-  {
     id: 'footer-1',
     name: 'Footer',
     category: 'footer',
