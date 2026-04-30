@@ -2,6 +2,17 @@ import { PageSection, ThemeConfig } from '../types';
 import { sectionTemplates } from '../data/templates';
 import { generateCSS } from '../data/themes';
 
+function getYouTubeEmbedUrl(url: string): string {
+  if (!url) return '';
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  const match = url.match(regExp);
+  const videoId = (match && match[2].length === 11) ? match[2] : null;
+  if (videoId) {
+    return `https://www.youtube.com/embed/${videoId}`;
+  }
+  return url;
+}
+
 function getSectionStyleRules(section: PageSection) {
   const layout = section.layout || {};
   const bgType = layout.backgroundType || 'plain';
@@ -180,6 +191,30 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
             `<div class="w-full max-w-md lg:max-w-lg h-64 lg:h-80 bg-gray-200 rounded-2xl flex items-center justify-center">
                     <span class="text-gray-500">Image</span>
                   </div>`
+          }
+              </div>
+            </div>
+          </section>
+        `;
+      }
+
+      if (section.templateId === 'video-section') {
+        const variant = (section.layout as any)?.variant || 'video-right';
+        const videoUrl = section.content.videoUrl || '';
+        const embedUrl = getYouTubeEmbedUrl(videoUrl);
+
+        return `
+          <section id="section-${section.id}" class="video-section py-24 md:py-32 px-6" ${combinedStyle}>
+            ${bgHTML}
+            <div class="video-inner max-w-7xl mx-auto flex flex-col ${variant === 'video-left' ? 'lg:flex-row-reverse' : 'lg:flex-row'} items-center gap-16 lg:gap-24" style="position: relative; z-index: 1;">
+              <div class="video-text w-full lg:w-5/12 text-center ${variant === 'video-left' ? 'lg:text-right' : 'lg:text-left'}">
+                <h2 class="text-4xl lg:text-5xl font-black mb-8 leading-tight">${section.content.title}</h2>
+                <p class="text-xl opacity-90 mb-0 leading-relaxed max-w-xl ${variant === 'video-left' ? 'lg:ml-auto' : 'lg:mr-auto'}">${section.content.description}</p>
+              </div>
+              <div class="video-container w-full lg:w-7/12 aspect-video rounded-[3rem] overflow-hidden shadow-[0_40px_100px_-20px_rgba(0,0,0,0.4)] bg-black ring-12 ring-white/5">
+                ${embedUrl ?
+            `<iframe class="w-full h-full border-0" src="${embedUrl}?rel=0&showinfo=0&modestbranding=1" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>` :
+            `<div class="w-full h-full flex items-center justify-center text-gray-500 font-bold uppercase tracking-widest text-xs">Video Link Required</div>`
           }
               </div>
             </div>
@@ -395,7 +430,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                   else return null;
                 }
                 if (!label) return null;
-                return `<a href="#section-${s.id}" class="hover:text-blue-600 font-medium transition-colors" style="color: inherit;">${label}</a>`;
+                return `<a href="#section-${s.id}" class="hover:text-blue-600 font-medium transition-colors" style="color: inherit; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${label}</a>`;
               })
               .filter(Boolean)
               .join('');
@@ -445,7 +480,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                 ${['link1', 'link2', 'link3', 'link4'].map(key => {
             const label = section.content[key as keyof typeof section.content];
             const href = section.content[`${key}Href` as keyof typeof section.content] || '#';
-            return label ? `<a href="${href}" class="hover:text-primary transition-colors" style="color: inherit; text-decoration: none;">${label}</a>` : '';
+            return label ? `<a href="${href}" class="hover:text-primary transition-colors" style="color: inherit; text-decoration: none; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${label}</a>` : '';
           }).filter(Boolean).join('')}
               </div>
               <p class="footer-copyright opacity-80">${copyright}</p>

@@ -319,11 +319,27 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
             <div className="space-y-8 animate-in slide-in-from-left-2 fade-in duration-300 pb-4">
               {/* Main Layout Group */}
               <section className="space-y-6">
-                {section.templateId === 'hero-image-advanced' && (
-                  <div className="space-y-4">
-                    <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest border-b pb-2">Image Position</h3>
-                    <div className="grid grid-cols-2 gap-3">
-                      {['image-left', 'image-right'].map(v => (
+              {['hero-image-advanced', 'video-section'].includes(section.templateId) && (
+                <div className="space-y-4">
+                  <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest border-b pb-2">Layout Alignment</h3>
+                  <div className="grid grid-cols-2 gap-3">
+                    {section.templateId === 'video-section' ? (
+                      ['video-left', 'video-right'].map(v => (
+                        <button
+                          key={v}
+                          onClick={() => handleLayoutChange('variant')(v)}
+                          className={`p-4 rounded-xl border-2 transition-all flex items-center space-x-3 ${
+                            (layout.variant || 'video-right') === v
+                              ? 'border-blue-600 bg-blue-50 text-blue-700 shadow-md shadow-blue-50' 
+                              : 'border-gray-100 bg-white text-gray-300 hover:border-gray-200'
+                          }`}
+                        >
+                           <Video className="w-4 h-4" />
+                           <span className="text-[10px] font-black uppercase tracking-widest">{v.split('-')[1]}</span>
+                        </button>
+                      ))
+                    ) : (
+                      ['image-left', 'image-right'].map(v => (
                         <button
                           key={v}
                           onClick={() => handleLayoutChange('variant')(v)}
@@ -336,10 +352,11 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                            <Layout className="w-4 h-4" />
                            <span className="text-[10px] font-black uppercase tracking-widest">{v.split('-')[1]}</span>
                         </button>
-                      ))}
-                    </div>
+                      ))
+                    )}
                   </div>
-                )}
+                </div>
+              )}
 
                 <div className="p-5 bg-white rounded-xl border border-gray-100 space-y-6 shadow-sm">
                   {/* Background Mode Selector */}

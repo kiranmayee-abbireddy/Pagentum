@@ -111,6 +111,29 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
 
       html = html.replace('{{navLinksHTML}}', navLinks);
     }
+    
+    if (section.templateId === 'video-section') {
+      const variant = layout?.variant || 'video-right';
+      html = html.replace('{{variantClass}}', variant === 'video-left' ? 'lg:flex-row-reverse flex-col' : 'lg:flex-row flex-col');
+      
+      const videoUrl = section.content.videoUrl || '';
+      // Simplified preview for editor
+      html = html.replace('{{videoEmbedHTML}}', 
+        `<div class="w-full h-full bg-gray-900 rounded-xl flex flex-col items-center justify-center p-4">
+           <div class="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center mb-2">
+             <div class="w-0 h-0 border-t-[6px] border-t-transparent border-l-[10px] border-l-white border-b-[6px] border-b-transparent ml-1"></div>
+           </div>
+           <span class="text-[7px] text-white/40 font-bold uppercase tracking-widest text-center">${videoUrl ? 'Video Stream Ready' : 'Paste Video Link'}</span>
+         </div>`
+      );
+      
+      // Basic structure for editor
+      html = html.replace('class="video-inner"', 'class="video-inner flex items-center gap-4 py-2"');
+      html = html.replace('class="video-text"', 'class="video-text flex-1"');
+      html = html.replace('class="video-container"', 'class="video-container flex-1 h-28"');
+      html = html.replace('<h2>', '<h2 class="text-sm font-bold mb-1">');
+      html = html.replace('<p>', '<p class="text-[9px] text-gray-500 leading-tight">');
+    }
 
     if (section.templateId === 'hero-image-advanced') {
       const variant = layout?.variant || 'image-right';

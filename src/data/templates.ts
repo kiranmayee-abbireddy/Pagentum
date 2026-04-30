@@ -259,6 +259,33 @@ export const sectionTemplates: SectionTemplate[] = [
     }
   },
   {
+    id: 'video-section',
+    name: 'Video Showcase',
+    category: 'features',
+    description: 'Feature section with YouTube video embed and descriptive text',
+    html: `
+      <section class="video-section">
+        <div class="video-inner flex {{variantClass}}">
+          <div class="video-text">
+            <h2>{{title}}</h2>
+            <p>{{description}}</p>
+          </div>
+          <div class="video-container">
+            {{videoEmbedHTML}}
+          </div>
+        </div>
+      </section>
+    `,
+    defaultContent: {
+      title: 'Watch the Story',
+      description: 'Discover how our platform is transforming the industry with cutting-edge technology and user-centric design.',
+      videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+    },
+    defaultLayout: {
+      variant: 'video-right'
+    }
+  },
+  {
     id: 'footer-1',
     name: 'Footer',
     category: 'footer',
