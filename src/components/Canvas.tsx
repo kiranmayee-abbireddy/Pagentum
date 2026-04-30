@@ -130,7 +130,7 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
       // Basic structure for editor
       html = html.replace('class="video-inner"', 'class="video-inner flex items-center gap-4 py-2"');
       html = html.replace('class="video-text"', 'class="video-text flex-1"');
-      html = html.replace('class="video-container"', 'class="video-container flex-1 h-28"');
+      html = html.replace('class="video-container"', 'class="video-container flex-1 h-64"');
       html = html.replace('<h2>', '<h2 class="text-sm font-bold mb-1">');
       html = html.replace('<p>', '<p class="text-[9px] text-gray-500 leading-tight">');
     }

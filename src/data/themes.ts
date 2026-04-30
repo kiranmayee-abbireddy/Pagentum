@@ -100,6 +100,46 @@ section {
   padding: calc(var(--spacing) * 4) calc(var(--spacing) * 2);
 }
 
+/* --- Layout Utilities for Sections --- */
+.video-section { width: 100%; position: relative; }
+.video-inner { 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  gap: 3rem; 
+  width: 100%; 
+  max-width: 1200px; 
+  margin: 0 auto; 
+}
+
+@media (min-width: 1024px) {
+  .video-inner { flex-direction: row; gap: 6rem; }
+  .video-inner.lg\:flex-row-reverse { flex-direction: row-reverse; }
+  .video-inner.video-center { flex-direction: column; text-align: center; }
+}
+
+.video-text { flex: 1; }
+.video-container { 
+  flex: 1.5; 
+  width: 100%; 
+  aspect-ratio: 16 / 9; 
+  background: black; 
+  border-radius: 2rem; 
+  overflow: hidden;
+}
+.video-container iframe { width: 100%; height: 100%; border: 0; }
+
+.aspect-video { aspect-ratio: 16 / 9; }
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.text-center { text-align: center; }
+.w-full { width: 100%; }
+.max-w-7xl { max-width: 80rem; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+
+
 .hero-section {
   min-height: 100vh !important;
   display: flex !important;

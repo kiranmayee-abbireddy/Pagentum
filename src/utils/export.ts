@@ -206,14 +206,14 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
         return `
           <section id="section-${section.id}" class="video-section py-24 md:py-32 px-6" ${combinedStyle}>
             ${bgHTML}
-            <div class="video-inner max-w-7xl mx-auto flex flex-col ${variant === 'video-left' ? 'lg:flex-row-reverse' : 'lg:flex-row'} items-center gap-16 lg:gap-24" style="position: relative; z-index: 1;">
-              <div class="video-text w-full lg:w-5/12 text-center ${variant === 'video-left' ? 'lg:text-right' : 'lg:text-left'}">
-                <h2 class="text-4xl lg:text-5xl font-black mb-8 leading-tight">${section.content.title}</h2>
-                <p class="text-xl opacity-90 mb-0 leading-relaxed max-w-xl ${variant === 'video-left' ? 'lg:ml-auto' : 'lg:mr-auto'}">${section.content.description}</p>
+            <div class="video-inner ${variant === 'video-center' ? 'video-center' : (variant === 'video-left' ? 'lg:flex-row-reverse' : 'lg:flex-row')}" style="position: relative; z-index: 1;">
+              <div class="video-text ${variant === 'video-left' ? 'lg:text-right' : (variant === 'video-center' ? 'text-center' : 'lg:text-left')}">
+                <h2 class="text-4xl lg:text-6xl font-black mb-8 leading-tight">${section.content.title}</h2>
+                <p class="text-xl opacity-90 mb-0 leading-relaxed max-w-2xl ${variant === 'video-left' ? 'lg:ml-auto' : (variant === 'video-center' ? 'mx-auto' : 'lg:mr-auto')}">${section.content.description}</p>
               </div>
-              <div class="video-container w-full lg:w-7/12 aspect-video rounded-[3rem] overflow-hidden shadow-[0_40px_100px_-20px_rgba(0,0,0,0.4)] bg-black ring-12 ring-white/5">
+              <div class="video-container" style="${variant === 'video-center' ? 'max-width: 1000px;' : ''}">
                 ${embedUrl ?
-            `<iframe class="w-full h-full border-0" src="${embedUrl}?rel=0&showinfo=0&modestbranding=1" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>` :
+            `<iframe src="${embedUrl}?rel=0&showinfo=0&modestbranding=1" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>` :
             `<div class="w-full h-full flex items-center justify-center text-gray-500 font-bold uppercase tracking-widest text-xs">Video Link Required</div>`
           }
               </div>

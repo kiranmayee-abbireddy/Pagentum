@@ -322,20 +322,20 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
               {['hero-image-advanced', 'video-section'].includes(section.templateId) && (
                 <div className="space-y-4">
                   <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest border-b pb-2">Layout Alignment</h3>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                     {section.templateId === 'video-section' ? (
-                      ['video-left', 'video-right'].map(v => (
+                      ['video-left', 'video-right', 'video-center'].map(v => (
                         <button
                           key={v}
                           onClick={() => handleLayoutChange('variant')(v)}
-                          className={`p-4 rounded-xl border-2 transition-all flex items-center space-x-3 ${
+                          className={`p-4 rounded-xl border-2 transition-all flex flex-col items-center justify-center space-y-2 ${
                             (layout.variant || 'video-right') === v
                               ? 'border-blue-600 bg-blue-50 text-blue-700 shadow-md shadow-blue-50' 
                               : 'border-gray-100 bg-white text-gray-300 hover:border-gray-200'
                           }`}
                         >
                            <Video className="w-4 h-4" />
-                           <span className="text-[10px] font-black uppercase tracking-widest">{v.split('-')[1]}</span>
+                           <span className="text-[8px] font-black uppercase tracking-widest">{v.split('-')[1]}</span>
                         </button>
                       ))
                     ) : (
@@ -343,14 +343,14 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                         <button
                           key={v}
                           onClick={() => handleLayoutChange('variant')(v)}
-                          className={`p-4 rounded-xl border-2 transition-all flex items-center space-x-3 ${
+                          className={`p-4 rounded-xl border-2 transition-all flex flex-col items-center justify-center space-y-2 ${
                             (layout.variant || 'image-right') === v
                               ? 'border-blue-600 bg-blue-50 text-blue-700 shadow-md shadow-blue-50' 
                               : 'border-gray-100 bg-white text-gray-300 hover:border-gray-200'
                           }`}
                         >
                            <Layout className="w-4 h-4" />
-                           <span className="text-[10px] font-black uppercase tracking-widest">{v.split('-')[1]}</span>
+                           <span className="text-[8px] font-black uppercase tracking-widest">{v.split('-')[1]}</span>
                         </button>
                       ))
                     )}
