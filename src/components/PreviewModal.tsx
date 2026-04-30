@@ -37,6 +37,7 @@ export default function PreviewModal({ sections, theme, onClose }: PreviewModalP
           className="w-full h-full border-0"
           title="Page Preview"
           sandbox="allow-same-origin allow-scripts"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
         />
       </div>
     </div>

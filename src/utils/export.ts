@@ -57,6 +57,25 @@ function getSectionBackgroundHTML(section: PageSection) {
   if (layout.backgroundType === 'video' && layout.backgroundVideo) {
     const opacity = (layout.overlayOpacity ?? 30) / 100;
     const isM3U8 = layout.backgroundVideo.toLowerCase().endsWith('.m3u8');
+
+    // More robust YouTube Detection (Supports URLs and raw IDs)
+    const ytIdMatch = layout.backgroundVideo.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})|^([^"&?\/\s]{11})$/i);
+    const ytId = ytIdMatch ? (ytIdMatch[1] || ytIdMatch[2]) : null;
+
+    if (ytId) {
+      return `
+        <div class="video-background-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 0;">
+          <iframe 
+            style="position: absolute; top: 50%; left: 50%; width: 100vw; height: 56.25vw; min-height: 100vh; min-width: 177.77vh; transform: translate(-50%, -50%); pointer-events: none; border: none; z-index: 1;"
+            src="https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1&loop=1&playlist=${ytId}&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3&rel=0" 
+            allow="autoplay; fullscreen">
+          </iframe>
+          <div class="video-shield" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; cursor: default;"></div>
+          <div class="overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: black; opacity: ${opacity}; z-index: 3;"></div>
+        </div>
+      `;
+    }
+
     const videoId = `video-${section.id.replace(/[^a-zA-Z0-9]/g, '')}`;
 
     return `
