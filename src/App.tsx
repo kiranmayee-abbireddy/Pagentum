@@ -104,7 +104,8 @@ function App() {
       id: `section-${Date.now()}`,
       templateId: template.id,
       order: project.sections.length,
-      content: { ...template.defaultContent }
+      content: { ...template.defaultContent },
+      layout: { ...template.defaultLayout }
     };
 
     updateProject({

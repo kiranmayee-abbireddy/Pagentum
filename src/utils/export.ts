@@ -45,11 +45,34 @@ function getSectionBackgroundHTML(section: PageSection) {
   const layout = section.layout || {};
   if (layout.backgroundType === 'video' && layout.backgroundVideo) {
     const opacity = (layout.overlayOpacity ?? 30) / 100;
+    const isM3U8 = layout.backgroundVideo.toLowerCase().endsWith('.m3u8');
+    const videoId = `video-${section.id.replace(/[^a-zA-Z0-9]/g, '')}`;
+
     return `
       <div class="video-background-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 0; pointer-events: none;">
-        <video autoplay muted loop playsinline style="min-width: 100%; min-height: 100%; width: auto; height: auto; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); object-fit: cover;">
-          <source src="${layout.backgroundVideo}" type="video/mp4">
+        <video id="${videoId}" autoplay muted loop playsinline style="min-width: 100%; min-height: 100%; width: auto; height: auto; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); object-fit: cover;">
+          ${!isM3U8 ? `<source src="${layout.backgroundVideo}" type="video/mp4">` : ''}
         </video>
+        ${isM3U8 ? `
+        <script>
+          (function() {
+            var video = document.getElementById('${videoId}');
+            var videoSrc = '${layout.backgroundVideo}';
+            if (Hls.isSupported()) {
+              var hls = new Hls();
+              hls.loadSource(videoSrc);
+              hls.attachMedia(video);
+              hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                video.play();
+              });
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+              video.src = videoSrc;
+              video.addEventListener('loadedmetadata', function() {
+                video.play();
+              });
+            }
+          })();
+        </script>` : ''}
         <div class="overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: black; opacity: ${opacity};"></div>
       </div>
     `;
@@ -88,6 +111,7 @@ export function generateHTML(sections: PageSection[], theme: ThemeConfig): strin
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Generated Page</title>
   <link rel="stylesheet" href="style.css">
+  ${sections.some(s => s.layout?.backgroundType === 'video' && s.layout?.backgroundVideo?.toLowerCase().endsWith('.m3u8')) ? '<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>' : ''}
 </head>
 <body>
 ${sectionsHTML}
@@ -461,6 +485,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Generated Page</title>
+  ${sections.some(s => s.layout?.backgroundType === 'video' && s.layout?.backgroundVideo?.toLowerCase().endsWith('.m3u8')) ? '<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>' : ''}
   <style>
 ${css}
   </style>

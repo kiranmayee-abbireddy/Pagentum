@@ -5,6 +5,7 @@ export interface SectionTemplate {
   description: string;
   html: string;
   defaultContent: Record<string, string>;
+  defaultLayout?: SectionLayout;
 }
 
 export interface PageSection {
