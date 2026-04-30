@@ -9,7 +9,7 @@ export default function SectionLibrary({ onAddSection }: SectionLibraryProps) {
   const categories = Array.from(new Set(sectionTemplates.map(t => t.category)));
 
   return (
-    <div className="w-72 bg-gradient-to-br from-slate-50/30 via-white to-blue-50/30 backdrop-blur-xl overflow-y-auto">
+    <div className="w-full h-full bg-gradient-to-br from-slate-50/30 via-white to-blue-50/30 backdrop-blur-xl overflow-y-auto">
       <div className="p-4">
         <h2 className="text-lg font-semibold text-gray-900">Section Library</h2>
         <p className="text-sm text-gray-500 mt-1">Drag or click to add</p>
@@ -24,7 +24,7 @@ export default function SectionLibrary({ onAddSection }: SectionLibraryProps) {
               <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
                 {category}
               </h3>
-              <div className="space-y-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2">
                 {categoryTemplates.map(template => (
                   <button
                     key={template.id}

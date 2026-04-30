@@ -196,16 +196,21 @@ function App() {
 
       <div className="flex-1 flex overflow-hidden relative">
         <div className={`
-          absolute inset-y-0 left-0 z-40 w-72 bg-white/95 backdrop-blur-xl border-r border-gray-200 overflow-y-auto transform transition-transform duration-300 ease-in-out
-          ${showMobileLibrary ? 'translate-x-0 shadow-2xl' : '-translate-x-full'}
-          lg:relative lg:translate-x-0 lg:shadow-none lg:bg-white/40 lg:border-white/20
+          fixed inset-x-0 bottom-0 z-50 h-[80vh] bg-white rounded-t-3xl shadow-[0_-10px_40px_rgba(0,0,0,0.1)] border-t border-gray-100 overflow-hidden transform transition-transform duration-300 ease-out flex flex-col
+          ${showMobileLibrary ? 'translate-y-0' : 'translate-y-full'}
+          lg:relative lg:inset-auto lg:h-auto lg:w-72 lg:translate-y-0 lg:rounded-none lg:shadow-none lg:bg-white/40 lg:border-r lg:border-t-0 lg:border-white/20 lg:z-auto lg:block
         `}>
-          {!showPreview && (
-            <SectionLibrary onAddSection={(id) => {
-              handleAddSection(id);
-              setShowMobileLibrary(false);
-            }} />
-          )}
+          <div className="sticky top-0 w-full flex justify-center py-3 bg-white/95 backdrop-blur-md lg:hidden z-10 cursor-pointer" onClick={() => setShowMobileLibrary(false)}>
+            <div className="w-12 h-1.5 bg-gray-300 rounded-full"></div>
+          </div>
+          <div className="flex-1 overflow-hidden relative">
+            {!showPreview && (
+              <SectionLibrary onAddSection={(id) => {
+                handleAddSection(id);
+                setShowMobileLibrary(false);
+              }} />
+            )}
+          </div>
         </div>
 
         {showMobileLibrary && !showPreview && (
