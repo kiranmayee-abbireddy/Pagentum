@@ -83,7 +83,7 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
 
   return (
     <div className="fixed inset-0 bg-gray-900/40 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-300">
-      <div className="bg-white rounded-2xl max-w-2xl w-full h-[650px] flex flex-col shadow-2xl overflow-hidden border border-gray-100">
+      <div className="bg-white rounded-2xl max-w-2xl w-full h-[650px] max-h-[90vh] flex flex-col shadow-2xl overflow-hidden border border-gray-100">
         {/* Header */}
         <div className="flex-none px-6 py-4 bg-gray-50/50 border-b border-gray-100 flex items-center justify-between">
           <div className="flex items-center space-x-3">
