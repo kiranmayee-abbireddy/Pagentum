@@ -203,7 +203,7 @@ function App() {
           <div className="sticky top-0 w-full flex justify-center py-3 bg-white/95 backdrop-blur-md lg:hidden z-10 cursor-pointer" onClick={() => setShowMobileLibrary(false)}>
             <div className="w-12 h-1.5 bg-gray-300 rounded-full"></div>
           </div>
-          <div className="flex-1 overflow-hidden relative">
+          <div className="flex-1 min-h-0 overflow-hidden relative">
             {!showPreview && (
               <SectionLibrary onAddSection={(id) => {
                 handleAddSection(id);
