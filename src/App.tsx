@@ -174,8 +174,8 @@ function App() {
         {!showPreview && (
           <div className={`bg-gradient-to-br from-blue-50/40 via-white to-indigo-50/40 overflow-hidden transition-all duration-500 ease-in-out ${isHeaderCollapsed ? 'max-h-0' : 'max-h-[500px]'
             }`}>
-            <div className="max-w-5xl mx-auto w-full px-6 py-12">
-              <h2 className="text-4xl font-black text-gray-900 tracking-tight mb-8">
+            <div className="max-w-5xl mx-auto w-full px-4 sm:px-6 py-4 sm:py-12">
+              <h2 className="text-2xl sm:text-4xl font-black text-gray-900 tracking-tight mb-3 sm:mb-8">
                 Design with <span className="text-blue-600">Magic.</span>
               </h2>
               <InputBar onGenerate={handleGenerate} onImport={handleImport} />

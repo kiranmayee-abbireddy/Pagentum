@@ -141,8 +141,8 @@ export default function InputBar({ onGenerate, onImport }: InputBarProps) {
         </form>
 
         {isFocused && (
-          <div className="mt-2 px-14 pb-3 flex flex-wrap gap-2 animate-in fade-in slide-in-from-top-1 duration-200">
-            <span className="text-[10px] w-full text-gray-400 font-bold uppercase tracking-widest mb-1">Intelligence Suggestions</span>
+          <div className="mt-2 px-4 sm:px-16 pb-3 flex flex-wrap gap-1.5 sm:gap-2 animate-in fade-in slide-in-from-top-1 duration-200">
+            <span className="text-[10px] w-full text-gray-400 font-bold uppercase tracking-widest mb-0.5 sm:mb-1">Intelligence Suggestions</span>
             {suggestions.map((suggestion) => (
               <button
                 key={suggestion}
