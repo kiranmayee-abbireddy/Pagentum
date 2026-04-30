@@ -430,7 +430,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                   else return null;
                 }
                 if (!label) return null;
-                return `<a href="#section-${s.id}" class="hover:text-blue-600 font-medium transition-colors" style="color: inherit; font-size: 0.8rem; white-space: nowrap;">${label}</a>`;
+                return `<a href="#section-${s.id}" class="hover:text-blue-600 font-medium transition-colors" style="color: inherit; font-size: 0.9rem; white-space: nowrap;">${label}</a>`;
               })
               .filter(Boolean)
               .join('');
@@ -480,7 +480,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                 ${['link1', 'link2', 'link3', 'link4'].map(key => {
             const label = section.content[key as keyof typeof section.content];
             const href = section.content[`${key}Href` as keyof typeof section.content] || '#';
-            return label ? `<a href="${href}" class="hover:text-primary transition-colors" style="color: inherit; text-decoration: none; font-size: 0.8rem; white-space: nowrap;">${label}</a>` : '';
+            return label ? `<a href="${href}" class="hover:text-primary transition-colors" style="color: inherit; text-decoration: none; font-size: 0.9rem; white-space: nowrap;">${label}</a>` : '';
           }).filter(Boolean).join('')}
               </div>
               <p class="footer-copyright opacity-80">${copyright}</p>
