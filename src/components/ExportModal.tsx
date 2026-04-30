@@ -50,23 +50,23 @@ export default function ExportModal({ sections, theme, onClose }: ExportModalPro
           </button>
         </div>
 
-        <div className="p-6 space-y-4 overflow-y-auto">
+        <div className="p-4 sm:p-6 space-y-3 sm:space-y-4 overflow-y-auto">
           <button
             onClick={handleExportStandalone}
-            className="w-full p-4 border-2 border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all text-left group"
+            className="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all text-left group"
           >
-            <div className="flex items-start gap-4">
-              <div className="p-3 bg-blue-100 rounded-lg group-hover:bg-blue-200 transition-colors">
-                <FileText className="w-6 h-6 text-blue-600" />
+            <div className="flex items-start gap-3 sm:gap-4">
+              <div className="p-2 sm:p-3 bg-blue-100 rounded-lg group-hover:bg-blue-200 transition-colors shrink-0">
+                <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
               </div>
               <div className="flex-1">
-                <h3 className="font-semibold text-gray-900 mb-1">
+                <h3 className="text-sm sm:text-base font-semibold text-gray-900 mb-0.5 sm:mb-1">
                   Single HTML File
                 </h3>
-                <p className="text-sm text-gray-600">
+                <p className="text-xs sm:text-sm text-gray-600 leading-snug">
                   All-in-one file with inline CSS. Perfect for quick sharing or prototypes.
                 </p>
-                <div className="mt-2 flex items-center gap-2 text-sm text-blue-600 font-medium">
+                <div className="mt-1.5 sm:mt-2 flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-sm text-blue-600 font-bold uppercase tracking-wider">
                   <Download className="w-4 h-4" />
                   Download page.html
                 </div>
@@ -76,20 +76,20 @@ export default function ExportModal({ sections, theme, onClose }: ExportModalPro
 
           <button
             onClick={handleExportSeparate}
-            className="w-full p-4 border-2 border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all text-left group"
+            className="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all text-left group"
           >
-            <div className="flex items-start gap-4">
-              <div className="p-3 bg-green-100 rounded-lg group-hover:bg-green-200 transition-colors">
-                <Code className="w-6 h-6 text-green-600" />
+            <div className="flex items-start gap-3 sm:gap-4">
+              <div className="p-2 sm:p-3 bg-green-100 rounded-lg group-hover:bg-green-200 transition-colors shrink-0">
+                <Code className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" />
               </div>
               <div className="flex-1">
-                <h3 className="font-semibold text-gray-900 mb-1">
+                <h3 className="text-sm sm:text-base font-semibold text-gray-900 mb-0.5 sm:mb-1">
                   Separate HTML + CSS Files
                 </h3>
-                <p className="text-sm text-gray-600">
+                <p className="text-xs sm:text-sm text-gray-600 leading-snug">
                   Clean separation for production use. Easier to customize and maintain.
                 </p>
-                <div className="mt-2 flex items-center gap-2 text-sm text-green-600 font-medium">
+                <div className="mt-1.5 sm:mt-2 flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-sm text-green-600 font-bold uppercase tracking-wider">
                   <Download className="w-4 h-4" />
                   Download index.html + style.css
                 </div>
@@ -114,20 +114,20 @@ export default function ExportModal({ sections, theme, onClose }: ExportModalPro
                 type: 'success'
               });
             }}
-            className="w-full p-4 border-2 border-gray-200 rounded-lg hover:border-blue-300 hover:bg-yellow-50 transition-all text-left group"
+            className="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-lg hover:border-blue-300 hover:bg-yellow-50 transition-all text-left group"
           >
-            <div className="flex items-start gap-4">
-              <div className="p-3 bg-yellow-100 rounded-lg group-hover:bg-yellow-200 transition-colors">
-                <Download className="w-6 h-6 text-yellow-600" />
+            <div className="flex items-start gap-3 sm:gap-4">
+              <div className="p-2 sm:p-3 bg-yellow-100 rounded-lg group-hover:bg-yellow-200 transition-colors shrink-0">
+                <Download className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-600" />
               </div>
               <div className="flex-1">
-                <h3 className="font-semibold text-gray-900 mb-1">
+                <h3 className="text-sm sm:text-base font-semibold text-gray-900 mb-0.5 sm:mb-1">
                   Project Data (JSON)
                 </h3>
-                <p className="text-sm text-gray-600">
+                <p className="text-xs sm:text-sm text-gray-600 leading-snug">
                   Save your work-in-progress. Import this file later to continue editing.
                 </p>
-                <div className="mt-2 flex items-center gap-2 text-sm text-yellow-600 font-medium">
+                <div className="mt-1.5 sm:mt-2 flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-sm text-yellow-600 font-bold uppercase tracking-wider">
                   <Download className="w-4 h-4" />
                   Download project.json
                 </div>
@@ -135,11 +135,11 @@ export default function ExportModal({ sections, theme, onClose }: ExportModalPro
             </div>
           </button>
 
-          <div className="relative overflow-hidden bg-gradient-to-br from-blue-50/50 to-indigo-50/50 p-6 rounded-2xl border border-blue-100 shadow-sm">
+          <div className="relative overflow-hidden bg-gradient-to-br from-blue-50/50 to-indigo-50/50 p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-blue-100 shadow-sm mt-4">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-indigo-500"></div>
-            <div className="flex items-center gap-2 mb-4">
-              <Sparkles className="w-5 h-5 text-blue-600" />
-              <h4 className="font-bold text-gray-900">What's included in your export?</h4>
+            <div className="flex items-center gap-2 mb-3 sm:mb-4">
+              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 shrink-0" />
+              <h4 className="font-bold text-gray-900 text-sm sm:text-base">What's included in your export?</h4>
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
