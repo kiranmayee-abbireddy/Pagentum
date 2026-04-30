@@ -31,11 +31,10 @@ export default function ThemeSelector({ currentTheme, onThemeChange, onClose }: 
                 <button
                   key={theme.name}
                   onClick={() => onThemeChange(theme)}
-                  className={`relative p-4 border-2 rounded-lg text-left transition-all hover:shadow-lg ${
-                    isSelected
-                      ? 'border-blue-600 shadow-md'
-                      : 'border-gray-200 hover:border-gray-300'
-                  }`}
+                  className={`relative p-4 border-2 rounded-lg text-left transition-all hover:shadow-lg ${isSelected
+                    ? 'border-blue-600 shadow-md'
+                    : 'border-gray-200 hover:border-gray-300'
+                    }`}
                 >
                   {isSelected && (
                     <div className="absolute top-2 right-2 w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center">

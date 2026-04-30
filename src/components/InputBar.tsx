@@ -18,7 +18,7 @@ export default function InputBar({ onGenerate, onImport }: InputBarProps) {
     if (input.trim().length > 1) {
       const parts = input.split(/[,\n]/);
       const lastPart = parts[parts.length - 1].trim().toLowerCase();
-      
+
       if (lastPart.includes('hero')) {
         setSuggestions(['Hero, Features, Pricing', 'Hero with Image, 3 Column Features', 'Hero and Testimonials']);
       } else if (lastPart.includes('feature')) {
@@ -82,9 +82,8 @@ export default function InputBar({ onGenerate, onImport }: InputBarProps) {
 
   return (
     <div className="w-full">
-      <div className={`bg-white rounded-3xl shadow-[0_10px_40px_rgba(37,99,235,0.08)] border-2 transition-all p-2 ${
-        isFocused ? 'border-blue-200 ring-8 ring-blue-500/5 scale-[1.005]' : 'border-transparent'
-      }`}>
+      <div className={`bg-white rounded-3xl shadow-[0_10px_40px_rgba(37,99,235,0.08)] border-2 transition-all p-2 ${isFocused ? 'border-blue-200 ring-8 ring-blue-500/5 scale-[1.005]' : 'border-transparent'
+        }`}>
         <form onSubmit={handleSubmit} className="flex items-center gap-2">
           <div className="flex-1 relative group">
             <div className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center gap-2">
@@ -92,7 +91,7 @@ export default function InputBar({ onGenerate, onImport }: InputBarProps) {
                 <Sparkles className={`w-5 h-5 ${isFocused ? 'animate-pulse' : ''}`} />
               </div>
             </div>
-            
+
             <input
               ref={inputRef}
               type="text"
@@ -108,10 +107,10 @@ export default function InputBar({ onGenerate, onImport }: InputBarProps) {
               <div className="hidden md:flex items-center gap-1.5 px-2 py-1 bg-gray-50 border border-gray-100 rounded-md text-[10px] font-bold text-gray-400 uppercase tracking-tighter">
                 <Command className="w-3 h-3" /> G
               </div>
-              
+
               {input && (
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   onClick={() => setInput('')}
                   className="p-1.5 hover:bg-gray-100 rounded-full transition-colors text-gray-300"
                 >
@@ -126,7 +125,7 @@ export default function InputBar({ onGenerate, onImport }: InputBarProps) {
               <Upload className="w-6 h-6 transition-transform group-hover:-translate-y-0.5" />
               <input type="file" accept=".json" onChange={handleFileChange} className="hidden" />
             </label>
-            
+
             <button
               type="submit"
               disabled={!input.trim()}
