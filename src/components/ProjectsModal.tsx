@@ -94,7 +94,7 @@ export default function ProjectsModal({
         </div>
 
         <div className="flex-1 overflow-y-auto p-6">
-          <div className="flex gap-4 mb-6">
+          <div className="flex flex-col sm:flex-row gap-4 mb-6">
             <button
               onClick={onNewProject}
               className="flex-1 flex items-center justify-center gap-2 p-4 border-2 border-dashed border-gray-200 rounded-xl text-gray-600 hover:border-blue-500 hover:text-blue-600 hover:bg-blue-50 transition-all"
@@ -134,24 +134,24 @@ export default function ProjectsModal({
                       : 'border-gray-100 hover:border-gray-300 hover:bg-gray-50'
                   }`}
                 >
-                  <div className="flex items-center gap-4">
-                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                  <div className="flex items-center gap-4 min-w-0 flex-1">
+                    <div className={`w-10 h-10 shrink-0 rounded-lg flex items-center justify-center ${
                       project.id === currentProjectId ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-500'
                     }`} >
                       <FolderOpen className="w-5 h-5" />
                     </div>
-                    <div>
-                      <h3 className="font-medium text-gray-900">{project.name}</h3>
+                    <div className="min-w-0 flex-1">
+                      <h3 className="font-medium text-gray-900 truncate" title={project.name}>{project.name}</h3>
                       <div className="flex items-center gap-1.5 text-xs text-gray-500 mt-1">
-                        <Clock className="w-3 h-3" />
-                        <span>{new Date(project.updatedAt).toLocaleString()}</span>
+                        <Clock className="w-3 h-3 shrink-0" />
+                        <span className="truncate">{new Date(project.updatedAt).toLocaleString()}</span>
                       </div>
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1 sm:gap-2 shrink-0 ml-4">
                     {project.id === currentProjectId && (
-                      <span className="px-2.5 py-1 text-xs font-medium text-blue-700 bg-blue-100 rounded-full">
+                      <span className="hidden sm:inline-block px-2.5 py-1 text-xs font-medium text-blue-700 bg-blue-100 rounded-full">
                         Current
                       </span>
                     )}
