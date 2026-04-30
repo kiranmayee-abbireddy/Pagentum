@@ -101,7 +101,7 @@ export default function InputBar({ onGenerate, onImport }: InputBarProps) {
               onBlur={() => setTimeout(() => setIsFocused(false), 200)}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Magic generate: 'hero, features, pricing, footer'..."
-              className="w-full bg-transparent px-10 sm:px-14 py-4 sm:py-5 text-base sm:text-lg font-medium text-gray-900 border-none outline-none focus:outline-none focus:ring-0 placeholder:text-gray-400 focus:border-none ring-0 shadow-none"
+              className="w-full bg-transparent pl-14 pr-12 sm:pl-16 sm:pr-14 py-4 sm:py-5 text-base sm:text-lg font-medium text-gray-900 border-none outline-none focus:outline-none focus:ring-0 placeholder:text-gray-400 focus:border-none ring-0 shadow-none"
             />
 
             <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-3">

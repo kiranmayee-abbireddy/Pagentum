@@ -73,9 +73,6 @@ export const sectionTemplates: SectionTemplate[] = [
           <nav class="nav-links">
             {{navLinksHTML}}
           </nav>
-          <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links')?.classList.toggle('active'); this.classList.toggle('active'); document.querySelector('.mobile-overlay')?.classList.toggle('active')">
-            <span></span><span></span><span></span>
-          </button>
         </div>
       </header>
     `,
