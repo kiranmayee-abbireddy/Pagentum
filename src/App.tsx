@@ -32,7 +32,7 @@ function App() {
   const [showPreview, setShowPreview] = useState(false);
   const [showProjectsModal, setShowProjectsModal] = useState(false);
   const [showMobileLibrary, setShowMobileLibrary] = useState(false);
-  const [alertConfig, setAlertConfig] = useState<{title: string, message: string, type: 'success' | 'error' | 'warning' | 'info'} | null>(null);
+  const [alertConfig, setAlertConfig] = useState<{ title: string, message: string, type: 'success' | 'error' | 'warning' | 'info' } | null>(null);
 
   useEffect(() => {
     loadProject().then(savedProject => {
@@ -183,7 +183,7 @@ function App() {
 
         {!showPreview && (
           <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 flex justify-center z-30">
-            <button 
+            <button
               onClick={() => setIsHeaderCollapsed(!isHeaderCollapsed)}
               className="bg-white border border-gray-200 text-gray-400 hover:text-blue-600 shadow-sm rounded-full p-1 transition-all hover:scale-110 hover:shadow-md flex items-center justify-center"
               title={isHeaderCollapsed ? "Show magic bar" : "Hide magic bar"}
@@ -198,7 +198,7 @@ function App() {
         <div className={`
           fixed inset-x-0 bottom-0 z-50 h-[80vh] bg-white rounded-t-3xl shadow-[0_-10px_40px_rgba(0,0,0,0.1)] border-t border-gray-100 overflow-hidden transform transition-transform duration-300 ease-out flex flex-col
           ${showMobileLibrary ? 'translate-y-0' : 'translate-y-full'}
-          lg:relative lg:inset-auto lg:h-full lg:w-72 lg:translate-y-0 lg:rounded-none lg:shadow-none lg:bg-white/40 lg:border-r lg:border-t-0 lg:border-white/20 lg:z-auto lg:block
+          lg:relative lg:inset-auto lg:h-full lg:w-72 lg:translate-y-0 lg:rounded-none lg:shadow-none lg:bg-white/40 lg:border-r lg:border-t-0 lg:border-white/20 lg:z-auto lg:flex
         `}>
           <div className="sticky top-0 w-full flex justify-center py-3 bg-white/95 backdrop-blur-md lg:hidden z-10 cursor-pointer" onClick={() => setShowMobileLibrary(false)}>
             <div className="w-12 h-1.5 bg-gray-300 rounded-full"></div>
@@ -214,7 +214,7 @@ function App() {
         </div>
 
         {showMobileLibrary && !showPreview && (
-          <div 
+          <div
             className="absolute inset-0 bg-black/20 backdrop-blur-sm z-30 lg:hidden"
             onClick={() => setShowMobileLibrary(false)}
           />
@@ -227,7 +227,7 @@ function App() {
         />
 
         {!showPreview && (
-          <button 
+          <button
             onClick={() => setShowMobileLibrary(true)}
             className="lg:hidden absolute bottom-6 right-6 p-4 bg-blue-600 text-white rounded-full shadow-xl hover:bg-blue-700 transition-colors z-20 flex items-center justify-center group"
           >
