@@ -63,9 +63,9 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
       html = html.replace('{{logoSrc}}', logo ? logo.src : '');
 
       // Force navbar-1 inner structure for editor
-      html = html.replace('class="nav-inner"', 'class="nav-inner flex items-center justify-between px-2 py-1"');
-      html = html.replace('class="nav-brand"', 'class="nav-brand flex items-center space-x-2"');
-      html = html.replace('class="nav-links"', 'class="nav-links flex space-x-3"');
+      html = html.replace('class="nav-inner"', 'class="nav-inner flex items-center justify-between px-2 py-1 flex-wrap gap-2"');
+      html = html.replace('class="nav-brand"', 'class="nav-brand flex items-center space-x-2 shrink-0"');
+      html = html.replace('class="nav-links"', 'class="nav-links flex flex-wrap gap-1.5 sm:gap-3 justify-center"');
       const navLinks = [
         ...(() => {
           let heroCount = 0;
@@ -245,7 +245,7 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
 
   return (
     <div className="flex-1 overflow-y-auto scroll-smooth bg-transparent">
-      <div className="max-w-6xl mx-auto py-8">
+      <div className="max-w-6xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
         {sections.map((section, index) => {
           const template = sectionTemplates.find(t => t.id === section.templateId);
           return (
