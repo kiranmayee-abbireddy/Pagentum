@@ -1,13 +1,46 @@
+import { get, set, del } from 'idb-keyval';
 import { Project } from '../types';
 
-const STORAGE_KEY = 'pagentum_project';
+const STORAGE_KEY_PREFIX = 'pagentum_project_';
 const PROJECTS_LIST_KEY = 'pagentum_projects_list';
+const LAST_ACTIVE_KEY = 'pagentum_last_active';
+const MIGRATION_KEY = 'pagentum_migrated_to_idb';
 
-export function saveProject(project: Project): void {
+async function migrateFromLocalStorage() {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(project));
+    const isMigrated = await get(MIGRATION_KEY);
+    if (isMigrated) return;
 
-    const projectsList = getProjectsList();
+    const listStr = localStorage.getItem(PROJECTS_LIST_KEY);
+    if (listStr) {
+      const list = JSON.parse(listStr);
+      await set(PROJECTS_LIST_KEY, list);
+      
+      for (const p of list) {
+        const projectStr = localStorage.getItem(`${STORAGE_KEY_PREFIX}${p.id}`);
+        if (projectStr) {
+          await set(`${STORAGE_KEY_PREFIX}${p.id}`, JSON.parse(projectStr));
+        }
+      }
+    }
+    const lastActive = localStorage.getItem(LAST_ACTIVE_KEY);
+    if (lastActive) {
+      await set(LAST_ACTIVE_KEY, lastActive);
+    }
+    
+    await set(MIGRATION_KEY, true);
+  } catch (err) {
+    console.error('Migration failed:', err);
+  }
+}
+
+migrateFromLocalStorage();
+
+export async function saveProject(project: Project): Promise<void> {
+  try {
+    await set(`${STORAGE_KEY_PREFIX}${project.id}`, project);
+
+    const projectsList = await getProjectsList();
     const existingIndex = projectsList.findIndex(p => p.id === project.id);
 
     if (existingIndex >= 0) {
@@ -24,30 +57,59 @@ export function saveProject(project: Project): void {
       });
     }
 
-    localStorage.setItem(PROJECTS_LIST_KEY, JSON.stringify(projectsList));
+    await set(PROJECTS_LIST_KEY, projectsList);
+    await set(LAST_ACTIVE_KEY, project.id);
   } catch (error) {
     console.error('Failed to save project:', error);
     throw new Error('Failed to save project. Storage might be full.');
   }
 }
 
-export function loadProject(): Project | null {
+export async function loadProject(id?: string): Promise<Project | null> {
   try {
-    const data = localStorage.getItem(STORAGE_KEY);
-    return data ? JSON.parse(data) : null;
+    let targetId = id;
+    if (!targetId) {
+      targetId = (await get(LAST_ACTIVE_KEY)) || '';
+    }
+    
+    let data = null;
+    if (targetId) {
+      data = await get(`${STORAGE_KEY_PREFIX}${targetId}`);
+    }
+    
+    if (!data) {
+      const legacy = localStorage.getItem('pagentum_project');
+      if (legacy) {
+        data = JSON.parse(legacy);
+        await set(`${STORAGE_KEY_PREFIX}${data.id}`, data);
+      }
+    }
+    
+    return data || null;
   } catch (error) {
     console.error('Failed to load project:', error);
     return null;
   }
 }
 
-export function getProjectsList(): Array<{ id: string; name: string; updatedAt: number }> {
+export async function getProjectsList(): Promise<Array<{ id: string; name: string; updatedAt: number }>> {
   try {
-    const data = localStorage.getItem(PROJECTS_LIST_KEY);
-    return data ? JSON.parse(data) : [];
+    const data = await get(PROJECTS_LIST_KEY);
+    return data || [];
   } catch (error) {
     console.error('Failed to load projects list:', error);
     return [];
+  }
+}
+
+export async function deleteProject(id: string): Promise<void> {
+  try {
+    await del(`${STORAGE_KEY_PREFIX}${id}`);
+    const projectsList = await getProjectsList();
+    const updated = projectsList.filter(p => p.id !== id);
+    await set(PROJECTS_LIST_KEY, updated);
+  } catch (error) {
+    console.error('Failed to delete project:', error);
   }
 }
 

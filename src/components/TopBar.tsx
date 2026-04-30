@@ -1,10 +1,11 @@
-import { Palette, Eye, Download, Save, Sparkles, ChevronUp, ChevronDown } from 'lucide-react';
+import { Palette, Eye, Download, Save, Sparkles, ChevronUp, ChevronDown, FolderOpen } from 'lucide-react';
 
 interface TopBarProps {
   onThemeClick: () => void;
   onPreviewClick: () => void;
   onExportClick: () => void;
   onSaveClick: () => void;
+  onProjectsClick: () => void;
   isPreviewMode: boolean;
   isHeaderCollapsed: boolean;
   onCollapseToggle: () => void;
@@ -15,6 +16,7 @@ export default function TopBar({
   onPreviewClick,
   onExportClick,
   onSaveClick,
+  onProjectsClick,
   isPreviewMode,
   isHeaderCollapsed,
   onCollapseToggle
@@ -67,6 +69,15 @@ export default function TopBar({
         >
           <Eye className="w-5 h-5" />
           <span className="hidden sm:inline">{isPreviewMode ? 'Edit' : 'Preview'}</span>
+        </button>
+
+        <button
+          onClick={onProjectsClick}
+          className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+          title="Your projects"
+        >
+          <FolderOpen className="w-5 h-5" />
+          <span className="hidden sm:inline">Projects</span>
         </button>
 
         <button

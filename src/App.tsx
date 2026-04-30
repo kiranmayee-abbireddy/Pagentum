@@ -12,6 +12,7 @@ import { themePresets } from './data/themes';
 import { sectionTemplates } from './data/templates';
 import { parseInputToSections } from './utils/parser';
 import { saveProject, loadProject, importProjectJSON } from './utils/storage';
+import ProjectsModal from './components/ProjectsModal';
 
 function App() {
   const [project, setProject] = useState<Project>({
@@ -27,13 +28,52 @@ function App() {
   const [showThemeSelector, setShowThemeSelector] = useState(false);
   const [showExportModal, setShowExportModal] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
+  const [showProjectsModal, setShowProjectsModal] = useState(false);
 
   useEffect(() => {
-    const savedProject = loadProject();
-    if (savedProject) {
-      setProject(savedProject);
-    }
+    loadProject().then(savedProject => {
+      if (savedProject) {
+        setProject(savedProject);
+      }
+    });
   }, []);
+
+  const handleLoadProject = async (id: string) => {
+    const loaded = await loadProject(id);
+    if (loaded) {
+      setProject(loaded);
+      setShowProjectsModal(false);
+    }
+  };
+
+  const handleRenameProject = async (id: string, newName: string) => {
+    if (project.id === id) {
+      const updated = { ...project, name: newName, updatedAt: Date.now() };
+      setProject(updated);
+      await saveProject(updated);
+    } else {
+      const target = await loadProject(id);
+      if (target) {
+        target.name = newName;
+        target.updatedAt = Date.now();
+        await saveProject(target);
+      }
+    }
+  };
+
+  const handleNewProject = async () => {
+    const newProject: Project = {
+      id: `project-${Date.now()}`,
+      name: 'New Page',
+      sections: [],
+      theme: themePresets.clean,
+      createdAt: Date.now(),
+      updatedAt: Date.now()
+    };
+    setProject(newProject);
+    await saveProject(newProject);
+    setShowProjectsModal(false);
+  };
 
   const updateProject = (updates: Partial<Project>) => {
     setProject(prev => ({
@@ -88,9 +128,9 @@ function App() {
     updateProject({ theme });
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     try {
-      saveProject(project);
+      await saveProject(project);
       alert('Project saved successfully!');
     } catch (error) {
       alert('Failed to save project. Please try exporting as JSON instead.');
@@ -121,6 +161,7 @@ function App() {
           onPreviewClick={() => setShowPreview(!showPreview)}
           onExportClick={() => setShowExportModal(true)}
           onSaveClick={handleSave}
+          onProjectsClick={() => setShowProjectsModal(true)}
           isPreviewMode={showPreview}
           isHeaderCollapsed={isHeaderCollapsed}
           onCollapseToggle={() => setIsHeaderCollapsed(!isHeaderCollapsed)}
@@ -182,6 +223,17 @@ function App() {
           sections={project.sections}
           theme={project.theme}
           onClose={() => setShowPreview(false)}
+        />
+      )}
+
+      {showProjectsModal && (
+        <ProjectsModal
+          currentProjectId={project.id}
+          onLoadProject={handleLoadProject}
+          onNewProject={handleNewProject}
+          onClose={() => setShowProjectsModal(false)}
+          onImportProject={handleImport}
+          onRenameProject={handleRenameProject}
         />
       )}
     </div>
