@@ -649,9 +649,61 @@ div[style*="background"] > section {
   color: var(--primary-color);
 }
 
-/* Mobile Menu Toggle (Hidden for wrapped flex layout) */
+/* Mobile Menu Toggle */
 .mobile-menu-btn {
   display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1001;
+  padding: 0.5rem;
+}
+
+.mobile-menu-btn span {
+  display: block;
+  width: 25px;
+  height: 2px;
+  background: var(--text-color);
+  margin: 5px 0;
+  transition: 0.4s;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100vh;
+    background: var(--bg-color);
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem !important;
+    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: -15px 0 35px rgba(0,0,0,0.1);
+    z-index: 1000;
+    padding: 3rem 2rem;
+  }
+
+  .nav-links.active {
+    right: 0;
+  }
+
+  .mobile-menu-btn {
+    display: block;
+  }
+
+  .mobile-menu-btn.active span:nth-child(1) {
+    transform: rotate(-45deg) translate(-5px, 6px);
+  }
+  .mobile-menu-btn.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .mobile-menu-btn.active span:nth-child(3) {
+    transform: rotate(45deg) translate(-5px, -6px);
+  }
 }
 .hero-advanced a {
   background-color: var(--primary-color);
@@ -688,11 +740,8 @@ div[style*="background"] > section {
 
 
 @media (max-width: 768px) {
-  .nav-links { 
-    gap: calc(var(--spacing) * 1); 
-  }
   .nav-links a { 
-    font-size: calc(var(--font-size) * 0.875); 
+    font-size: calc(var(--font-size) * 1.125); 
   }
 }
 

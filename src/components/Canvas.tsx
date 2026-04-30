@@ -65,7 +65,10 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
       // Force navbar-1 inner structure for editor
       html = html.replace('class="nav-inner"', 'class="nav-inner flex items-center justify-between px-2 py-1 flex-wrap gap-2"');
       html = html.replace('class="nav-brand"', 'class="nav-brand flex items-center space-x-2 shrink-0"');
-      html = html.replace('class="nav-links"', 'class="nav-links flex flex-wrap gap-1.5 sm:gap-3 justify-center"');
+      html = html.replace('class="nav-links"', 'class="nav-links-editor flex flex-wrap gap-1.5 sm:gap-3 justify-center"');
+      
+      // Remove mobile menu button from editor view
+      html = html.replace(/<button class="mobile-menu-btn"[\s\S]*?<\/button>/, '');
       const navLinks = [
         ...(() => {
           let heroCount = 0;
