@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, Download, FileText, Code } from 'lucide-react';
+import { X, Download, FileText, Code, Sparkles, CheckCircle2 } from 'lucide-react';
 import { PageSection, ThemeConfig } from '../types';
 import { generateHTML, generateStandaloneHTML, downloadFile, generateCSS } from '../utils/export';
 import AlertDialog from './AlertDialog';
@@ -135,14 +135,28 @@ export default function ExportModal({ sections, theme, onClose }: ExportModalPro
             </div>
           </button>
 
-          <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-            <h4 className="font-semibold text-gray-900 mb-2 text-sm">Export Info</h4>
-            <ul className="text-sm text-gray-600 space-y-1">
-              <li>✓ Clean, production-ready HTML and CSS</li>
-              <li>✓ Fully responsive design included</li>
-              <li>✓ No external dependencies</li>
-              <li>✓ Works offline after download</li>
-            </ul>
+          <div className="relative overflow-hidden bg-gradient-to-br from-blue-50/50 to-indigo-50/50 p-6 rounded-2xl border border-blue-100 shadow-sm">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-indigo-500"></div>
+            <div className="flex items-center gap-2 mb-4">
+              <Sparkles className="w-5 h-5 text-blue-600" />
+              <h4 className="font-bold text-gray-900">What's included in your export?</h4>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {[
+                'Clean, production-ready code',
+                'Fully responsive layout',
+                'Zero external dependencies',
+                'Works perfectly offline'
+              ].map((text, i) => (
+                <div key={i} className="flex items-center gap-2.5 bg-white/60 p-2.5 rounded-xl border border-white/80">
+                  <div className="p-1 bg-white rounded-full shadow-sm border border-blue-100">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-blue-600" />
+                  </div>
+                  <span className="text-sm font-medium text-gray-700">{text}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
