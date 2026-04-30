@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { X, Download, FileText, Code } from 'lucide-react';
 import { PageSection, ThemeConfig } from '../types';
 import { generateHTML, generateStandaloneHTML, downloadFile, generateCSS } from '../utils/export';
+import AlertDialog from './AlertDialog';
 
 interface ExportModalProps {
   sections: PageSection[];
@@ -9,6 +11,8 @@ interface ExportModalProps {
 }
 
 export default function ExportModal({ sections, theme, onClose }: ExportModalProps) {
+  const [alertConfig, setAlertConfig] = useState<{title: string, message: string, type: 'success'} | null>(null);
+
   const handleExportSeparate = () => {
     const html = generateHTML(sections, theme);
     const css = generateCSS(theme);
@@ -16,13 +20,21 @@ export default function ExportModal({ sections, theme, onClose }: ExportModalPro
     downloadFile('index.html', html);
     setTimeout(() => downloadFile('style.css', css), 100);
 
-    alert('Files downloaded! You now have:\n\n1. index.html\n2. style.css\n\nPlace them in the same folder and open index.html.');
+    setAlertConfig({
+      title: 'Export Successful',
+      message: 'Files downloaded! You now have index.html and style.css. Place them in the same folder and open index.html.',
+      type: 'success'
+    });
   };
 
   const handleExportStandalone = () => {
     const html = generateStandaloneHTML(sections, theme);
     downloadFile('page.html', html);
-    alert('Single HTML file downloaded! Open it directly in any browser.');
+    setAlertConfig({
+      title: 'Export Successful',
+      message: 'Single HTML file downloaded! Open it directly in any browser.',
+      type: 'success'
+    });
   };
 
   return (
@@ -96,7 +108,11 @@ export default function ExportModal({ sections, theme, onClose }: ExportModalPro
                 updatedAt: Date.now()
               };
               downloadFile('project.json', JSON.stringify(projectData, null, 2));
-              alert('Project JSON downloaded! You can re-import this file later using the Import button.');
+              setAlertConfig({
+                title: 'Export Successful',
+                message: 'Project JSON downloaded! You can re-import this file later using the Import button.',
+                type: 'success'
+              });
             }}
             className="w-full p-4 border-2 border-gray-200 rounded-lg hover:border-blue-300 hover:bg-yellow-50 transition-all text-left group"
           >
@@ -135,10 +151,19 @@ export default function ExportModal({ sections, theme, onClose }: ExportModalPro
             onClick={onClose}
             className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
           >
-            Cancel
+            Close
           </button>
         </div>
       </div>
+
+      {alertConfig && (
+        <AlertDialog
+          title={alertConfig.title}
+          message={alertConfig.message}
+          type={alertConfig.type}
+          onConfirm={() => setAlertConfig(null)}
+        />
+      )}
     </div>
   );
 }

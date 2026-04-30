@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { X, FolderOpen, Clock, Plus, Trash2, Edit2, Upload } from 'lucide-react';
 import { getProjectsList, deleteProject } from '../utils/storage';
+import AlertDialog from './AlertDialog';
+import PromptDialog from './PromptDialog';
 
 interface ProjectsModalProps {
   currentProjectId: string;
@@ -21,6 +23,8 @@ export default function ProjectsModal({
 }: ProjectsModalProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [projects, setProjects] = useState<Array<{ id: string; name: string; updatedAt: number }>>([]);
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
+  const [promptRename, setPromptRename] = useState<{id: string, name: string} | null>(null);
 
   useEffect(() => {
     getProjectsList().then(list => {
@@ -36,27 +40,36 @@ export default function ProjectsModal({
     }
   };
 
-  const handleRename = async (id: string, currentName: string, e: React.MouseEvent) => {
+  const handleRenameClick = (id: string, currentName: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    const newName = window.prompt('Enter new project name:', currentName);
-    if (newName && newName.trim() !== currentName) {
-      await onRenameProject(id, newName.trim());
+    setPromptRename({id, name: currentName});
+  };
+
+  const handleConfirmRename = async (newName: string) => {
+    if (promptRename && newName.trim() !== promptRename.name) {
+      await onRenameProject(promptRename.id, newName.trim());
       getProjectsList().then(list => {
         setProjects(list.sort((a, b) => b.updatedAt - a.updatedAt));
       });
     }
+    setPromptRename(null);
   };
 
-  const handleDelete = async (id: string, e: React.MouseEvent) => {
+  const handleDeleteClick = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    if (confirm('Are you sure you want to delete this project?')) {
-      await deleteProject(id);
-      const updatedProjects = projects.filter(p => p.id !== id);
+    setConfirmDeleteId(id);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (confirmDeleteId) {
+      await deleteProject(confirmDeleteId);
+      const updatedProjects = projects.filter(p => p.id !== confirmDeleteId);
       setProjects(updatedProjects);
-      if (id === currentProjectId) {
+      if (confirmDeleteId === currentProjectId) {
          onNewProject();
       }
     }
+    setConfirmDeleteId(null);
   };
 
   return (
@@ -143,14 +156,14 @@ export default function ProjectsModal({
                       </span>
                     )}
                     <button
-                      onClick={(e) => handleRename(project.id, project.name, e)}
+                      onClick={(e) => handleRenameClick(project.id, project.name, e)}
                       className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                       title="Rename project"
                     >
                       <Edit2 className="w-4 h-4" />
                     </button>
                     <button
-                      onClick={(e) => handleDelete(project.id, e)}
+                      onClick={(e) => handleDeleteClick(project.id, e)}
                       className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                       title="Delete project"
                     >
@@ -163,6 +176,27 @@ export default function ProjectsModal({
           </div>
         </div>
       </div>
+
+      {confirmDeleteId && (
+        <AlertDialog
+          title="Delete Project"
+          message="Are you sure you want to delete this project? This action cannot be undone."
+          type="error"
+          onConfirm={handleConfirmDelete}
+          onCancel={() => setConfirmDeleteId(null)}
+          confirmText="Delete"
+        />
+      )}
+
+      {promptRename && (
+        <PromptDialog
+          title="Rename Project"
+          message="Enter a new name for your project:"
+          defaultValue={promptRename.name}
+          onConfirm={handleConfirmRename}
+          onCancel={() => setPromptRename(null)}
+        />
+      )}
     </div>
   );
 }

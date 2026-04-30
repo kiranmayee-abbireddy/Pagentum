@@ -13,6 +13,7 @@ import { sectionTemplates } from './data/templates';
 import { parseInputToSections } from './utils/parser';
 import { saveProject, loadProject, importProjectJSON } from './utils/storage';
 import ProjectsModal from './components/ProjectsModal';
+import AlertDialog from './components/AlertDialog';
 
 function App() {
   const [project, setProject] = useState<Project>({
@@ -29,6 +30,7 @@ function App() {
   const [showExportModal, setShowExportModal] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [showProjectsModal, setShowProjectsModal] = useState(false);
+  const [alertConfig, setAlertConfig] = useState<{title: string, message: string, type: 'success' | 'error' | 'warning' | 'info'} | null>(null);
 
   useEffect(() => {
     loadProject().then(savedProject => {
@@ -131,9 +133,9 @@ function App() {
   const handleSave = async () => {
     try {
       await saveProject(project);
-      alert('Project saved successfully!');
+      setAlertConfig({ title: 'Success', message: 'Project saved successfully!', type: 'success' });
     } catch (error) {
-      alert('Failed to save project. Please try exporting as JSON instead.');
+      setAlertConfig({ title: 'Save Failed', message: 'Failed to save project. Please try exporting as JSON instead.', type: 'error' });
     }
   };
 
@@ -145,9 +147,9 @@ function App() {
         id: `project-${Date.now()}`,
         updatedAt: Date.now()
       });
-      alert('Project imported successfully!');
+      setAlertConfig({ title: 'Success', message: 'Project imported successfully!', type: 'success' });
     } catch (error) {
-      alert('Failed to import project. Please check the file format.');
+      setAlertConfig({ title: 'Import Failed', message: 'Failed to import project. Please check the file format.', type: 'error' });
     }
   };
 
@@ -234,6 +236,15 @@ function App() {
           onClose={() => setShowProjectsModal(false)}
           onImportProject={handleImport}
           onRenameProject={handleRenameProject}
+        />
+      )}
+
+      {alertConfig && (
+        <AlertDialog
+          title={alertConfig.title}
+          message={alertConfig.message}
+          type={alertConfig.type}
+          onConfirm={() => setAlertConfig(null)}
         />
       )}
     </div>
