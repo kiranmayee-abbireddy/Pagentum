@@ -668,7 +668,7 @@ div[style*="background"] > section {
   transition: 0.4s;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .nav-links {
     position: fixed;
     top: 0;
@@ -739,7 +739,7 @@ div[style*="background"] > section {
 }
 
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .nav-links a { 
     font-size: calc(var(--font-size) * 1.125); 
   }
