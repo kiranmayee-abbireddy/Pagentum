@@ -101,7 +101,7 @@ export default function InputBar({ onGenerate, onImport }: InputBarProps) {
               onBlur={() => setTimeout(() => setIsFocused(false), 200)}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Magic generate: 'hero, features, pricing, footer'..."
-              className="w-full bg-transparent px-14 py-5 text-lg font-medium text-gray-900 border-none outline-none focus:outline-none focus:ring-0 placeholder:text-gray-400 focus:border-none ring-0 shadow-none"
+              className="w-full bg-transparent px-10 sm:px-14 py-4 sm:py-5 text-base sm:text-lg font-medium text-gray-900 border-none outline-none focus:outline-none focus:ring-0 placeholder:text-gray-400 focus:border-none ring-0 shadow-none"
             />
 
             <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-3">
@@ -130,11 +130,11 @@ export default function InputBar({ onGenerate, onImport }: InputBarProps) {
             <button
               type="submit"
               disabled={!input.trim()}
-              className="group relative px-8 py-4 bg-blue-600 text-white rounded-2xl font-bold transition-all overflow-hidden flex items-center gap-3 disabled:opacity-50 disabled:bg-gray-200 disabled:cursor-not-allowed shadow-lg shadow-blue-200 hover:shadow-blue-300 active:scale-95"
+              className="group relative px-4 py-3 sm:px-8 sm:py-4 bg-blue-600 text-white rounded-2xl font-bold transition-all overflow-hidden flex items-center gap-2 sm:gap-3 disabled:opacity-50 disabled:bg-gray-200 disabled:cursor-not-allowed shadow-lg shadow-blue-200 hover:shadow-blue-300 active:scale-95"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity" />
               <span className="relative flex items-center gap-2">
-                Generate <Sparkles className="w-4 h-4" />
+                <span className="hidden sm:inline">Generate</span> <Sparkles className="w-4 h-4" />
               </span>
             </button>
           </div>

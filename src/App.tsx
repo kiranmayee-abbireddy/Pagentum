@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Plus } from 'lucide-react';
 import TopBar from './components/TopBar';
 import InputBar from './components/InputBar';
 import SectionLibrary from './components/SectionLibrary';
@@ -30,6 +31,7 @@ function App() {
   const [showExportModal, setShowExportModal] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [showProjectsModal, setShowProjectsModal] = useState(false);
+  const [showMobileLibrary, setShowMobileLibrary] = useState(false);
   const [alertConfig, setAlertConfig] = useState<{title: string, message: string, type: 'success' | 'error' | 'warning' | 'info'} | null>(null);
 
   useEffect(() => {
@@ -182,18 +184,41 @@ function App() {
         )}
       </div>
 
-      <div className="flex-1 flex overflow-hidden">
-        <div className="w-72 bg-white/40 backdrop-blur-xl border-r border-white/20 overflow-y-auto">
+      <div className="flex-1 flex overflow-hidden relative">
+        <div className={`
+          absolute inset-y-0 left-0 z-40 w-72 bg-white/95 backdrop-blur-xl border-r border-gray-200 overflow-y-auto transform transition-transform duration-300 ease-in-out
+          ${showMobileLibrary ? 'translate-x-0 shadow-2xl' : '-translate-x-full'}
+          lg:relative lg:translate-x-0 lg:shadow-none lg:bg-white/40 lg:border-white/20
+        `}>
           {!showPreview && (
-            <SectionLibrary onAddSection={handleAddSection} />
+            <SectionLibrary onAddSection={(id) => {
+              handleAddSection(id);
+              setShowMobileLibrary(false);
+            }} />
           )}
         </div>
+
+        {showMobileLibrary && !showPreview && (
+          <div 
+            className="absolute inset-0 bg-black/20 backdrop-blur-sm z-30 lg:hidden"
+            onClick={() => setShowMobileLibrary(false)}
+          />
+        )}
 
         <Canvas
           sections={project.sections}
           onSectionsChange={handleSectionsChange}
           onEditSection={handleEditSection}
         />
+
+        {!showPreview && (
+          <button 
+            onClick={() => setShowMobileLibrary(true)}
+            className="lg:hidden absolute bottom-6 right-6 p-4 bg-blue-600 text-white rounded-full shadow-xl hover:bg-blue-700 transition-colors z-20 flex items-center justify-center group"
+          >
+            <Plus className="w-6 h-6 transition-transform group-hover:rotate-90" />
+          </button>
+        )}
       </div>
 
       {editingSection && (
