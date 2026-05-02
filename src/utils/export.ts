@@ -3,6 +3,17 @@ import { sectionTemplates } from '../data/templates';
 import { generateCSS } from '../data/themes';
 import { socialIcons } from '../data/socialIcons';
 
+const featureIcons: Record<string, string> = {
+  zap: 'M13 2L3 14h9l-1 8 10-12h-9l1-8z',
+  palette: 'M12 21a9 9 0 110-18 9 9 0 010 18z M12 7a5 5 0 100 10 5 5 0 000-10z',
+  rocket: 'M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.71-2.13.71-2.13l.12-.13a8.48 8.48 0 016.3-6.3l.13-.12s1.29 0 2.13-.71c1.5-1.26 2-5 2-5s-3.74.5-5 2c-.71.84-.71 2.13-.71 2.13l-.12.13a8.48 8.48 0 01-6.3 6.3l-.13.12s-1.29 0-2.13.71z',
+  shield: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',
+  clock: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',
+  globe: 'M12 21a9 9 0 100-18 9 9 0 000 18z M12 21V3 M21 12H3',
+  monitor: 'M2 3h20v14H2V3zm6 18h8m-4-4v4',
+  mouse: 'M12 2a5 5 0 00-5 5v10a5 5 0 0010 0V7a5 5 0 00-5-5z M12 7V5'
+};
+
 function getYouTubeEmbedUrl(url: string): string {
   if (!url) return '';
   const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
@@ -587,7 +598,77 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
           </section>
         `;
       }
+      if (section.templateId === 'features-3col') {
+        const title = section.content.title || 'Key Features';
+        const subtitle = section.content.subtitle || '';
+        
+        const cardsHTML = [1, 2, 3].map(i => {
+          const fTitle = section.content[`feature${i}Title`] || `Feature ${i}`;
+          const fDesc = section.content[`feature${i}Desc`] || '';
+          const iconKey = section.content[`feature${i}Icon`] || 'zap';
+          const iconPath = featureIcons[iconKey] || featureIcons.zap;
+          const cardId = `feature-card-${section.id}-${i}`;
 
+          return `
+            <style>
+              #${cardId} {
+                transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+                background: white;
+                border: 1px solid rgba(0,0,0,0.05);
+              }
+              #${cardId}:hover {
+                transform: translateY(-10px) scale(1.02);
+                box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+                border-color: var(--primary-color);
+              }
+              #${cardId} .icon-glow {
+                transition: all 0.5s ease;
+                opacity: 0;
+                filter: blur(20px);
+                background: var(--primary-color);
+              }
+              #${cardId}:hover .icon-glow {
+                opacity: 0.2;
+                transform: scale(1.5);
+              }
+              #${cardId} .icon-svg {
+                transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+                color: var(--primary-color);
+              }
+              #${cardId}:hover .icon-svg {
+                transform: scale(1.2) rotate(5deg);
+              }
+            </style>
+            <div id="${cardId}" class="p-10 rounded-[2.5rem] flex flex-col items-center text-center relative overflow-hidden group">
+              <div class="relative w-20 h-20 mb-8 flex items-center justify-center">
+                <div class="icon-glow absolute inset-0 rounded-full"></div>
+                <div class="icon-svg relative z-10 w-12 h-12 flex items-center justify-center">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full">
+                    <path d="${iconPath}"></path>
+                  </svg>
+                </div>
+              </div>
+              <h3 class="text-2xl font-bold mb-4 text-gray-900">${fTitle}</h3>
+              <p class="text-gray-500 leading-relaxed">${fDesc}</p>
+            </div>
+          `;
+        }).join('');
+
+        return `
+          <section id="section-${section.id}" class="features-section py-32 px-6" ${combinedStyle}>
+            ${bgHTML}
+            <div class="max-w-7xl mx-auto relative z-10">
+              <div class="text-center mb-24">
+                <h2 class="text-4xl md:text-6xl font-black mb-6 tracking-tight">${title}</h2>
+                <p class="text-xl opacity-70 max-w-2xl mx-auto font-medium">${subtitle}</p>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                ${cardsHTML}
+              </div>
+            </div>
+          </section>
+        `;
+      }
       if (section.templateId === 'contact-section') {
         return `
           <section id="section-${section.id}" class="contact-section py-24 px-6 max-w-7xl mx-auto" ${combinedStyle}>

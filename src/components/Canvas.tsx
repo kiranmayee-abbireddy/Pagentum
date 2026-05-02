@@ -4,6 +4,17 @@ import { PageSection } from '../types';
 import { sectionTemplates } from '../data/templates';
 import { socialIcons } from '../data/socialIcons';
 
+const featureIcons: Record<string, string> = {
+  zap: 'M13 2L3 14h9l-1 8 10-12h-9l1-8z',
+  palette: 'M12 21a9 9 0 110-18 9 9 0 010 18z M12 7a5 5 0 100 10 5 5 0 000-10z',
+  rocket: 'M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.71-2.13.71-2.13l.12-.13a8.48 8.48 0 016.3-6.3l.13-.12s1.29 0 2.13-.71c1.5-1.26 2-5 2-5s-3.74.5-5 2c-.71.84-.71 2.13-.71 2.13l-.12.13a8.48 8.48 0 01-6.3 6.3l-.13.12s-1.29 0-2.13.71z',
+  shield: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',
+  clock: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',
+  globe: 'M12 21a9 9 0 100-18 9 9 0 000 18z M12 21V3 M21 12H3',
+  monitor: 'M2 3h20v14H2V3zm6 18h8m-4-4v4',
+  mouse: 'M12 2a5 5 0 00-5 5v10a5 5 0 0010 0V7a5 5 0 00-5-5z M12 7V5'
+};
+
 interface CanvasProps {
   sections: PageSection[];
   onSectionsChange: (sections: PageSection[]) => void;
@@ -381,6 +392,32 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
         .join('');
 
       html = html.replace('{{socialLinksHTML}}', socialHTML);
+    }
+
+    if (section.templateId === 'features-3col') {
+      const cardsHTML = [1, 2, 3].map(i => {
+        const fTitle = section.content[`feature${i}Title`] || `Feature ${i}`;
+        const fDesc = section.content[`feature${i}Desc`] || '';
+        const iconKey = section.content[`feature${i}Icon`] || 'zap';
+        const iconPath = featureIcons[iconKey] || featureIcons.zap;
+
+        return `
+          <div class="p-4 rounded-3xl border border-gray-100 flex flex-col items-center text-center group hover:bg-blue-50/30 transition-all duration-300">
+            <div class="w-12 h-12 mb-4 flex items-center justify-center text-blue-600 bg-blue-50 rounded-2xl group-hover:scale-110 transition-transform">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
+                <path d="${iconPath}"></path>
+              </svg>
+            </div>
+            <h3 class="text-sm font-bold mb-2">${fTitle}</h3>
+            <p class="text-[10px] text-gray-500 leading-relaxed line-clamp-3">${fDesc}</p>
+          </div>
+        `;
+      }).join('');
+
+      html = html.replace(/<div class="feature-card-wrapper">[\s\S]*?<\/div>/g, ''); // Clear wrappers
+      html = html.replace('{{feature1HTML}}', cardsHTML);
+      html = html.replace('{{feature2HTML}}', '');
+      html = html.replace('{{feature3HTML}}', '');
     }
 
     // Standard replacements

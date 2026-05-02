@@ -28,35 +28,38 @@ export const sectionTemplates: SectionTemplate[] = [
     category: 'features',
     description: 'Three-column feature cards with icons',
     html: `
-      <section class="features-section">
-        <h2 class="section-title">{{title}}</h2>
-        <div class="features-grid">
-          <div class="feature-card">
-            <div class="feature-icon">⚡</div>
-            <h3 class="feature-title">{{feature1Title}}</h3>
-            <p class="feature-description">{{feature1Desc}}</p>
+      <section class="features-section py-24 px-6">
+        <div class="max-w-7xl mx-auto">
+          <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-black mb-4">{{title}}</h2>
+            <p class="text-xl text-gray-500 max-w-2xl mx-auto">{{subtitle}}</p>
           </div>
-          <div class="feature-card">
-            <div class="feature-icon">🎨</div>
-            <h3 class="feature-title">{{feature2Title}}</h3>
-            <p class="feature-description">{{feature2Desc}}</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">🚀</div>
-            <h3 class="feature-title">{{feature3Title}}</h3>
-            <p class="feature-description">{{feature3Desc}}</p>
+          <div class="features-grid grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="feature-card-wrapper">
+              {{feature1HTML}}
+            </div>
+            <div class="feature-card-wrapper">
+              {{feature2HTML}}
+            </div>
+            <div class="feature-card-wrapper">
+              {{feature3HTML}}
+            </div>
           </div>
         </div>
       </section>
     `,
     defaultContent: {
       title: 'Key Features',
+      subtitle: 'Experience the next generation of web building with our powerful toolset.',
       feature1Title: 'Lightning Fast',
-      feature1Desc: 'Build pages in minutes, not hours',
+      feature1Desc: 'Build pages in minutes, not hours with our optimized workflow.',
+      feature1Icon: 'zap',
       feature2Title: 'Beautiful Design',
-      feature2Desc: 'Pre-styled components that look great',
+      feature2Desc: 'Pre-styled components that look great on any device.',
+      feature2Icon: 'palette',
       feature3Title: 'Easy Export',
-      feature3Desc: 'Download clean HTML and CSS'
+      feature3Desc: 'Download clean HTML and CSS ready for production.',
+      feature3Icon: 'rocket'
     }
   },
 

@@ -247,6 +247,26 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
               )}
 
               {/* Custom Links Manager */}
+              {/* Features Icon Picker */}
+              {section.templateId === 'features-3col' && (
+                <section>
+                   <div className="flex items-center space-x-2 mb-4 border-b pb-2">
+                    <MousePointer2 className="w-4 h-4 text-gray-400" />
+                    <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest text-left">Feature Icons</h3>
+                  </div>
+                  <div className="grid grid-cols-3 gap-4">
+                    {[1, 2, 3].map(i => (
+                      <FeatureIconPicker 
+                        key={i}
+                        index={i}
+                        content={content}
+                        setContent={setContent}
+                      />
+                    ))}
+                  </div>
+                </section>
+              )}
+
               {['navbar-1', 'footer-1'].includes(section.templateId) && (
                 <section>
                    <div className="flex items-center space-x-2 mb-4 border-b pb-2">
@@ -783,6 +803,60 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
           </button>
         </div>
       </div>
+    </div>
+  );
+}
+
+  );
+}
+
+function FeatureIconPicker({ index, content, setContent }: { index: number, content: any, setContent: any }) {
+  const [showPicker, setShowPicker] = useState(false);
+  const iconKey = `feature${index}Icon`;
+  const currentIcon = content[iconKey] || 'zap';
+  
+  const icons = [
+    { id: 'zap', label: 'Lightning', path: 'M13 2L3 14h9l-1 8 10-12h-9l1-8z' },
+    { id: 'palette', label: 'Design', path: 'M12 21a9 9 0 110-18 9 9 0 010 18z M12 7a5 5 0 100 10 5 5 0 000-10z' },
+    { id: 'rocket', label: 'Launch', path: 'M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.71-2.13.71-2.13l.12-.13a8.48 8.48 0 016.3-6.3l.13-.12s1.29 0 2.13-.71c1.5-1.26 2-5 2-5s-3.74.5-5 2c-.71.84-.71 2.13-.71 2.13l-.12.13a8.48 8.48 0 01-6.3 6.3l-.13.12s-1.29 0-2.13.71z' },
+    { id: 'shield', label: 'Security', path: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z' },
+    { id: 'clock', label: 'Speed', path: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z' },
+    { id: 'globe', label: 'Global', path: 'M12 21a9 9 0 100-18 9 9 0 000 18z M12 21V3 M21 12H3' },
+    { id: 'monitor', label: 'Desktop', path: 'M2 3h20v14H2V3zm6 18h8m-4-4v4' },
+    { id: 'mouse', label: 'Click', path: 'M12 2a5 5 0 00-5 5v10a5 5 0 0010 0V7a5 5 0 00-5-5z M12 7V5' }
+  ];
+
+  return (
+    <div className="relative">
+      <label className="text-[8px] font-black text-gray-400 uppercase tracking-widest block mb-2">Icon {index}</label>
+      <button
+        onClick={() => setShowPicker(!showPicker)}
+        className="w-full h-12 bg-white border border-gray-200 rounded-xl flex items-center justify-center hover:border-blue-300 transition-all group"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6 text-blue-600 group-hover:scale-110 transition-transform">
+          <path d={icons.find(i => i.id === currentIcon)?.path || icons[0].path}></path>
+        </svg>
+      </button>
+
+      {showPicker && (
+        <div className="absolute z-50 top-full left-1/2 -translate-x-1/2 mt-2 p-3 bg-white rounded-2xl shadow-2xl border border-gray-100 grid grid-cols-4 gap-2 min-w-[180px] animate-in fade-in zoom-in duration-200">
+          {icons.map(icon => (
+            <button
+              key={icon.id}
+              onClick={() => {
+                setContent((prev: any) => ({ ...prev, [iconKey]: icon.id }));
+                setShowPicker(false);
+              }}
+              className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all hover:bg-blue-50 ${currentIcon === icon.id ? 'bg-blue-600 text-white shadow-lg' : 'text-gray-400'}`}
+              title={icon.label}
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                <path d={icon.path}></path>
+              </svg>
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
