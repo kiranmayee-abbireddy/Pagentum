@@ -455,7 +455,10 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
               <nav class="nav-links flex space-x-6">
                 ${(() => {
             let heroCount = 0;
-            const linkSections = sections.filter(s => s.templateId !== 'navbar-1' && s.templateId !== 'footer-1' && s.templateId !== 'footer-advanced');
+            const linkSections = sections.filter(s => {
+              const template = sectionTemplates.find(t => t.id === s.templateId);
+              return template?.category !== 'cta' && s.templateId !== 'navbar-1' && s.templateId !== 'footer-1' && s.templateId !== 'footer-advanced';
+            });
             
             return linkSections.map(s => {
                 let label = s.content.title;
@@ -548,12 +551,12 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                 
                 <div class="space-y-6">
                   <h4 class="text-lg font-bold">Quick Links</h4>
-                  <div class="flex flex-col space-y-3 text-gray-400">
-                    ${(() => {
+                  ${(() => {
                       let heroCount = 0;
                       const linkSections = sections.filter(s => s.templateId !== 'navbar-1' && s.templateId !== 'footer-1' && s.templateId !== 'footer-advanced');
                       
-                      return linkSections.map(s => {
+                      const allLinks = [
+                        ...linkSections.map(s => {
                           let label = s.content.title;
                           if (s.templateId.includes('hero')) {
                             heroCount++;
@@ -563,15 +566,23 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                           }
                           if (!label) return null;
                           return `<a href="#section-${s.id}" class="hover:text-white transition-colors text-sm">${label}</a>`;
-                        })
-                        .filter(Boolean)
-                        .join('');
+                        }).filter(Boolean),
+                        ...['link1', 'link2', 'link3', 'link4'].map(key => {
+                          const label = section.content[key as keyof typeof section.content];
+                          return label ? `<a href="#" class="hover:text-white transition-colors text-sm">${label}</a>` : '';
+                        }).filter(Boolean)
+                      ];
+
+                      if (allLinks.length > 6) {
+                        return `<div class="grid grid-cols-2 gap-x-8 gap-y-3 text-gray-400">
+                          ${allLinks.join('')}
+                        </div>`;
+                      }
+                      
+                      return `<div class="flex flex-col space-y-3 text-gray-400">
+                        ${allLinks.join('')}
+                      </div>`;
                     })()}
-                    ${['link1', 'link2', 'link3', 'link4'].map(key => {
-                      const label = section.content[key as keyof typeof section.content];
-                      return label ? `<a href="#" class="hover:text-white transition-colors text-sm">${label}</a>` : '';
-                    }).join('')}
-                  </div>
                 </div>
 
                 <div class="space-y-6">

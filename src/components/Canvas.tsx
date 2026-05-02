@@ -72,7 +72,10 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
       const navLinks = [
         ...(() => {
           let heroCount = 0;
-          const linkSections = sections.filter(s => s.templateId !== 'navbar-1' && s.templateId !== 'footer-1' && s.templateId !== 'footer-advanced');
+          const linkSections = sections.filter(s => {
+            const template = sectionTemplates.find(t => t.id === s.templateId);
+            return template?.category !== 'cta' && s.templateId !== 'navbar-1' && s.templateId !== 'footer-1' && s.templateId !== 'footer-advanced';
+          });
           return linkSections
             .map(s => {
                 let label = s.content.title;
