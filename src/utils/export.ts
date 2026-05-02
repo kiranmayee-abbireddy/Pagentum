@@ -529,37 +529,71 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
       }
 
       if (section.templateId === 'portfolio-grid') {
-        const displayImages = section.images || [];
-        const itemsHTML = displayImages.map((img, idx) => {
-          const num = idx + 1;
-          const title = section.content[`proj${num}Title`] || `Project ${num}`;
-          const desc = section.content[`proj${num}Desc`] || '';
-          return `
-            <div class="group relative overflow-hidden rounded-2xl shadow-lg bg-white border border-gray-100 transition-all hover:shadow-xl hover:-translate-y-1">
-              <div class="h-64 overflow-hidden">
-                <img src="${img.src}" alt="${img.alt || title}" class="w-full h-full object-cover" />
+        const itemCount = parseInt(section.content.itemCount || '0') || 0;
+        const items = [];
+        for (let i = 1; i <= itemCount; i++) {
+          const title = section.content[`proj${i}Title`];
+          if (!title) continue;
+          
+          const desc = section.content[`proj${i}Desc`] || '';
+          const link = section.content[`proj${i}Link`] || '#';
+          const thumbnail = section.content[`proj${i}Thumbnail`];
+          
+          const fallbackPatterns = [
+            'linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%)',
+            'radial-gradient(circle at top left, var(--primary-color) 0%, transparent 70%), radial-gradient(circle at bottom right, var(--secondary-color) 0%, transparent 70%)',
+            'conic-gradient(from 180deg at 50% 50%, var(--primary-color) 0deg, var(--secondary-color) 180deg, var(--primary-color) 360deg)'
+          ];
+          const pattern = fallbackPatterns[(i - 1) % fallbackPatterns.length];
+
+          items.push(`
+            <a href="${link}" class="group relative block overflow-hidden rounded-3xl shadow-lg bg-white border border-gray-100 transition-all hover:shadow-2xl hover:-translate-y-2">
+              <div class="h-72 overflow-hidden relative">
+                ${thumbnail ? `
+                  <img src="${thumbnail}" alt="${title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                ` : `
+                  <div class="w-full h-full flex items-center justify-center relative overflow-hidden" style="background: ${pattern}; opacity: 0.15;">
+                    <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(var(--text-color) 1px, transparent 1px); background-size: 20px 20px;"></div>
+                  </div>
+                  <div class="absolute inset-0 flex items-center justify-center">
+                    <span class="text-4xl font-black opacity-10 uppercase tracking-tighter" style="color: var(--primary-color)">${title.substring(0, 2)}</span>
+                  </div>
+                `}
+                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300"></div>
               </div>
-              <div class="p-8">
-                <h3 class="text-xl font-bold mb-3 text-gray-900">${title}</h3>
-                <p class="opacity-70 leading-relaxed">${desc}</p>
+              <div class="p-10">
+                <div class="flex items-center justify-between mb-4">
+                   <h3 class="text-2xl font-black text-gray-900 group-hover:text-blue-600 transition-colors">${title}</h3>
+                   <div class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all">
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="9 5l7 7-7 7"></path></svg>
+                   </div>
+                </div>
+                <p class="opacity-70 leading-relaxed text-lg line-clamp-3">${desc}</p>
               </div>
-            </div>
-          `;
-        }).join('') || `
-          <div class="col-span-full py-20 text-center bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">
-            <p class="text-gray-400 font-medium italic">Your portfolio items will appear here once images are added.</p>
+            </a>
+          `);
+        }
+
+        const itemsHTML = items.join('') || `
+          <div class="col-span-full py-32 text-center bg-gray-50 rounded-[40px] border-4 border-dashed border-gray-100">
+             <div class="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6 text-gray-400">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+             </div>
+             <p class="text-gray-500 font-bold text-xl uppercase tracking-widest">Portfolio Showcase Empty</p>
+             <p class="text-gray-400 mt-2">Add projects in the editor to showcase your work.</p>
           </div>
         `;
 
         return `
-          <section class="portfolio-section py-24 px-6" ${combinedStyle}>
+          <section class="portfolio-section py-32 px-6" ${combinedStyle}>
             ${bgHTML}
             <div class="max-w-7xl mx-auto relative z-10">
-              <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-6xl font-bold mb-6">${section.content.title || ''}</h2>
-                <p class="text-xl opacity-80 max-w-2xl mx-auto">${section.content.subtitle || ''}</p>
+              <div class="text-center mb-24">
+                <h2 class="text-5xl md:text-7xl font-black mb-8 tracking-tighter">${section.content.title || ''}</h2>
+                <div class="w-24 h-2 bg-blue-600 mx-auto mb-8 rounded-full"></div>
+                <p class="text-2xl opacity-80 max-w-3xl mx-auto leading-relaxed">${section.content.subtitle || ''}</p>
               </div>
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
                 ${itemsHTML}
               </div>
             </div>

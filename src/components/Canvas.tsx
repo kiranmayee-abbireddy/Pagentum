@@ -200,33 +200,45 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
     }
 
     if (section.templateId === 'portfolio-grid') {
-      const displayImages = section.images || [];
-      const itemsHTML = displayImages.map((img, idx) => {
-        const num = idx + 1;
-        const title = section.content[`proj${num}Title`] || `Project ${num}`;
-        const desc = section.content[`proj${num}Desc`] || '';
-        return `
-          <div class="bg-gray-50 rounded-lg overflow-hidden border border-gray-100 flex flex-col h-full">
-            <div class="h-16 overflow-hidden">
-              <img src="${img.src}" alt="${img.alt || title}" class="w-full h-full object-cover" />
+      const itemCount = parseInt(section.content.itemCount || '0') || 0;
+      const items = [];
+      for (let i = 1; i <= itemCount; i++) {
+        const title = section.content[`proj${i}Title`];
+        if (!title) continue;
+        const desc = section.content[`proj${i}Desc`] || '';
+        const thumbnail = section.content[`proj${i}Thumbnail`];
+        
+        items.push(`
+          <div class="bg-gray-50 rounded-xl overflow-hidden border border-gray-100 flex flex-col h-full shadow-sm">
+            <div class="h-20 overflow-hidden relative bg-gray-200">
+              ${thumbnail ? `
+                <img src="${thumbnail}" class="w-full h-full object-cover" />
+              ` : `
+                <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50 opacity-50">
+                  <span class="text-[10px] font-bold text-blue-300 uppercase">${title.substring(0, 2)}</span>
+                </div>
+              `}
             </div>
-            <div class="p-2 flex-1">
-              <h3 class="text-[9px] font-bold mb-0.5 line-clamp-1">${title}</h3>
-              <p class="text-[7px] text-gray-500 line-clamp-2">${desc}</p>
+            <div class="p-2.5 flex-1">
+              <h3 class="text-[10px] font-bold mb-0.5 line-clamp-1 text-gray-900">${title}</h3>
+              <p class="text-[8px] text-gray-500 line-clamp-2 leading-tight">${desc}</p>
             </div>
           </div>
-        `;
-      }).join('') || `
-        <div class="col-span-full py-6 text-center bg-gray-50 rounded-xl border border-dashed border-gray-200">
-          <p class="text-[8px] text-gray-400 italic">No projects added yet. Click edit to add items.</p>
+        `);
+      }
+
+      const itemsHTML = items.join('') || `
+        <div class="col-span-full py-10 text-center bg-gray-50 rounded-2xl border-2 border-dashed border-gray-100">
+          <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">No Projects Added</p>
+          <p class="text-[8px] text-gray-400 mt-1">Edit this section to add projects manually.</p>
         </div>
       `;
 
       html = `
-        <div class="py-4 px-2 text-center">
-          <h2 class="text-sm font-bold mb-1">${section.content.title || ''}</h2>
-          <p class="text-[8px] opacity-60 mb-4">${section.content.subtitle || ''}</p>
-          <div class="grid grid-cols-3 gap-3">
+        <div class="py-6 px-3 text-center">
+          <h2 class="text-lg font-black mb-1 tracking-tight">${section.content.title || ''}</h2>
+          <p class="text-[9px] opacity-60 mb-6 max-w-md mx-auto">${section.content.subtitle || ''}</p>
+          <div class="grid grid-cols-3 gap-4">
             ${itemsHTML}
           </div>
         </div>
