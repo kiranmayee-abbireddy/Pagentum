@@ -185,8 +185,8 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                   <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest text-left">Text Content</h3>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-2">
-                  {Object.entries(template.defaultContent)
-                    .filter(([key]) => !key.includes('nav') && !key.includes('link') && !key.includes('social')) // Filter out nav/footer/social links
+                   {Object.entries(template.defaultContent)
+                    .filter(([key]) => !key.includes('nav') && !key.includes('link') && !key.includes('social') && !key.includes('Icon')) // Filter out nav/footer/social/icons
                     .map(([key, defaultValue]) => {
                       const isHref = key.toLowerCase().includes('href');
                       return (
