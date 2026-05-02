@@ -215,6 +215,55 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                 </div>
               </section>
 
+              {/* Social Links Manager */}
+              {section.templateId === 'footer-advanced' && (
+                <section>
+                   <div className="flex items-center space-x-2 mb-4 border-b pb-2">
+                    <Monitor className="w-4 h-4 text-gray-400" />
+                    <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest text-left">Social Presence</h3>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {[1, 2, 3, 4].map(i => {
+                      const typeKey = `social${i}Type`;
+                      const linkKey = `social${i}Link`;
+                      const currentType = content[typeKey] || 'facebook';
+
+                      return (
+                        <div key={i} className="p-4 bg-gray-50/50 rounded-xl border border-gray-100 space-y-3">
+                          <div className="flex items-center justify-between">
+                            <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Platform {i}</span>
+                            <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-[8px]">
+                              {currentType.substring(0, 2).toUpperCase()}
+                            </div>
+                          </div>
+                          <div className="space-y-2">
+                            <select 
+                              className="w-full p-2 bg-white border border-gray-200 rounded-lg text-[10px] font-bold focus:border-blue-400 outline-none"
+                              value={currentType}
+                              onChange={(e) => setContent(prev => ({ ...prev, [typeKey]: e.target.value }))}
+                            >
+                              <option value="facebook">Facebook</option>
+                              <option value="twitter">Twitter (X)</option>
+                              <option value="instagram">Instagram</option>
+                              <option value="linkedin">LinkedIn</option>
+                              <option value="youtube">YouTube</option>
+                              <option value="github">GitHub</option>
+                            </select>
+                            <input
+                              type="text"
+                              placeholder="Profile URL"
+                              className="w-full p-2 bg-white border border-gray-200 rounded-lg text-[10px] font-bold focus:border-blue-400 outline-none"
+                              value={content[linkKey] || ''}
+                              onChange={handleContentChange(linkKey)}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </section>
+              )}
+
               {/* Custom Links Manager */}
               {['navbar-1', 'footer-1'].includes(section.templateId) && (
                 <section>
