@@ -361,7 +361,7 @@ export const sectionTemplates: SectionTemplate[] = [
   {
     id: 'portfolio-grid',
     name: 'Portfolio Grid',
-    category: 'features',
+    category: 'portfolio',
     description: 'A grid showcasing projects or portfolio items',
     html: `
       <section class="py-20 px-6 max-w-7xl mx-auto">
@@ -370,39 +370,13 @@ export const sectionTemplates: SectionTemplate[] = [
           <p class="text-xl opacity-80 max-w-2xl mx-auto">{{subtitle}}</p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div class="group relative overflow-hidden rounded-2xl shadow-lg bg-white border border-gray-100">
-            <div class="h-64 bg-gray-200 flex items-center justify-center text-gray-500 font-bold uppercase tracking-widest text-xs">Project 1</div>
-            <div class="p-6">
-              <h3 class="text-xl font-bold mb-2">{{proj1Title}}</h3>
-              <p class="opacity-80">{{proj1Desc}}</p>
-            </div>
-          </div>
-          <div class="group relative overflow-hidden rounded-2xl shadow-lg bg-white border border-gray-100">
-            <div class="h-64 bg-gray-200 flex items-center justify-center text-gray-500 font-bold uppercase tracking-widest text-xs">Project 2</div>
-            <div class="p-6">
-              <h3 class="text-xl font-bold mb-2">{{proj2Title}}</h3>
-              <p class="opacity-80">{{proj2Desc}}</p>
-            </div>
-          </div>
-          <div class="group relative overflow-hidden rounded-2xl shadow-lg bg-white border border-gray-100">
-            <div class="h-64 bg-gray-200 flex items-center justify-center text-gray-500 font-bold uppercase tracking-widest text-xs">Project 3</div>
-            <div class="p-6">
-              <h3 class="text-xl font-bold mb-2">{{proj3Title}}</h3>
-              <p class="opacity-80">{{proj3Desc}}</p>
-            </div>
-          </div>
+          {{portfolioItemsHTML}}
         </div>
       </section>
     `,
     defaultContent: {
       title: 'Our Latest Work',
-      subtitle: 'A selection of our most recent and favorite projects.',
-      proj1Title: 'E-commerce Platform',
-      proj1Desc: 'A complete redesign resulting in a 40% conversion increase.',
-      proj2Title: 'Brand Identity',
-      proj2Desc: 'Modernizing a legacy brand for the digital age.',
-      proj3Title: 'Mobile Application',
-      proj3Desc: 'An award-winning fitness and habit tracking app.'
+      subtitle: 'A selection of our most recent and favorite projects.'
     }
   },
   {

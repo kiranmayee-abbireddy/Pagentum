@@ -528,6 +528,45 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
         `;
       }
 
+      if (section.templateId === 'portfolio-grid') {
+        const displayImages = section.images || [];
+        const itemsHTML = displayImages.map((img, idx) => {
+          const num = idx + 1;
+          const title = section.content[`proj${num}Title`] || `Project ${num}`;
+          const desc = section.content[`proj${num}Desc`] || '';
+          return `
+            <div class="group relative overflow-hidden rounded-2xl shadow-lg bg-white border border-gray-100 transition-all hover:shadow-xl hover:-translate-y-1">
+              <div class="h-64 overflow-hidden">
+                <img src="${img.src}" alt="${img.alt || title}" class="w-full h-full object-cover" />
+              </div>
+              <div class="p-8">
+                <h3 class="text-xl font-bold mb-3 text-gray-900">${title}</h3>
+                <p class="opacity-70 leading-relaxed">${desc}</p>
+              </div>
+            </div>
+          `;
+        }).join('') || `
+          <div class="col-span-full py-20 text-center bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">
+            <p class="text-gray-400 font-medium italic">Your portfolio items will appear here once images are added.</p>
+          </div>
+        `;
+
+        return `
+          <section class="portfolio-section py-24 px-6" ${combinedStyle}>
+            ${bgHTML}
+            <div class="max-w-7xl mx-auto relative z-10">
+              <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-6xl font-bold mb-6">${section.content.title || ''}</h2>
+                <p class="text-xl opacity-80 max-w-2xl mx-auto">${section.content.subtitle || ''}</p>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                ${itemsHTML}
+              </div>
+            </div>
+          </section>
+        `;
+      }
+
       if (section.templateId === 'contact-section') {
         return `
           <section class="py-24 px-6 max-w-7xl mx-auto" ${combinedStyle}>

@@ -200,16 +200,37 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
     }
 
     if (section.templateId === 'portfolio-grid') {
-      html = html.replace('class="py-20 px-6 max-w-7xl mx-auto"', 'class="py-4 px-2"');
-      html = html.replace('class="text-center mb-16"', 'class="text-center mb-4"');
-      html = html.replace('class="text-3xl md:text-5xl font-bold mb-4"', 'class="text-sm font-bold mb-1"');
-      html = html.replace('class="text-xl opacity-80 max-w-2xl mx-auto"', 'class="text-[8px] opacity-60"');
-      html = html.replace('class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"', 'class="grid grid-cols-3 gap-3"');
-      html = html.replace(/class="group relative overflow-hidden rounded-2xl shadow-lg bg-white border border-gray-100"/g, 'class="bg-gray-50 rounded-lg overflow-hidden border border-gray-100"');
-      html = html.replace(/class="h-64 bg-gray-200 flex items-center justify-center text-gray-500 font-bold uppercase tracking-widest text-xs"/g, 'class="h-16 bg-gray-200 flex items-center justify-center text-[6px] font-bold text-gray-400"');
-      html = html.replace(/class="p-6"/g, 'class="p-2"');
-      html = html.replace(/class="text-xl font-bold mb-2"/g, 'class="text-[9px] font-bold mb-0.5"');
-      html = html.replace(/class="opacity-80"/g, 'class="text-[7px] opacity-60"');
+      const displayImages = section.images || [];
+      const itemsHTML = displayImages.map((img, idx) => {
+        const num = idx + 1;
+        const title = section.content[`proj${num}Title`] || `Project ${num}`;
+        const desc = section.content[`proj${num}Desc`] || '';
+        return `
+          <div class="bg-gray-50 rounded-lg overflow-hidden border border-gray-100 flex flex-col h-full">
+            <div class="h-16 overflow-hidden">
+              <img src="${img.src}" alt="${img.alt || title}" class="w-full h-full object-cover" />
+            </div>
+            <div class="p-2 flex-1">
+              <h3 class="text-[9px] font-bold mb-0.5 line-clamp-1">${title}</h3>
+              <p class="text-[7px] text-gray-500 line-clamp-2">${desc}</p>
+            </div>
+          </div>
+        `;
+      }).join('') || `
+        <div class="col-span-full py-6 text-center bg-gray-50 rounded-xl border border-dashed border-gray-200">
+          <p class="text-[8px] text-gray-400 italic">No projects added yet. Click edit to add items.</p>
+        </div>
+      `;
+
+      html = `
+        <div class="py-4 px-2 text-center">
+          <h2 class="text-sm font-bold mb-1">${section.content.title || ''}</h2>
+          <p class="text-[8px] opacity-60 mb-4">${section.content.subtitle || ''}</p>
+          <div class="grid grid-cols-3 gap-3">
+            ${itemsHTML}
+          </div>
+        </div>
+      `;
     }
 
     if (section.templateId === 'footer-advanced') {
