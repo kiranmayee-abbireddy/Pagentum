@@ -408,11 +408,11 @@ export const sectionTemplates: SectionTemplate[] = [
     description: 'Footer with description, links, and social icons',
     html: `
       <footer class="py-16 px-6 bg-gray-900 text-white">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-12 text-center md:text-left">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-12 text-left">
           <div class="space-y-6">
             <h3 class="text-2xl font-bold mb-4">{{companyName}}</h3>
-            <p class="text-gray-400 max-w-md leading-relaxed mx-auto md:mx-0">{{description}}</p>
-            <div class="flex justify-center md:justify-start space-x-4">
+            <p class="text-gray-400 max-w-md leading-relaxed">{{description}}</p>
+            <div class="flex justify-start space-x-4">
               <a href="{{social1Link}}" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-500 transition-colors">
                 <span class="text-xs font-bold">FB</span>
               </a>

@@ -533,11 +533,11 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
         return `
           <footer class="footer-advanced py-20 bg-gray-900 text-white" ${combinedStyle}>
             <div class="max-w-7xl mx-auto px-6">
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16 text-center md:text-left">
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16 text-left">
                 <div class="space-y-6">
                   <h3 class="text-2xl font-bold">${section.content.companyName || 'Pagentum'}</h3>
-                  <p class="text-gray-400 leading-relaxed max-w-md mx-auto md:mx-0">${section.content.description || ''}</p>
-                  <div class="flex justify-center md:justify-start space-x-4">
+                  <p class="text-gray-400 leading-relaxed max-w-md">${section.content.description || ''}</p>
+                  <div class="flex justify-start space-x-4">
                     ${['social1Link', 'social2Link', 'social3Link', 'social4Link'].map((key, i) => {
                       const href = section.content[key as keyof typeof section.content] || '#';
                       const labels = ['FB', 'TW', 'IG', 'IN'];
