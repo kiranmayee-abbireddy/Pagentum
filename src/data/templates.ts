@@ -152,14 +152,15 @@ export const sectionTemplates: SectionTemplate[] = [
         <div class="cta-content">
           <h2 class="cta-title">{{title}}</h2>
           <p class="cta-subtitle">{{subtitle}}</p>
-          <button class="cta-button">{{ctaText}}</button>
+          <a href="{{ctaHref}}" class="cta-button" style="text-decoration: none; display: inline-block;">{{ctaText}}</a>
         </div>
       </section>
     `,
     defaultContent: {
       title: 'Ready to Get Started?',
       subtitle: 'Join thousands of users building amazing pages',
-      ctaText: 'Sign Up Now'
+      ctaText: 'Sign Up Now',
+      ctaHref: '#'
     }
   },
   {
@@ -213,7 +214,7 @@ export const sectionTemplates: SectionTemplate[] = [
               <li>{{tier1Feature2}}</li>
               <li>{{tier1Feature3}}</li>
             </ul>
-            <button class="pricing-button">{{tier1CTA}}</button>
+            <a href="{{tier1Href}}" class="pricing-button" style="text-decoration: none; display: inline-block;">{{tier1CTA}}</a>
           </div>
           <div class="pricing-card pricing-featured">
             <h3 class="pricing-tier">{{tier2Name}}</h3>
@@ -223,7 +224,7 @@ export const sectionTemplates: SectionTemplate[] = [
               <li>{{tier2Feature2}}</li>
               <li>{{tier2Feature3}}</li>
             </ul>
-            <button class="pricing-button">{{tier2CTA}}</button>
+            <a href="{{tier2Href}}" class="pricing-button" style="text-decoration: none; display: inline-block;">{{tier2CTA}}</a>
           </div>
           <div class="pricing-card">
             <h3 class="pricing-tier">{{tier3Name}}</h3>
@@ -233,7 +234,7 @@ export const sectionTemplates: SectionTemplate[] = [
               <li>{{tier3Feature2}}</li>
               <li>{{tier3Feature3}}</li>
             </ul>
-            <button class="pricing-button">{{tier3CTA}}</button>
+            <a href="{{tier3Href}}" class="pricing-button" style="text-decoration: none; display: inline-block;">{{tier3CTA}}</a>
           </div>
         </div>
       </section>
@@ -246,18 +247,21 @@ export const sectionTemplates: SectionTemplate[] = [
       tier1Feature2: 'Basic templates',
       tier1Feature3: 'Email support',
       tier1CTA: 'Get Started',
+      tier1Href: '#',
       tier2Name: 'Pro',
       tier2Price: '$29/mo',
       tier2Feature1: 'Unlimited projects',
       tier2Feature2: 'All templates',
       tier2Feature3: 'Priority support',
       tier2CTA: 'Go Pro',
+      tier2Href: '#',
       tier3Name: 'Enterprise',
       tier3Price: 'Custom',
       tier3Feature1: 'Custom templates',
       tier3Feature2: 'Dedicated support',
       tier3Feature3: 'SLA guarantee',
-      tier3CTA: 'Contact Sales'
+      tier3CTA: 'Contact Sales',
+      tier3Href: '#'
     }
   },
   {
