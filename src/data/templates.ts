@@ -279,7 +279,7 @@ export const sectionTemplates: SectionTemplate[] = [
     defaultContent: {
       title: 'Watch the Story',
       description: 'Discover how our platform is transforming the industry with cutting-edge technology and user-centric design.',
-      videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+      videoUrl: 'https://www.youtube.com/watch?v=YE7VzlLtp-4'
     },
     defaultLayout: {
       variant: 'video-right'

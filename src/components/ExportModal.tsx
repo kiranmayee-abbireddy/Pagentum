@@ -13,6 +13,12 @@ interface ExportModalProps {
 export default function ExportModal({ sections, theme, onClose }: ExportModalProps) {
   const [alertConfig, setAlertConfig] = useState<{title: string, message: string, type: 'success'} | null>(null);
 
+  const hasYouTubeVideo = sections.some(section => {
+    const isVideoSection = section.templateId === 'video-section' && section.content?.videoUrl?.includes('youtu');
+    const isBackgroundVideo = section.layout?.backgroundType === 'video' && section.layout?.backgroundVideo?.includes('youtu');
+    return isVideoSection || isBackgroundVideo;
+  });
+
   const handleExportSeparate = () => {
     const html = generateHTML(sections, theme);
     const css = generateCSS(theme);
@@ -96,6 +102,15 @@ export default function ExportModal({ sections, theme, onClose }: ExportModalPro
               </div>
             </div>
           </button>
+
+          {hasYouTubeVideo && (
+            <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg flex items-start gap-3 text-left">
+              <span className="text-xl shrink-0 leading-none" role="img" aria-label="warning">⚠️</span>
+              <div className="text-xs sm:text-sm text-yellow-800 leading-relaxed">
+                <strong>Note on YouTube Videos:</strong> YouTube videos require a server to play properly due to strict browser security policies. If you open your exported file directly from your computer (file://), videos may not play. To test videos locally, use a tool like <strong>Live Server</strong> in VS Code to view via <code>localhost</code>, or deploy your file to a real web server.
+              </div>
+            </div>
+          )}
 
           <button
             onClick={() => {
