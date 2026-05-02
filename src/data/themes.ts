@@ -1483,5 +1483,12 @@ div[style*="background"] > section {
 .portfolio-section .bg-blue-100 { background-color: color-mix(in srgb, var(--primary-color) 15%, transparent) !important; }
 .portfolio-section .text-blue-600 { color: var(--primary-color) !important; }
 
+/* --- Contact Section Theme Overrides --- */
+.contact-section .bg-white\\/50 { background-color: color-mix(in srgb, var(--bg-color) 50%, transparent) !important; }
+.contact-section .border-gray-100 { border-color: color-mix(in srgb, var(--text-color) 10%, transparent) !important; }
+.contact-section .bg-blue-100, .contact-section .bg-green-100, .contact-section .bg-purple-100 { background-color: color-mix(in srgb, var(--primary-color) 15%, transparent) !important; }
+.contact-section .text-blue-600, .contact-section .text-green-600, .contact-section .text-purple-600 { color: var(--primary-color) !important; }
+.contact-section h3, .contact-section p { color: var(--text-color) !important; }
+
   `.trim();
 };
