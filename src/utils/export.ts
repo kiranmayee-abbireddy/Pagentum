@@ -144,6 +144,20 @@ export function generateHTML(sections: PageSection[], theme: ThemeConfig): strin
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Generated Page</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: 'var(--primary-color)',
+            secondary: 'var(--secondary-color)',
+            accent: 'var(--accent-color)'
+          }
+        }
+      }
+    }
+  </script>
   ${sections.some(s => s.layout?.backgroundType === 'video' && s.layout?.backgroundVideo?.toLowerCase().endsWith('.m3u8')) ? '<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>' : ''}
 </head>
 <body>
@@ -541,7 +555,20 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Generated Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '${theme.primaryColor}',
+            secondary: '${theme.secondaryColor}',
+            accent: '${theme.accentColor || theme.primaryColor}'
+          }
+        }
+      }
+    }
+  </script>
   ${sections.some(s => s.layout?.backgroundType === 'video' && s.layout?.backgroundVideo?.toLowerCase().endsWith('.m3u8')) ? '<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>' : ''}
   <style>
 ${css}
