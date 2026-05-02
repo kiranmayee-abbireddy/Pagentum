@@ -161,6 +161,56 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
       }
     }
 
+    if (section.templateId === 'contact-section') {
+      html = html.replace('class="py-20 px-6 max-w-7xl mx-auto"', 'class="py-4 px-2"');
+      html = html.replace('class="text-center mb-16"', 'class="text-center mb-4"');
+      html = html.replace('class="text-3xl md:text-5xl font-bold mb-4"', 'class="text-sm font-bold mb-1"');
+      html = html.replace('class="text-xl opacity-80 max-w-2xl mx-auto"', 'class="text-[8px] opacity-60"');
+      html = html.replace('class="grid md:grid-cols-2 gap-12"', 'class="grid grid-cols-2 gap-4"');
+      html = html.replace('class="text-2xl font-semibold mb-6"', 'class="text-[10px] font-bold mb-2"');
+      html = html.replace('class="text-lg opacity-80 mb-8"', 'class="text-[7px] opacity-60 mb-2"');
+      html = html.replace('class="space-y-4 text-lg"', 'class="space-y-1 text-[7px]"');
+      html = html.replace('class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100"', 'class="bg-gray-50 p-3 rounded-lg border border-gray-100"');
+      html = html.replace('class="flex flex-col space-y-4"', 'class="space-y-2"');
+      html = html.replace(/class="p-4 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"/g, 'class="p-1.5 text-[8px] rounded-md bg-white border border-gray-200 w-full"');
+      html = html.replace('class="bg-blue-600 text-white font-bold py-4 rounded-lg hover:bg-blue-700 transition-colors"', 'class="bg-blue-600 text-white text-[8px] font-bold py-1.5 rounded-md w-full"');
+    }
+
+    if (section.templateId === 'portfolio-grid') {
+      html = html.replace('class="py-20 px-6 max-w-7xl mx-auto"', 'class="py-4 px-2"');
+      html = html.replace('class="text-center mb-16"', 'class="text-center mb-4"');
+      html = html.replace('class="text-3xl md:text-5xl font-bold mb-4"', 'class="text-sm font-bold mb-1"');
+      html = html.replace('class="text-xl opacity-80 max-w-2xl mx-auto"', 'class="text-[8px] opacity-60"');
+      html = html.replace('class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"', 'class="grid grid-cols-3 gap-3"');
+      html = html.replace(/class="group relative overflow-hidden rounded-2xl shadow-lg bg-white border border-gray-100"/g, 'class="bg-gray-50 rounded-lg overflow-hidden border border-gray-100"');
+      html = html.replace(/class="h-64 bg-gray-200 flex items-center justify-center text-gray-500 font-bold uppercase tracking-widest text-xs"/g, 'class="h-16 bg-gray-200 flex items-center justify-center text-[6px] font-bold text-gray-400"');
+      html = html.replace(/class="p-6"/g, 'class="p-2"');
+      html = html.replace(/class="text-xl font-bold mb-2"/g, 'class="text-[9px] font-bold mb-0.5"');
+      html = html.replace(/class="opacity-80"/g, 'class="text-[7px] opacity-60"');
+    }
+
+    if (section.templateId === 'footer-advanced') {
+      html = html.replace('class="footer-advanced py-16 px-6"', 'class="py-4 px-2 border-t border-gray-100"');
+      html = html.replace('class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-12 text-left"', 'class="grid grid-cols-3 gap-4 mb-4 text-left"');
+      html = html.replace('class="text-2xl font-bold mb-4"', 'class="text-[10px] font-bold mb-1"');
+      html = html.replace('class="text-gray-400 max-w-md leading-relaxed"', 'class="text-[7px] text-gray-500 leading-tight"');
+      html = html.replace('class="flex justify-start space-x-4"', 'class="flex space-x-1.5 mt-2"');
+      html = html.replace(/class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-500 transition-colors"/g, 'class="w-4 h-4 rounded-full bg-gray-100 flex items-center justify-center"');
+      html = html.replace(/class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-400 transition-colors"/g, 'class="w-4 h-4 rounded-full bg-gray-100 flex items-center justify-center"');
+      html = html.replace(/class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-pink-500 transition-colors"/g, 'class="w-4 h-4 rounded-full bg-gray-100 flex items-center justify-center"');
+      html = html.replace(/class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 transition-colors"/g, 'class="w-4 h-4 rounded-full bg-gray-100 flex items-center justify-center"');
+      html = html.replace(/class="text-xs font-bold"/g, 'class="text-[5px] font-bold text-gray-400"');
+      
+      html = html.replace(/class="text-lg font-bold mb-4"/g, 'class="text-[8px] font-bold mb-2 text-gray-900"');
+      html = html.replace(/class="flex flex-col space-y-2 text-gray-400"/g, 'class="flex flex-col space-y-1"');
+      html = html.replace(/class="hover:text-white transition-colors"/g, 'class="text-[7px] text-gray-400"');
+      html = html.replace(/class="space-y-2 text-gray-400"/g, 'class="space-y-1"');
+      html = html.replace(/<p>/g, '<p class="text-[7px] text-gray-400">');
+      
+      html = html.replace('class="max-w-7xl mx-auto pt-8 border-t border-gray-800 text-center text-gray-500"', 'class="pt-2 border-t border-gray-50 text-center"');
+      html = html.replace(/<p>{{copyright}}<\/p>/, '<p class="text-[6px] text-gray-400">{{copyright}}</p>');
+    }
+
     if (section.templateId === 'pricing-3tier') {
       html = html.replace('class="pricing-grid"', 'class="pricing-grid grid grid-cols-3 gap-3 px-2 py-4"');
       html = html.replace(/class="pricing-card"/g, 'class="pricing-card p-3 bg-gray-50 rounded-xl border border-gray-100 flex flex-col items-center"');
