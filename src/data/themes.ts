@@ -785,7 +785,6 @@ div[style*="background"] > section {
   animation: auto-scroll 30s linear infinite;
 }
 
-
 @media (max-width: 1024px) {
   .nav-links a { 
     font-size: calc(var(--font-size) * 1.125); 
@@ -1471,9 +1470,18 @@ div[style*="background"] > section {
 }
 
 /* Overlay & Sticky Utilities */
-.sticky { position: sticky !important; top: 0 !important; z-index: 100 !important; }
-.fixed { position: fixed !important; top: 0 !important; left: 0 !important; width: 100% !important; z-index: 100 !important; }
-.absolute { position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; z-index: 100 !important; }
+.sticky { position: sticky !important; }
+.fixed { position: fixed !important; }
+.absolute { position: absolute !important; }
+
+/* --- Portfolio Grid Theme Overrides --- */
+.portfolio-section .bg-white { background-color: var(--bg-color) !important; }
+.portfolio-section .border-gray-100 { border-color: color-mix(in srgb, var(--text-color) 10%, transparent) !important; }
+.portfolio-section .text-gray-900 { color: var(--text-color) !important; }
+.portfolio-section .bg-gray-50 { background-color: color-mix(in srgb, var(--text-color) 5%, transparent) !important; }
+.portfolio-section .bg-gray-900\\/40 { background-color: color-mix(in srgb, var(--bg-color) 40%, transparent) !important; }
+.portfolio-section .bg-blue-100 { background-color: color-mix(in srgb, var(--primary-color) 15%, transparent) !important; }
+.portfolio-section .text-blue-600 { color: var(--primary-color) !important; }
 
   `.trim();
 };

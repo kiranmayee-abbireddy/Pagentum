@@ -66,7 +66,7 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
       html = html.replace('class="nav-inner"', 'class="nav-inner flex items-center justify-between px-2 py-1 flex-wrap gap-2"');
       html = html.replace('class="nav-brand"', 'class="nav-brand flex items-center space-x-2 shrink-0"');
       html = html.replace('class="nav-links"', 'class="nav-links-editor flex flex-wrap gap-1.5 sm:gap-3 justify-center"');
-      
+
       // Remove mobile menu button from editor view
       html = html.replace(/<button class="mobile-menu-btn"[\s\S]*?<\/button>/, '');
       const navLinks = [
@@ -78,15 +78,15 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
           });
           return linkSections
             .map(s => {
-                let label = s.content.title;
-                if (s.templateId.includes('hero')) {
-                  heroCount++;
-                  if (heroCount === 1) label = 'Home';
-                  else if (heroCount === 2) label = 'About';
-                  else return null;
-                }
-                if (!label) return null;
-                return `
+              let label = s.content.title;
+              if (s.templateId.includes('hero')) {
+                heroCount++;
+                if (heroCount === 1) label = 'Home';
+                else if (heroCount === 2) label = 'About';
+                else return null;
+              }
+              if (!label) return null;
+              return `
                 <a href="#section-${s.id}" 
                    onClick="document.getElementById('section-${s.id}')?.scrollIntoView({ behavior: 'smooth' })" 
                    class="text-gray-500 hover:text-blue-600 font-bold text-[8px] uppercase tracking-wider"
@@ -114,14 +114,14 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
 
       html = html.replace('{{navLinksHTML}}', navLinks);
     }
-    
+
     if (section.templateId === 'video-section') {
       const variant = layout?.variant || 'video-right';
       html = html.replace('{{variantClass}}', variant === 'video-left' ? 'lg:flex-row-reverse flex-col' : 'lg:flex-row flex-col');
-      
+
       const videoUrl = section.content.videoUrl || '';
       // Simplified preview for editor
-      html = html.replace('{{videoEmbedHTML}}', 
+      html = html.replace('{{videoEmbedHTML}}',
         `<div class="w-full h-full bg-gray-900 rounded-xl flex flex-col items-center justify-center p-4">
            <div class="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center mb-2">
              <div class="w-0 h-0 border-t-[6px] border-t-transparent border-l-[10px] border-l-white border-b-[6px] border-b-transparent ml-1"></div>
@@ -129,7 +129,7 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
            <span class="text-[7px] text-white/40 font-bold uppercase tracking-widest text-center">${videoUrl ? 'Video Stream Ready' : 'Paste Video Link'}</span>
          </div>`
       );
-      
+
       // Basic structure for editor
       html = html.replace('class="video-inner"', 'class="video-inner flex items-center gap-4 py-2"');
       html = html.replace('class="video-text"', 'class="video-text flex-1"');
@@ -169,7 +169,7 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
           </div>
           <p class="text-[7px] text-gray-500 truncate">${section.content.email}</p>
         </div>` : '';
-      
+
       const phoneHTML = section.content.phone ? `
         <div class="p-2 rounded-lg border border-gray-100 bg-gray-50">
           <div class="w-4 h-4 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-1">
@@ -206,7 +206,7 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
         const title = section.content[`proj${num}Title`] || `Project ${num}`;
         const desc = section.content[`proj${num}Desc`] || '';
         const thumb = section.content[`proj${num}Thumb`];
-        
+
         return `
           <div class="bg-gray-50 rounded-lg overflow-hidden border border-gray-100 flex flex-col h-full">
             <div class="h-16 overflow-hidden bg-gray-100 flex items-center justify-center p-2 text-center" style="background: color-mix(in srgb, var(--primary-color) 8%, var(--bg-color));">
@@ -247,13 +247,13 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
       html = html.replace(/class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-pink-500 transition-colors"/g, 'class="w-4 h-4 rounded-full bg-gray-100 flex items-center justify-center"');
       html = html.replace(/class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 transition-colors"/g, 'class="w-4 h-4 rounded-full bg-gray-100 flex items-center justify-center"');
       html = html.replace(/class="text-xs font-bold"/g, 'class="text-[5px] font-bold text-gray-400"');
-      
+
       html = html.replace(/class="text-lg font-bold mb-4"/g, 'class="text-[8px] font-bold mb-2 text-gray-900"');
       html = html.replace(/class="flex flex-col space-y-2 text-gray-400"/g, 'class="flex flex-col space-y-1"');
       html = html.replace(/class="hover:text-white transition-colors"/g, 'class="text-[7px] text-gray-400"');
       html = html.replace(/class="space-y-2 text-gray-400"/g, 'class="space-y-1"');
       html = html.replace(/<p>/g, '<p class="text-[7px] text-gray-400">');
-      
+
       html = html.replace('class="max-w-7xl mx-auto pt-8 border-t border-gray-800 text-center text-gray-500"', 'class="pt-2 border-t border-gray-50 text-center"');
       html = html.replace(/<p>{{copyright}}<\/p>/, '<p class="text-[6px] text-gray-400">{{copyright}}</p>');
     }

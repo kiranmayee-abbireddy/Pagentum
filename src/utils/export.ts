@@ -459,18 +459,18 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
               const template = sectionTemplates.find(t => t.id === s.templateId);
               return template?.category !== 'cta' && s.templateId !== 'navbar-1' && s.templateId !== 'footer-1' && s.templateId !== 'footer-advanced';
             });
-            
+
             return linkSections.map(s => {
-                let label = s.content.title;
-                if (s.templateId.includes('hero')) {
-                  heroCount++;
-                  if (heroCount === 1) label = 'Home';
-                  else if (heroCount === 2) label = 'About';
-                  else return null;
-                }
-                if (!label) return null;
-                return `<a href="#section-${s.id}" class="hover:text-blue-600 font-medium transition-colors" style="color: inherit; font-size: 0.9rem; white-space: nowrap;">${label}</a>`;
-              })
+              let label = s.content.title;
+              if (s.templateId.includes('hero')) {
+                heroCount++;
+                if (heroCount === 1) label = 'Home';
+                else if (heroCount === 2) label = 'About';
+                else return null;
+              }
+              if (!label) return null;
+              return `<a href="#section-${s.id}" class="hover:text-blue-600 font-medium transition-colors" style="color: inherit; font-size: 0.9rem; white-space: nowrap;">${label}</a>`;
+            })
               .filter(Boolean)
               .join('');
           })()}
@@ -536,8 +536,8 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
           const desc = section.content[`proj${num}Desc`] || '';
           const link = section.content[`proj${num}Link`] || '#';
           const thumb = section.content[`proj${num}Thumb`];
-          
-          const thumbHTML = thumb 
+
+          const thumbHTML = thumb
             ? `<img src="${thumb}" alt="${title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />`
             : `
               <div class="w-full h-full flex items-center justify-center p-8 text-center" style="background: color-mix(in srgb, var(--primary-color) 8%, var(--bg-color));">
@@ -641,43 +641,43 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                   <p class="opacity-70 leading-relaxed max-w-md">${section.content.description || ''}</p>
                   <div class="flex justify-start space-x-4">
                     ${['social1Link', 'social2Link', 'social3Link', 'social4Link'].map((key, i) => {
-                      const href = section.content[key as keyof typeof section.content] || '#';
-                      const labels = ['FB', 'TW', 'IG', 'IN'];
-                      return `<a href="${href}" class="w-10 h-10 rounded-full flex items-center justify-center transition-colors" style="background: color-mix(in srgb, var(--text-color) 10%, transparent); color: inherit;">
+          const href = section.content[key as keyof typeof section.content] || '#';
+          const labels = ['FB', 'TW', 'IG', 'IN'];
+          return `<a href="${href}" class="w-10 h-10 rounded-full flex items-center justify-center transition-colors" style="background: color-mix(in srgb, var(--text-color) 10%, transparent); color: inherit;">
                         <span class="text-xs font-bold">${labels[i]}</span>
                       </a>`;
-                    }).join('')}
+        }).join('')}
                   </div>
                 </div>
                 
                 <div class="space-y-6">
                   <h4 class="text-lg font-bold">Quick Links</h4>
                   ${(() => {
-                      let heroCount = 0;
-                      const linkSections = sections.filter(s => s.templateId !== 'navbar-1' && s.templateId !== 'footer-1' && s.templateId !== 'footer-advanced');
-                      
-                      const allLinks = linkSections.map(s => {
-                          let label = s.content.title;
-                          if (s.templateId.includes('hero')) {
-                            heroCount++;
-                            if (heroCount === 1) label = 'Home';
-                            else if (heroCount === 2) label = 'About';
-                            else return null;
-                          }
-                          if (!label) return null;
-                          return `<a href="#section-${s.id}" class="hover:text-white transition-colors text-sm">${label}</a>`;
-                        }).filter(Boolean);
+            let heroCount = 0;
+            const linkSections = sections.filter(s => s.templateId !== 'navbar-1' && s.templateId !== 'footer-1' && s.templateId !== 'footer-advanced');
 
-                      if (allLinks.length > 6) {
-                        return `<div class="grid grid-cols-2 gap-x-8 gap-y-3 opacity-70">
+            const allLinks = linkSections.map(s => {
+              let label = s.content.title;
+              if (s.templateId.includes('hero')) {
+                heroCount++;
+                if (heroCount === 1) label = 'Home';
+                else if (heroCount === 2) label = 'About';
+                else return null;
+              }
+              if (!label) return null;
+              return `<a href="#section-${s.id}" class="hover:text-white transition-colors text-sm">${label}</a>`;
+            }).filter(Boolean);
+
+            if (allLinks.length > 6) {
+              return `<div class="grid grid-cols-2 gap-x-8 gap-y-3 opacity-70">
                           ${allLinks.join('')}
                         </div>`;
-                      }
-                      
-                      return `<div class="flex flex-col space-y-3 opacity-70">
+            }
+
+            return `<div class="flex flex-col space-y-3 opacity-70">
                         ${allLinks.join('')}
                       </div>`;
-                    })()}
+          })()}
                 </div>
 
                 <div class="space-y-6">
