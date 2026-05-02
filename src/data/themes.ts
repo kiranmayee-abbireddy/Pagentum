@@ -1196,10 +1196,6 @@ div[style*="background"] > section {
   opacity: 0.9;
   line-height: 1.4;
   flex-grow: 1;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 
 .auto-card-cta {
@@ -1241,7 +1237,8 @@ div[style*="background"] > section {
 
 .rail-card-box {
   width: 260px;
-  height: 376px;
+  min-height: 376px;
+  height: auto;
   position: relative;
   display: grid;
   place-items: center;

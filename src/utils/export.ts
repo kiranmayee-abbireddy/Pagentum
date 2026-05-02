@@ -408,7 +408,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                   <h2 class="text-3xl lg:text-4xl font-bold mb-4 text-center">${section.content.title}</h2>
                   <p class="text-xl opacity-80 max-w-2xl mx-auto text-center mb-12">${section.content.subtitle}</p>
                 </div>
-                <div class="slider" style="--width: 280px; --height: 360px; --quantity: ${quantity};">
+                <div class="slider" style="--width: 280px; --height: 420px; --quantity: ${quantity};">
                   <div class="list">
                     ${displayImages.map((img, idx) => {
             const productNum = idx + 1;
