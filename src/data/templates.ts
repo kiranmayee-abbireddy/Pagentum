@@ -11,14 +11,15 @@ export const sectionTemplates: SectionTemplate[] = [
         <div class="hero-content">
           <h1 class="hero-title">{{title}}</h1>
           <p class="hero-subtitle">{{subtitle}}</p>
-          <button class="hero-cta">{{ctaText}}</button>
+          <a href="{{ctaHref}}" class="hero-cta" style="text-decoration: none; display: inline-block;">{{ctaText}}</a>
         </div>
       </section>
     `,
     defaultContent: {
       title: 'Your Product Name Here',
       subtitle: 'Transform your ideas into reality with our innovative solution',
-      ctaText: 'Get Started'
+      ctaText: 'Get Started',
+      ctaHref: '#'
     }
   },
   {
@@ -58,6 +59,7 @@ export const sectionTemplates: SectionTemplate[] = [
       feature3Desc: 'Download clean HTML and CSS'
     }
   },
+
   {
     id: 'navbar-1',
     name: 'Navbar',

@@ -206,8 +206,8 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
         const variant = (section.layout as any)?.variant || 'image-right';
         const img = section.images?.[0];
         const showButton = (section.layout as any)?.showButton ?? true;
-        const buttonLabel = (section.layout as any)?.buttonLabel || section.content.ctaText || 'Get Started';
-        const buttonHref = (section.layout as any)?.buttonHref || '#';
+        const buttonLabel = section.content.buttonLabel || section.content.ctaText || 'Get Started';
+        const buttonHref = section.content.buttonHref || section.content.ctaHref || '#';
 
         return `
           <section id="section-${section.id}" class="hero-advanced py-20 px-4" ${combinedStyle}>

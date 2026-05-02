@@ -186,28 +186,32 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-2">
                   {Object.entries(template.defaultContent)
                     .filter(([key]) => !key.includes('nav') && !key.includes('link')) // Filter out nav/footer links
-                    .map(([key, defaultValue]) => (
-                    <div key={key} className={`${(key.includes('Description') || key.includes('quote')) ? 'md:col-span-2' : ''} space-y-1`}>
-                      <label className="text-[9px] font-bold text-gray-400 uppercase tracking-wider ml-1">
-                        {key.replace(/([A-Z])/g, ' $1').trim()}
-                      </label>
-                      {key.includes('Description') || key.includes('quote') ? (
-                        <textarea
-                          className="w-full p-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all text-sm font-medium text-gray-600 shadow-sm"
-                          rows={3}
-                          value={content[key] || defaultValue || ''}
-                          onChange={handleContentChange(key)}
-                        />
-                      ) : (
-                        <input
-                          type="text"
-                          className="w-full p-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all text-sm font-bold text-gray-900 shadow-sm"
-                          value={content[key] || defaultValue || ''}
-                          onChange={handleContentChange(key)}
-                        />
-                      )}
-                    </div>
-                  ))}
+                    .map(([key, defaultValue]) => {
+                      const isHref = key.toLowerCase().includes('href');
+                      return (
+                        <div key={key} className={`${(key.includes('Description') || key.includes('quote')) ? 'md:col-span-2' : ''} space-y-1`}>
+                          <label className="text-[9px] font-bold text-gray-400 uppercase tracking-wider ml-1 flex items-center gap-1">
+                            {isHref && <MousePointer2 className="w-2.5 h-2.5 text-blue-400" />}
+                            {key.replace(/([A-Z])/g, ' $1').replace('Href', ' Link').trim()}
+                          </label>
+                          {key.includes('Description') || key.includes('quote') ? (
+                            <textarea
+                              className="w-full p-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all text-sm font-medium text-gray-600 shadow-sm"
+                              rows={3}
+                              value={content[key] || defaultValue || ''}
+                              onChange={handleContentChange(key)}
+                            />
+                          ) : (
+                            <input
+                              type="text"
+                              className={`w-full p-3 border rounded-xl focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none transition-all text-sm shadow-sm ${isHref ? 'bg-blue-50/30 border-blue-100 font-bold text-blue-600' : 'bg-white border-gray-200 font-bold text-gray-900'}`}
+                              value={content[key] || defaultValue || ''}
+                              onChange={handleContentChange(key)}
+                            />
+                          )}
+                        </div>
+                      );
+                    })}
                 </div>
               </section>
 
