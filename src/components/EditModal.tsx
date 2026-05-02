@@ -398,6 +398,25 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                             </div>
 
                             <div className="space-y-1">
+                              <label className="text-[8px] font-bold text-gray-400 uppercase ml-1">Fallback Style (If no thumbnail)</label>
+                              <div className="grid grid-cols-3 gap-2">
+                                {['gradient', 'waves', 'pastel'].map(p => (
+                                  <button
+                                    key={p}
+                                    onClick={() => setContent(prev => ({ ...prev, [`proj${num}Pattern`]: p }))}
+                                    className={`py-2 rounded-lg border text-[8px] font-black uppercase tracking-tighter transition-all ${
+                                      (content[`proj${num}Pattern`] || 'gradient') === p
+                                        ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
+                                        : 'bg-white text-gray-400 border-gray-100 hover:bg-gray-50'
+                                    }`}
+                                  >
+                                    {p}
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+
+                            <div className="space-y-1">
                               <label className="text-[8px] font-bold text-gray-400 uppercase ml-1">Thumbnail Image (Optional)</label>
                               <div className="flex items-center space-x-3">
                                 {content[`proj${num}Thumbnail`] && (

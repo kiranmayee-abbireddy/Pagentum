@@ -538,13 +538,16 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
           const desc = section.content[`proj${i}Desc`] || '';
           const link = section.content[`proj${i}Link`] || '#';
           const thumbnail = section.content[`proj${i}Thumbnail`];
+          const patternType = section.content[`proj${i}Pattern`] || 'gradient';
           
-          const fallbackPatterns = [
-            'linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%)',
-            'radial-gradient(circle at top left, var(--primary-color) 0%, transparent 70%), radial-gradient(circle at bottom right, var(--secondary-color) 0%, transparent 70%)',
-            'conic-gradient(from 180deg at 50% 50%, var(--primary-color) 0deg, var(--secondary-color) 180deg, var(--primary-color) 360deg)'
-          ];
-          const pattern = fallbackPatterns[(i - 1) % fallbackPatterns.length];
+          let pattern = '';
+          if (patternType === 'gradient') {
+            pattern = 'linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%)';
+          } else if (patternType === 'waves') {
+            pattern = `url("data:image/svg+xml,%3Csvg width='100' height='20' viewBox='0 0 100 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10 Q 25 20 50 10 T 100 10' stroke='white' fill='none' opacity='0.2'/%3E%3C/svg%3E"), linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%)`;
+          } else if (patternType === 'pastel') {
+            pattern = 'color-mix(in srgb, var(--primary-color) 15%, var(--bg-color))';
+          }
 
           items.push(`
             <a href="${link}" class="group relative block overflow-hidden rounded-3xl shadow-lg bg-white border border-gray-100 transition-all hover:shadow-2xl hover:-translate-y-2">
@@ -552,23 +555,29 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                 ${thumbnail ? `
                   <img src="${thumbnail}" alt="${title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                 ` : `
-                  <div class="w-full h-full flex items-center justify-center relative overflow-hidden" style="background: ${pattern}; opacity: 0.15;">
-                    <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(var(--text-color) 1px, transparent 1px); background-size: 20px 20px;"></div>
+                  <div class="w-full h-full flex items-center justify-center relative overflow-hidden" style="background: ${pattern};">
+                    ${patternType === 'pastel' ? `
+                      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(var(--text-color) 1px, transparent 1px); background-size: 20px 20px;"></div>
+                    ` : ''}
                   </div>
                   <div class="absolute inset-0 flex items-center justify-center">
-                    <span class="text-4xl font-black opacity-10 uppercase tracking-tighter" style="color: var(--primary-color)">${title.substring(0, 2)}</span>
+                    <span class="text-4xl font-black opacity-20 uppercase tracking-tighter" style="color: ${patternType === 'pastel' ? 'var(--primary-color)' : 'white'}">${title.substring(0, 2)}</span>
                   </div>
                 `}
-                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300"></div>
+                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300"></div>
               </div>
               <div class="p-10">
                 <div class="flex items-center justify-between mb-4">
-                   <h3 class="text-2xl font-black text-gray-900 group-hover:text-blue-600 transition-colors">${title}</h3>
-                   <div class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all">
-                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="9 5l7 7-7 7"></path></svg>
+                   <h3 class="text-2xl font-black text-gray-900 group-hover:text-[var(--primary-color)] transition-colors">${title}</h3>
+                   <div class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-[var(--primary-color)] group-hover:text-white transition-all">
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                    </div>
                 </div>
                 <p class="opacity-70 leading-relaxed text-lg line-clamp-3">${desc}</p>
+                <div class="mt-6 flex items-center text-[var(--primary-color)] font-bold text-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span>View Project</span>
+                  <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                </div>
               </div>
             </a>
           `);

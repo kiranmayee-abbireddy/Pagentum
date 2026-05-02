@@ -207,21 +207,31 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
         if (!title) continue;
         const desc = section.content[`proj${i}Desc`] || '';
         const thumbnail = section.content[`proj${i}Thumbnail`];
+        const patternType = section.content[`proj${i}Pattern`] || 'gradient';
         
         items.push(`
-          <div class="bg-gray-50 rounded-xl overflow-hidden border border-gray-100 flex flex-col h-full shadow-sm">
-            <div class="h-20 overflow-hidden relative bg-gray-200">
+          <div class="bg-gray-50 rounded-xl overflow-hidden border border-gray-100 flex flex-col h-full shadow-sm group/card transition-all hover:border-blue-200">
+            <div class="h-20 overflow-hidden relative">
               ${thumbnail ? `
                 <img src="${thumbnail}" class="w-full h-full object-cover" />
               ` : `
-                <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50 opacity-50">
+                <div class="w-full h-full flex items-center justify-center ${
+                  patternType === 'gradient' ? 'bg-gradient-to-br from-blue-100 to-indigo-100' :
+                  patternType === 'waves' ? 'bg-gradient-to-br from-blue-50 to-indigo-50 opacity-80' :
+                  'bg-blue-50/30'
+                }">
                   <span class="text-[10px] font-bold text-blue-300 uppercase">${title.substring(0, 2)}</span>
                 </div>
               `}
             </div>
-            <div class="p-2.5 flex-1">
-              <h3 class="text-[10px] font-bold mb-0.5 line-clamp-1 text-gray-900">${title}</h3>
-              <p class="text-[8px] text-gray-500 line-clamp-2 leading-tight">${desc}</p>
+            <div class="p-2.5 flex-1 flex flex-col">
+              <div class="flex items-center justify-between mb-0.5">
+                <h3 class="text-[9px] font-bold line-clamp-1 text-gray-900">${title}</h3>
+                <div class="w-3 h-3 rounded-full bg-gray-100 flex items-center justify-center group-hover/card:bg-blue-600 group-hover/card:text-white transition-all">
+                  <svg class="w-1.5 h-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" stroke-width="3"></path></svg>
+                </div>
+              </div>
+              <p class="text-[7px] text-gray-500 line-clamp-2 leading-tight">${desc}</p>
             </div>
           </div>
         `);
