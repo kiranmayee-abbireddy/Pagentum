@@ -619,33 +619,46 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
           return `
             <style>
               #${cardId} {
-                transition: all 0.3s ease;
-                background: white;
-                border: 1px solid rgba(0,0,0,0.05);
+                transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+                background: color-mix(in srgb, var(--text-color) 5%, var(--bg-color));
+                backdrop-filter: blur(10px);
+                border: 1px solid color-mix(in srgb, var(--text-color) 10%, transparent);
               }
               #${cardId}:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+                transform: translateY(-10px) scale(1.02);
+                box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
                 border-color: var(--primary-color);
+                background: color-mix(in srgb, var(--primary-color) 5%, var(--bg-color));
               }
-              #${cardId} .icon-container {
-                transition: all 0.3s ease;
-                background: color-mix(in srgb, var(--primary-color) 8%, transparent);
+              #${cardId} .icon-glow {
+                transition: all 0.5s ease;
+                opacity: 0;
+                filter: blur(20px);
+                background: var(--primary-color);
+              }
+              #${cardId}:hover .icon-glow {
+                opacity: 0.2;
+                transform: scale(1.5);
+              }
+              #${cardId} .icon-svg {
+                transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
                 color: var(--primary-color);
               }
-              #${cardId}:hover .icon-container {
-                background: var(--primary-color);
-                color: white;
+              #${cardId}:hover .icon-svg {
+                transform: scale(1.2) rotate(5deg);
               }
             </style>
-            <div id="${cardId}" class="p-8 rounded-3xl flex flex-col items-center text-center relative overflow-hidden group">
-              <div class="icon-container w-16 h-16 rounded-2xl mb-6 flex items-center justify-center">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8">
-                  <path d="${iconPath}"></path>
-                </svg>
+            <div id="${cardId}" class="p-10 rounded-[2.5rem] flex flex-col items-center text-center relative overflow-hidden group">
+              <div class="relative w-20 h-20 mb-8 flex items-center justify-center">
+                <div class="icon-glow absolute inset-0 rounded-full"></div>
+                <div class="icon-svg relative z-10 w-12 h-12 flex items-center justify-center">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-full h-full">
+                    <path d="${iconPath}"></path>
+                  </svg>
+                </div>
               </div>
-              <h3 class="text-xl font-bold mb-3" style="color: var(--text-color);">${fTitle}</h3>
-              <p class="text-sm opacity-60 leading-relaxed" style="color: var(--text-color);">${fDesc}</p>
+              <h3 class="text-2xl font-bold mb-4" style="color: var(--text-color);">${fTitle}</h3>
+              <p class="leading-relaxed opacity-70" style="color: var(--text-color);">${fDesc}</p>
             </div>
           `;
         }).join('');

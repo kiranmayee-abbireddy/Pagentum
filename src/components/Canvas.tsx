@@ -409,14 +409,14 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
         const iconPath = featureIcons[iconKey] || featureIcons.zap;
 
         return `
-          <div class="p-6 rounded-2xl border border-gray-100 flex flex-col items-center text-center group hover:border-blue-400 transition-all duration-300 bg-white">
-            <div class="w-10 h-10 mb-4 flex items-center justify-center text-blue-600 bg-blue-50 rounded-xl group-hover:bg-blue-600 group-hover:text-white transition-all">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
+          <div class="flex flex-col items-center text-center p-4">
+            <div class="text-blue-600 mb-3">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
                 <path d="${iconPath}"></path>
               </svg>
             </div>
-            <h3 class="text-xs font-bold mb-2">${fTitle}</h3>
-            <p class="text-[9px] text-gray-500 leading-relaxed line-clamp-3">${fDesc}</p>
+            <h3 class="text-xs font-bold mb-1">${fTitle}</h3>
+            <p class="text-[9px] text-gray-500 line-clamp-2">${fDesc}</p>
           </div>
         `;
       }).join('');
