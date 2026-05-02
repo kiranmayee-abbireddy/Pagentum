@@ -589,7 +589,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
 
       if (section.templateId === 'contact-section') {
         return `
-          <section class="py-24 px-6 max-w-7xl mx-auto" ${combinedStyle}>
+          <section id="section-${section.id}" class="py-24 px-6 max-w-7xl mx-auto" ${combinedStyle}>
             <div class="text-center mb-16">
               <h2 class="text-4xl md:text-6xl font-bold mb-6">${section.content.title || ''}</h2>
               <p class="text-xl opacity-80 max-w-2xl mx-auto mb-16">${section.content.subtitle || ''}</p>
