@@ -538,61 +538,41 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
           const desc = section.content[`proj${i}Desc`] || '';
           const link = section.content[`proj${i}Link`] || '#';
           const thumbnail = section.content[`proj${i}Thumbnail`];
-          const patternType = section.content[`proj${i}Pattern`] || 'gradient';
           
-          let patternHTML = '';
-          if (patternType === 'gradient') {
-            const gradient = 'linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%)';
-            patternHTML = `<div class="w-full h-full flex items-center justify-center relative overflow-hidden" style="background: ${gradient};">
-              <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(white 1px, transparent 1px); background-size: 30px 30px;"></div>
-              <span class="text-6xl font-black text-white opacity-25 uppercase tracking-tighter select-none">${title.substring(0, 2)}</span>
-            </div>`;
-          } else if (patternType === 'waves') {
-            patternHTML = `
-              <div class="w-full h-full flex items-center justify-center relative overflow-hidden" style="background: var(--primary-color);">
-                <div class="waves-graphic">
-                  <svg viewBox="0 0 120 28" preserveAspectRatio="none" style="width: 100%; height: 100%;">
-                    <defs>
-                      <path id="wave-${i}" d="M-160 44c30 0 58-18 88-18s58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
-                    </defs>
-                    <g>
-                      <use xlink:href="#wave-${i}" x="48" y="0" fill="rgba(255,255,255,0.4)" />
-                      <use xlink:href="#wave-${i}" x="48" y="3" fill="rgba(255,255,255,0.2)" />
-                      <use xlink:href="#wave-${i}" x="48" y="7" fill="rgba(255,255,255,0.6)" />
-                    </g>
-                  </svg>
-                </div>
-                <span class="text-6xl font-black text-white opacity-40 uppercase tracking-tighter z-10 select-none">${title.substring(0, 2)}</span>
-              </div>
-            `;
-          } else if (patternType === 'pastel') {
-            const pastelBg = 'color-mix(in srgb, var(--primary-color) 12%, var(--bg-color))';
-            patternHTML = `<div class="w-full h-full flex items-center justify-center relative overflow-hidden" style="background: ${pastelBg};">
-              <div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(var(--primary-color) 1px, transparent 1px); background-size: 20px 20px;"></div>
-              <span class="text-6xl font-black opacity-15 uppercase tracking-tighter select-none" style="color: var(--primary-color)">${title.substring(0, 2)}</span>
-            </div>`;
-          }
+          const fallbackPatterns = [
+            'linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%)',
+            'radial-gradient(circle at top left, var(--primary-color) 0%, transparent 70%), radial-gradient(circle at bottom right, var(--secondary-color) 0%, transparent 70%)',
+            'conic-gradient(from 180deg at 50% 50%, var(--primary-color) 0deg, var(--secondary-color) 180deg, var(--primary-color) 360deg)'
+          ];
+          const pattern = fallbackPatterns[(i - 1) % fallbackPatterns.length];
 
           items.push(`
             <a href="${link}" class="group relative block overflow-hidden rounded-[2.5rem] shadow-lg bg-white border border-gray-100 transition-all hover:shadow-2xl hover:-translate-y-2">
-              <div class="h-80 overflow-hidden relative">
+              <div class="h-72 overflow-hidden relative">
                 ${thumbnail ? `
                   <img src="${thumbnail}" alt="${title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                ` : patternHTML}
-                <div class="absolute inset-0 bg-black/0 group-hover:bg-[var(--primary-color)]/5 transition-colors duration-300"></div>
+                ` : `
+                  <div class="w-full h-full flex items-center justify-center relative overflow-hidden" style="background: ${pattern}; opacity: 0.1;">
+                    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(var(--text-color) 1px, transparent 1px); background-size: 24px 24px;"></div>
+                  </div>
+                  <div class="absolute inset-0 flex items-center justify-center">
+                    <span class="text-5xl font-black opacity-10 uppercase tracking-tighter" style="color: var(--primary-color)">${title.substring(0, 2)}</span>
+                  </div>
+                `}
+                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300"></div>
               </div>
-              <div class="p-12">
-                <div class="flex items-center justify-between mb-6">
-                   <h3 class="text-3xl font-black text-gray-900 group-hover:text-[var(--primary-color)] transition-colors tracking-tight">${title}</h3>
-                   <div class="w-12 h-12 rounded-2xl bg-gray-50 flex items-center justify-center group-hover:bg-[var(--primary-color)] group-hover:text-white group-hover:rotate-12 transition-all duration-300 shadow-sm">
-                      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+              <div class="p-10">
+                <div class="flex items-center justify-between mb-4">
+                   <h3 class="text-2xl font-black text-gray-900 transition-colors" style="color: inherit;">${title}</h3>
+                   <div class="w-12 h-12 rounded-2xl bg-gray-50 flex items-center justify-center transition-all group-hover:text-white" 
+                        style="background: color-mix(in srgb, var(--primary-color) 10%, transparent); color: var(--primary-color);"
+                        onmouseover="this.style.background='var(--primary-color)';"
+                        onmouseout="this.style.background='color-mix(in srgb, var(--primary-color) 10%, transparent)';"
+                   >
+                      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7-7 7M3 12h18"></path></svg>
                    </div>
                 </div>
-                <p class="opacity-70 leading-relaxed text-xl line-clamp-2 mb-8">${desc}</p>
-                <div class="flex items-center text-[var(--primary-color)] font-black text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0">
-                  <span>Explore Case Study</span>
-                  <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                </div>
+                <p class="opacity-70 leading-relaxed text-lg line-clamp-3">${desc}</p>
               </div>
             </a>
           `);
@@ -614,7 +594,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
             <div class="max-w-7xl mx-auto relative z-10">
               <div class="text-center mb-24">
                 <h2 class="text-5xl md:text-7xl font-black mb-8 tracking-tighter">${section.content.title || ''}</h2>
-                <div class="w-24 h-2 bg-blue-600 mx-auto mb-8 rounded-full"></div>
+                <div class="w-24 h-2 mx-auto mb-8 rounded-full" style="background: var(--primary-color)"></div>
                 <p class="text-2xl opacity-80 max-w-3xl mx-auto leading-relaxed">${section.content.subtitle || ''}</p>
               </div>
               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">

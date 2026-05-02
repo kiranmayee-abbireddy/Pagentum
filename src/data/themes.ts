@@ -100,23 +100,6 @@ section {
   padding: calc(var(--spacing) * 4) calc(var(--spacing) * 2);
 }
 
-@keyframes wave-motion {
-  0% { transform: translateX(0) translateZ(0) scaleY(1); }
-  50% { transform: translateX(-25%) translateZ(0) scaleY(0.8); }
-  100% { transform: translateX(-50%) translateZ(0) scaleY(1); }
-}
-
-.waves-graphic {
-  position: absolute;
-  width: 200%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  animation: wave-motion 10s linear infinite;
-  transform-origin: center bottom;
-}
-
-
 /* --- Layout Utilities for Sections --- */
 .video-section { width: 100%; position: relative; }
 .video-inner { 

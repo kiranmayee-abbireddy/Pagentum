@@ -207,44 +207,24 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
         if (!title) continue;
         const desc = section.content[`proj${i}Desc`] || '';
         const thumbnail = section.content[`proj${i}Thumbnail`];
-        const patternType = section.content[`proj${i}Pattern`] || 'gradient';
         
-        let patternHTML = '';
-        if (patternType === 'gradient') {
-          patternHTML = `<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-600 to-indigo-600">
-            <span class="text-[14px] font-black text-white opacity-30 uppercase">${title.substring(0, 2)}</span>
-          </div>`;
-        } else if (patternType === 'waves') {
-          patternHTML = `
-            <div class="w-full h-full flex items-center justify-center relative overflow-hidden bg-blue-600">
-              <div class="absolute inset-0 opacity-40" style="width: 200%; animation: wave-motion 10s linear infinite;">
-                <svg viewBox="0 0 120 28" preserveAspectRatio="none" class="w-full h-full">
-                  <path d="M-160 44c30 0 58-18 88-18s58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" fill="rgba(255,255,255,0.5)" />
-                </svg>
-              </div>
-              <span class="text-[14px] font-black text-white opacity-40 uppercase z-10">${title.substring(0, 2)}</span>
-            </div>
-          `;
-        } else if (patternType === 'pastel') {
-          patternHTML = `<div class="w-full h-full flex items-center justify-center bg-blue-50">
-            <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(blue 1px, transparent 1px); background-size: 10px 10px;"></div>
-            <span class="text-[14px] font-black text-blue-200 uppercase">${title.substring(0, 2)}</span>
-          </div>`;
-        }
-
         items.push(`
-          <div class="bg-gray-50 rounded-2xl overflow-hidden border border-gray-100 flex flex-col h-full shadow-sm group/card transition-all hover:border-blue-300">
-            <div class="h-24 overflow-hidden relative">
-              ${thumbnail ? `<img src="${thumbnail}" class="w-full h-full object-cover" />` : patternHTML}
-            </div>
-            <div class="p-3.5 flex-1 flex flex-col">
-              <div class="flex items-center justify-between mb-1">
-                <h3 class="text-[11px] font-bold line-clamp-1 text-gray-900">${title}</h3>
-                <div class="w-4 h-4 rounded-lg bg-gray-100 flex items-center justify-center group-hover/card:bg-blue-600 group-hover/card:text-white transition-all">
-                  <svg class="w-2 h-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" stroke-width="3"></path></svg>
+          <div class="bg-gray-50 rounded-xl overflow-hidden border border-gray-100 flex flex-col h-full shadow-sm relative group">
+            <div class="h-20 overflow-hidden relative bg-gray-200">
+              ${thumbnail ? `
+                <img src="${thumbnail}" class="w-full h-full object-cover" />
+              ` : `
+                <div class="w-full h-full flex items-center justify-center bg-gray-100 opacity-50">
+                  <span class="text-[10px] font-bold text-gray-400 uppercase">${title.substring(0, 2)}</span>
                 </div>
-              </div>
+              `}
+            </div>
+            <div class="p-2.5 flex-1 relative">
+              <h3 class="text-[10px] font-bold mb-0.5 line-clamp-1 text-gray-900">${title}</h3>
               <p class="text-[8px] text-gray-500 line-clamp-2 leading-tight">${desc}</p>
+              <div class="absolute bottom-2 right-2 w-4 h-4 bg-gray-200 rounded-md flex items-center justify-center text-gray-400">
+                <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7-7 7M3 12h18"></path></svg>
+              </div>
             </div>
           </div>
         `);
@@ -259,8 +239,9 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
 
       html = `
         <div class="py-6 px-3 text-center">
-          <h2 class="text-lg font-black mb-1 tracking-tight">${section.content.title || ''}</h2>
-          <p class="text-[9px] opacity-60 mb-6 max-w-md mx-auto">${section.content.subtitle || ''}</p>
+          <h2 class="text-lg font-black mb-1 tracking-tight text-gray-900">${section.content.title || ''}</h2>
+          <div class="w-8 h-1 bg-blue-600 mx-auto mb-4 rounded-full opacity-40"></div>
+          <p class="text-[9px] opacity-60 mb-8 max-w-md mx-auto">${section.content.subtitle || ''}</p>
           <div class="grid grid-cols-3 gap-4">
             ${itemsHTML}
           </div>
