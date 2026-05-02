@@ -310,13 +310,171 @@ export const sectionTemplates: SectionTemplate[] = [
       link4: '',
       copyright: '© 2024 Your Company. All rights reserved.'
     }
+  },
+  {
+    id: 'contact-section',
+    name: 'Contact Form',
+    category: 'cta',
+    description: 'A contact section with info and a message form',
+    html: `
+      <section class="py-20 px-6 max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-5xl font-bold mb-4">{{title}}</h2>
+          <p class="text-xl opacity-80 max-w-2xl mx-auto">{{subtitle}}</p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-12">
+          <div class="flex flex-col justify-center">
+            <h3 class="text-2xl font-semibold mb-6">{{infoTitle}}</h3>
+            <p class="text-lg opacity-80 mb-8">{{infoDesc}}</p>
+            <div class="space-y-4 text-lg">
+              <p><strong>Email:</strong> {{email}}</p>
+              <p><strong>Phone:</strong> {{phone}}</p>
+              <p><strong>Address:</strong> {{address}}</p>
+            </div>
+          </div>
+          <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
+            <form class="flex flex-col space-y-4" onsubmit="event.preventDefault();">
+              <input type="text" placeholder="Your Name" class="p-4 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full" />
+              <input type="email" placeholder="Your Email" class="p-4 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full" />
+              <textarea rows="4" placeholder="Your Message" class="p-4 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"></textarea>
+              <button type="submit" class="bg-blue-600 text-white font-bold py-4 rounded-lg hover:bg-blue-700 transition-colors">{{buttonText}}</button>
+            </form>
+          </div>
+        </div>
+      </section>
+    `,
+    defaultContent: {
+      title: 'Get in Touch',
+      subtitle: 'We would love to hear from you. Drop us a message below.',
+      infoTitle: 'Contact Information',
+      infoDesc: 'Feel free to reach out for collaborations or just a friendly hello.',
+      email: 'hello@example.com',
+      phone: '+1 (555) 123-4567',
+      address: '123 Creative Street, Design City',
+      buttonText: 'Send Message'
+    }
+  },
+  {
+    id: 'portfolio-grid',
+    name: 'Portfolio Grid',
+    category: 'features',
+    description: 'A grid showcasing projects or portfolio items',
+    html: `
+      <section class="py-20 px-6 max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-5xl font-bold mb-4">{{title}}</h2>
+          <p class="text-xl opacity-80 max-w-2xl mx-auto">{{subtitle}}</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="group relative overflow-hidden rounded-2xl shadow-lg bg-white border border-gray-100">
+            <div class="h-64 bg-gray-200 flex items-center justify-center text-gray-500 font-bold uppercase tracking-widest text-xs">Project 1</div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2">{{proj1Title}}</h3>
+              <p class="opacity-80">{{proj1Desc}}</p>
+            </div>
+          </div>
+          <div class="group relative overflow-hidden rounded-2xl shadow-lg bg-white border border-gray-100">
+            <div class="h-64 bg-gray-200 flex items-center justify-center text-gray-500 font-bold uppercase tracking-widest text-xs">Project 2</div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2">{{proj2Title}}</h3>
+              <p class="opacity-80">{{proj2Desc}}</p>
+            </div>
+          </div>
+          <div class="group relative overflow-hidden rounded-2xl shadow-lg bg-white border border-gray-100">
+            <div class="h-64 bg-gray-200 flex items-center justify-center text-gray-500 font-bold uppercase tracking-widest text-xs">Project 3</div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2">{{proj3Title}}</h3>
+              <p class="opacity-80">{{proj3Desc}}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    `,
+    defaultContent: {
+      title: 'Our Latest Work',
+      subtitle: 'A selection of our most recent and favorite projects.',
+      proj1Title: 'E-commerce Platform',
+      proj1Desc: 'A complete redesign resulting in a 40% conversion increase.',
+      proj2Title: 'Brand Identity',
+      proj2Desc: 'Modernizing a legacy brand for the digital age.',
+      proj3Title: 'Mobile Application',
+      proj3Desc: 'An award-winning fitness and habit tracking app.'
+    }
+  },
+  {
+    id: 'footer-advanced',
+    name: 'Advanced Footer',
+    category: 'footer',
+    description: 'Footer with description, links, and social icons',
+    html: `
+      <footer class="py-16 px-6 bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+          <div class="md:col-span-2">
+            <h3 class="text-2xl font-bold mb-4">{{companyName}}</h3>
+            <p class="text-gray-400 max-w-md leading-relaxed mb-6">{{description}}</p>
+            <div class="flex space-x-4">
+              <a href="{{social1Link}}" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-500 transition-colors">
+                <span class="text-xs font-bold">FB</span>
+              </a>
+              <a href="{{social2Link}}" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-400 transition-colors">
+                <span class="text-xs font-bold">TW</span>
+              </a>
+              <a href="{{social3Link}}" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-pink-500 transition-colors">
+                <span class="text-xs font-bold">IG</span>
+              </a>
+              <a href="{{social4Link}}" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 transition-colors">
+                <span class="text-xs font-bold">IN</span>
+              </a>
+            </div>
+          </div>
+          <div>
+            <h4 class="text-lg font-bold mb-4">{{linksTitle1}}</h4>
+            <ul class="space-y-3 text-gray-400">
+              <li><a href="#" class="hover:text-white transition-colors">{{link1}}</a></li>
+              <li><a href="#" class="hover:text-white transition-colors">{{link2}}</a></li>
+              <li><a href="#" class="hover:text-white transition-colors">{{link3}}</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-lg font-bold mb-4">{{linksTitle2}}</h4>
+            <ul class="space-y-3 text-gray-400">
+              <li><a href="#" class="hover:text-white transition-colors">{{link4}}</a></li>
+              <li><a href="#" class="hover:text-white transition-colors">{{link5}}</a></li>
+              <li><a href="#" class="hover:text-white transition-colors">{{link6}}</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="max-w-7xl mx-auto pt-8 border-t border-gray-800 text-center text-gray-500">
+          <p>{{copyright}}</p>
+        </div>
+      </footer>
+    `,
+    defaultContent: {
+      companyName: 'Pagentum',
+      description: 'We create digital experiences that make a difference. Our platform empowers creators to build magical landing pages effortlessly.',
+      social1Link: '#',
+      social2Link: '#',
+      social3Link: '#',
+      social4Link: '#',
+      linksTitle1: 'Company',
+      link1: 'About Us',
+      link2: 'Careers',
+      link3: 'Contact',
+      linksTitle2: 'Legal',
+      link4: 'Privacy Policy',
+      link5: 'Terms of Service',
+      link6: 'Cookie Policy',
+      copyright: '© 2026 Pagentum. All rights reserved.'
+    }
   }
 ];
 
 export const getCategoryKeywords = (): Record<string, string[]> => ({
   hero: ['hero', 'banner', 'header', 'headline', 'landing', 'intro', 'welcome'],
   features: ['features', 'benefits', 'highlights', 'services', 'what we offer'],
+  portfolio: ['portfolio', 'projects', 'work', 'gallery', 'showcase', 'examples'],
   cta: ['cta', 'call to action', 'signup', 'register', 'join'],
+  contact: ['contact', 'form', 'email', 'message', 'touch', 'reach out'],
   testimonials: ['testimonials', 'reviews', 'feedback', 'social proof', 'quotes'],
   pricing: ['pricing', 'plans', 'packages', 'tiers', 'cost'],
   footer: ['footer', 'bottom', 'links', 'copyright']
