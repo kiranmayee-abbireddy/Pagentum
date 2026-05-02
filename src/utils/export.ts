@@ -650,8 +650,8 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                   </svg>
                 </div>
               </div>
-              <h3 class="text-2xl font-bold mb-4 text-gray-900">${fTitle}</h3>
-              <p class="text-gray-500 leading-relaxed">${fDesc}</p>
+              <h3 class="text-2xl font-bold mb-4" style="color: var(--text-color);">${fTitle}</h3>
+              <p class="leading-relaxed opacity-70" style="color: var(--text-color);">${fDesc}</p>
             </div>
           `;
         }).join('');
