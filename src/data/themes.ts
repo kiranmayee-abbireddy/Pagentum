@@ -1132,7 +1132,7 @@ div[style*="background"] > section {
 /* CARD STYLING - Theme integrated */
 .auto-card {
   width: 100%;
-
+  height: 100%;
   padding: calc(var(--spacing) * 1);
   background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
   border-radius: 1rem;
