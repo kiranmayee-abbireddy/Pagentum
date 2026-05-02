@@ -562,12 +562,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                 </a>
               </div>
               <div class="p-8">
-                <div class="flex items-center justify-between mb-4">
-                   <h3 class="text-2xl font-bold text-gray-900">${title}</h3>
-                   <a href="${link}" class="text-blue-600 hover:text-blue-700 font-bold text-sm flex items-center gap-1">
-                     View Case <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                   </a>
-                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">${title}</h3>
                 <p class="opacity-70 leading-relaxed line-clamp-3">${desc}</p>
               </div>
             </div>
