@@ -455,9 +455,10 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
               <nav class="nav-links flex space-x-6">
                 ${(() => {
             let heroCount = 0;
-            return sections
-              .filter(s => s.templateId !== 'navbar-1' && s.templateId !== 'footer-1')
-              .map(s => {
+            const linkSections = sections.filter(s => s.templateId !== 'navbar-1' && s.templateId !== 'footer-1' && s.templateId !== 'footer-advanced');
+            
+            // Limit to first 5 meaningful sections to prevent overflow
+            return linkSections.slice(0, 5).map(s => {
                 let label = s.content.title;
                 if (s.templateId.includes('hero')) {
                   heroCount++;
@@ -499,6 +500,90 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
             let heroCount = 0;
             return sections
               .filter(s => s.templateId !== 'navbar-1' && s.templateId !== 'footer-1')
+              .map(s => {
+                let label = s.content.title;
+                if (s.templateId.includes('hero')) {
+                  heroCount++;
+                  if (heroCount === 1) label = 'Home';
+                  else if (heroCount === 2) label = 'About';
+                  else return null;
+                }
+                if (!label) return null;
+                return `<a href="#section-${s.id}" class="hover:text-primary transition-colors" style="color: inherit; text-decoration: none;">${label}</a>`;
+              })
+              .filter(Boolean)
+              .join('');
+          })()}
+                ${['link1', 'link2', 'link3', 'link4'].map(key => {
+            const label = section.content[key as keyof typeof section.content];
+            const href = section.content[`${key}Href` as keyof typeof section.content] || '#';
+            return label ? `<a href="${href}" class="hover:text-primary transition-colors" style="color: inherit; text-decoration: none; font-size: 0.9rem; white-space: nowrap;">${label}</a>` : '';
+          }).filter(Boolean).join('')}
+              </div>
+              <p class="footer-copyright opacity-80">${copyright}</p>
+            </div>
+          </footer>
+        `;
+      }
+
+      if (section.templateId === 'footer-advanced') {
+        const copyright = section.content.copyright || `© ${new Date().getFullYear()} ${theme.name || 'Pagentum'}. All rights reserved.`;
+        return `
+          <footer class="footer-advanced py-20 bg-gray-900 text-white" ${combinedStyle}>
+            <div class="max-w-7xl mx-auto px-6">
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16 text-center md:text-left">
+                <div class="space-y-6">
+                  <h3 class="text-2xl font-bold">${section.content.companyName || 'Pagentum'}</h3>
+                  <p class="text-gray-400 leading-relaxed max-w-md mx-auto md:mx-0">${section.content.description || ''}</p>
+                  <div class="flex justify-center md:justify-start space-x-4">
+                    ${['social1Link', 'social2Link', 'social3Link', 'social4Link'].map((key, i) => {
+                      const href = section.content[key as keyof typeof section.content] || '#';
+                      const labels = ['FB', 'TW', 'IG', 'IN'];
+                      const colors = ['hover:bg-blue-600', 'hover:bg-blue-400', 'hover:bg-pink-500', 'hover:bg-blue-700'];
+                      return `<a href="${href}" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center ${colors[i]} transition-colors">
+                        <span class="text-xs font-bold">${labels[i]}</span>
+                      </a>`;
+                    }).join('')}
+                  </div>
+                </div>
+                
+                <div class="space-y-6">
+                  <h4 class="text-lg font-bold">Quick Links</h4>
+                  <div class="flex flex-col space-y-3 text-gray-400">
+                    ${['link1', 'link2', 'link3', 'link4'].map(key => {
+                      const label = section.content[key as keyof typeof section.content];
+                      return label ? `<a href="#" class="hover:text-white transition-colors text-sm">${label}</a>` : '';
+                    }).join('')}
+                  </div>
+                </div>
+
+                <div class="space-y-6">
+                  <h4 class="text-lg font-bold">Contact Us</h4>
+                  <div class="space-y-3 text-gray-400 text-sm">
+                    <p>${section.content.email || ''}</p>
+                    <p>${section.content.phone || ''}</p>
+                    <p>${section.content.address || ''}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
+                <p>${copyright}</p>
+              </div>
+            </div>
+          </footer>
+        `;
+      }
+
+      if (section.templateId === 'footer-1') {
+        const copyright = section.content.copyright || `© ${new Date().getFullYear()} ${theme.name || 'Pagentum'}. All rights reserved.`;
+        return `
+          <footer class="footer-section py-12" ${combinedStyle}>
+            <div class="footer-content max-w-7xl mx-auto px-4 text-center">
+              <div class="footer-links flex flex-wrap justify-center gap-6 mb-8">
+                ${(() => {
+            let heroCount = 0;
+            return sections
+              .filter(s => s.templateId !== 'navbar-1' && s.templateId !== 'footer-1' && s.templateId !== 'footer-advanced')
               .map(s => {
                 let label = s.content.title;
                 if (s.templateId.includes('hero')) {

@@ -72,18 +72,19 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
       const navLinks = [
         ...(() => {
           let heroCount = 0;
-          return sections
-            .filter(s => s.templateId !== 'navbar-1' && s.templateId !== 'footer-1')
+          const linkSections = sections.filter(s => s.templateId !== 'navbar-1' && s.templateId !== 'footer-1' && s.templateId !== 'footer-advanced');
+          return linkSections
+            .slice(0, 5)
             .map(s => {
-              let label = s.content.title;
-              if (s.templateId.includes('hero')) {
-                heroCount++;
-                if (heroCount === 1) label = 'Home';
-                else if (heroCount === 2) label = 'About';
-                else return null;
-              }
-              if (!label) return null;
-              return `
+                let label = s.content.title;
+                if (s.templateId.includes('hero')) {
+                  heroCount++;
+                  if (heroCount === 1) label = 'Home';
+                  else if (heroCount === 2) label = 'About';
+                  else return null;
+                }
+                if (!label) return null;
+                return `
                 <a href="#section-${s.id}" 
                    onClick="document.getElementById('section-${s.id}')?.scrollIntoView({ behavior: 'smooth' })" 
                    class="text-gray-500 hover:text-blue-600 font-bold text-[8px] uppercase tracking-wider"
