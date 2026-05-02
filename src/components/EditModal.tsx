@@ -224,15 +224,24 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                     <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest text-left">Social Presence</h3>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {[1, 2, 3, 4].map(i => (
-                      <SocialItem 
-                        key={i} 
-                        index={i} 
-                        content={content} 
-                        setContent={setContent} 
-                        handleContentChange={handleContentChange} 
-                      />
-                    ))}
+                    {[1, 2, 3, 4, 5, 6].map(i => {
+                      const linkKey = `social${i}Link`;
+                      const typeKey = `social${i}Type`;
+                      
+                      // Show if it has content, or if it's one of the first 4, or if the previous one has content
+                      const isVisible = i <= 4 || !!content[linkKey] || (i > 4 && !!content[`social${i-1}Link`]);
+                      if (!isVisible) return null;
+
+                      return (
+                        <SocialItem 
+                          key={i} 
+                          index={i} 
+                          content={content} 
+                          setContent={setContent} 
+                          handleContentChange={handleContentChange} 
+                        />
+                      );
+                    })}
                   </div>
                 </section>
               )}
@@ -794,18 +803,29 @@ function SocialItem({ index, content, setContent, handleContentChange }: {
     <div className="p-4 bg-gray-50/50 rounded-xl border border-gray-100 space-y-3 relative">
       <div className="flex items-center justify-between">
         <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Social Link {index}</span>
-        <button 
-          onClick={() => setShowPicker(!showPicker)}
-          className="w-10 h-10 rounded-full flex items-center justify-center transition-all shadow-sm hover:scale-110 active:scale-95"
-          style={{ 
-            background: currentIcon.color,
-            color: 'white'
-          }}
-        >
-          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-            <path d={currentIcon.path} />
-          </svg>
-        </button>
+        <div className="flex items-center space-x-2">
+          {content[linkKey] && (
+            <button 
+              onClick={() => setContent((prev: any) => ({ ...prev, [linkKey]: '', [typeKey]: 'facebook' }))}
+              className="p-1.5 text-red-400 hover:text-red-500 transition-colors"
+              title="Remove"
+            >
+              <Trash2 className="w-3 h-3" />
+            </button>
+          )}
+          <button 
+            onClick={() => setShowPicker(!showPicker)}
+            className="w-10 h-10 rounded-full flex items-center justify-center transition-all shadow-sm hover:scale-110 active:scale-95"
+            style={{ 
+              background: currentIcon.color,
+              color: 'white'
+            }}
+          >
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d={currentIcon.path} />
+            </svg>
+          </button>
+        </div>
       </div>
 
       {showPicker && (

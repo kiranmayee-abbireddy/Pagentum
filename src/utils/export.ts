@@ -642,8 +642,10 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                   <h3 class="text-2xl font-bold">${section.content.companyName || 'Pagentum'}</h3>
                   <p class="opacity-70 leading-relaxed max-w-md">${section.content.description || ''}</p>
                   <div class="flex justify-start space-x-4">
-                    ${['social1', 'social2', 'social3', 'social4'].map((prefix) => {
-          const href = section.content[`${prefix}Link` as keyof typeof section.content] || '#';
+                    ${['social1', 'social2', 'social3', 'social4', 'social5', 'social6'].map((prefix) => {
+          const href = section.content[`${prefix}Link` as keyof typeof section.content];
+          if (!href || href === '#') return ''; // Skip if no link provided
+          
           const type = (section.content[`${prefix}Type` as keyof typeof section.content] || 'facebook').toLowerCase();
 
           const config = socialIcons.find((icon: any) => icon.id === type) || socialIcons[0];
