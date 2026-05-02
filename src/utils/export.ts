@@ -642,33 +642,35 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                   <h3 class="text-2xl font-bold">${section.content.companyName || 'Pagentum'}</h3>
                   <p class="opacity-70 leading-relaxed max-w-md">${section.content.description || ''}</p>
                   <div class="flex justify-start space-x-4">
-                    ${['social1', 'social2', 'social3', 'social4', 'social5', 'social6'].map((prefix) => {
-          let href = section.content[`${prefix}Link` as keyof typeof section.content];
-          if (!href || href === '#') return ''; 
-          
-          // Ensure absolute URL
-          if (!href.startsWith('http') && !href.startsWith('mailto:') && !href.startsWith('tel:')) {
-            href = `https://${href}`;
-          }
-          
-          const type = (section.content[`${prefix}Type` as keyof typeof section.content] || 'facebook').toLowerCase();
-          const config = socialIcons.find((icon: any) => icon.id === type) || socialIcons[0];
-          const iconId = `social-icon-${section.id}-${prefix}`;
+                    ${(() => {
+          const socialHTML = ['social1', 'social2', 'social3', 'social4', 'social5', 'social6'].map((prefix) => {
+            let href = section.content[`${prefix}Link` as keyof typeof section.content];
+            if (!href || href === '#') return ''; 
+            
+            if (!href.startsWith('http') && !href.startsWith('mailto:') && !href.startsWith('tel:')) {
+              href = `https://${href}`;
+            }
+            
+            const type = (section.content[`${prefix}Type` as keyof typeof section.content] || 'facebook').toLowerCase();
+            const config = socialIcons.find((icon: any) => icon.id === type) || socialIcons[0];
+            const iconId = `social-icon-${section.id}-${prefix}`;
 
-          return `
-                    <style>
-                      #${iconId}:hover {
-                        background: ${config.color} !important;
-                        color: white !important;
-                        transform: translateY(-3px);
-                        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-                      }
-                    </style>
-                    <a id="${iconId}" href="${href}" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm" 
-                       style="background: color-mix(in srgb, var(--text-color) 10%, transparent); color: var(--text-color);">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="${config.path}"/></svg>
-                    </a>`;
-        }).join('')}
+            return `
+                      <style>
+                        #${iconId}:hover {
+                          background: ${config.color} !important;
+                          color: white !important;
+                          transform: translateY(-3px);
+                          box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+                        }
+                      </style>
+                      <a id="${iconId}" href="${href}" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm" 
+                         style="background: color-mix(in srgb, var(--text-color) 10%, transparent); color: var(--text-color);">
+                          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="${config.path}"/></svg>
+                      </a>`;
+          }).join('');
+          return socialHTML;
+        })()}
                   </div>
                 </div>
                 

@@ -380,7 +380,7 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
         })
         .join('');
 
-      html = html.replace(/<div class="flex justify-start space-x-4">[\s\S]*?<\/div>/, `<div class="flex justify-start flex-wrap gap-2 py-2">${socialHTML}</div>`);
+      html = html.replace('{{socialLinksHTML}}', socialHTML);
     }
 
     // Standard replacements
