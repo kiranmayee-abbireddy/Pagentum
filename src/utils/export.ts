@@ -634,7 +634,8 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
         const copyright = section.content.copyright || `© ${new Date().getFullYear()} ${theme.name || 'Pagentum'}. All rights reserved.`;
         return `
           <footer class="footer-advanced py-20" ${combinedStyle}>
-            <div class="max-w-7xl mx-auto px-6">
+            ${bgHTML}
+            <div class="max-w-7xl mx-auto px-6 relative z-10">
               <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16 text-left">
                 <div class="space-y-6">
                   <h3 class="text-2xl font-bold">${section.content.companyName || 'Pagentum'}</h3>
@@ -701,7 +702,8 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
         const copyright = section.content.copyright || `© ${new Date().getFullYear()} ${theme.name || 'Pagentum'}. All rights reserved.`;
         return `
           <footer class="footer-section py-12" ${combinedStyle}>
-            <div class="footer-content max-w-7xl mx-auto px-4 text-center">
+            ${bgHTML}
+            <div class="footer-content max-w-7xl mx-auto px-4 text-center relative z-10">
               <div class="footer-links flex flex-wrap justify-center gap-6 mb-8">
                 ${(() => {
             let heroCount = 0;
