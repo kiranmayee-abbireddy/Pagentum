@@ -555,8 +555,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                       let heroCount = 0;
                       const linkSections = sections.filter(s => s.templateId !== 'navbar-1' && s.templateId !== 'footer-1' && s.templateId !== 'footer-advanced');
                       
-                      const allLinks = [
-                        ...linkSections.map(s => {
+                      const allLinks = linkSections.map(s => {
                           let label = s.content.title;
                           if (s.templateId.includes('hero')) {
                             heroCount++;
@@ -566,12 +565,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                           }
                           if (!label) return null;
                           return `<a href="#section-${s.id}" class="hover:text-white transition-colors text-sm">${label}</a>`;
-                        }).filter(Boolean),
-                        ...['link1', 'link2', 'link3', 'link4'].map(key => {
-                          const label = section.content[key as keyof typeof section.content];
-                          return label ? `<a href="#" class="hover:text-white transition-colors text-sm">${label}</a>` : '';
-                        }).filter(Boolean)
-                      ];
+                        }).filter(Boolean);
 
                       if (allLinks.length > 6) {
                         return `<div class="grid grid-cols-2 gap-x-8 gap-y-3 text-gray-400">
