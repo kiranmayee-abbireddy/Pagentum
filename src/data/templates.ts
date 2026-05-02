@@ -309,7 +309,10 @@ export const sectionTemplates: SectionTemplate[] = [
       link3: '',
       link4: '',
       copyright: '© 2024 Your Company. All rights reserved.'
-       id: 'contact-section',
+    }
+  },
+  {
+    id: 'contact-section',
     name: 'Contact Form',
     category: 'cta',
     description: 'A contact section with info and a message form',
