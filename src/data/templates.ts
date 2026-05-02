@@ -407,7 +407,7 @@ export const sectionTemplates: SectionTemplate[] = [
     category: 'footer',
     description: 'Footer with description, links, and social icons',
     html: `
-      <footer class="py-16 px-6 bg-gray-900 text-white">
+      <footer class="footer-advanced py-16 px-6">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-12 text-left">
           <div class="space-y-6">
             <h3 class="text-2xl font-bold mb-4">{{companyName}}</h3>

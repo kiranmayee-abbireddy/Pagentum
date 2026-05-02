@@ -422,9 +422,16 @@ div[style*="background"] > section {
 }
 
 .footer-section {
-  background: ${theme.backgroundColor === '#ffffff' ? '#1e293b' : '#000000'};
-  color: ${theme.backgroundColor === '#ffffff' ? '#f1f5f9' : '#9ca3af'};
-  padding: calc(var(--spacing) * 3) calc(var(--spacing) * 2);
+  background: var(--bg-color);
+  color: var(--text-color);
+  border-top: 1px solid color-mix(in srgb, var(--text-color) 10%, transparent);
+  padding: calc(var(--spacing) * 5) calc(var(--spacing) * 2);
+}
+
+.footer-advanced {
+  background: var(--bg-color);
+  color: var(--text-color);
+  border-top: 1px solid color-mix(in srgb, var(--text-color) 10%, transparent);
 }
 
 .footer-content {

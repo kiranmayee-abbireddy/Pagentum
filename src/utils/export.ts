@@ -531,18 +531,17 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
       if (section.templateId === 'footer-advanced') {
         const copyright = section.content.copyright || `© ${new Date().getFullYear()} ${theme.name || 'Pagentum'}. All rights reserved.`;
         return `
-          <footer class="footer-advanced py-20 bg-gray-900 text-white" ${combinedStyle}>
+          <footer class="footer-advanced py-20" ${combinedStyle}>
             <div class="max-w-7xl mx-auto px-6">
               <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16 text-left">
                 <div class="space-y-6">
                   <h3 class="text-2xl font-bold">${section.content.companyName || 'Pagentum'}</h3>
-                  <p class="text-gray-400 leading-relaxed max-w-md">${section.content.description || ''}</p>
+                  <p class="opacity-70 leading-relaxed max-w-md">${section.content.description || ''}</p>
                   <div class="flex justify-start space-x-4">
                     ${['social1Link', 'social2Link', 'social3Link', 'social4Link'].map((key, i) => {
                       const href = section.content[key as keyof typeof section.content] || '#';
                       const labels = ['FB', 'TW', 'IG', 'IN'];
-                      const colors = ['hover:bg-blue-600', 'hover:bg-blue-400', 'hover:bg-pink-500', 'hover:bg-blue-700'];
-                      return `<a href="${href}" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center ${colors[i]} transition-colors">
+                      return `<a href="${href}" class="w-10 h-10 rounded-full flex items-center justify-center transition-colors" style="background: color-mix(in srgb, var(--text-color) 10%, transparent); color: inherit;">
                         <span class="text-xs font-bold">${labels[i]}</span>
                       </a>`;
                     }).join('')}
@@ -568,12 +567,12 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                         }).filter(Boolean);
 
                       if (allLinks.length > 6) {
-                        return `<div class="grid grid-cols-2 gap-x-8 gap-y-3 text-gray-400">
+                        return `<div class="grid grid-cols-2 gap-x-8 gap-y-3 opacity-70">
                           ${allLinks.join('')}
                         </div>`;
                       }
                       
-                      return `<div class="flex flex-col space-y-3 text-gray-400">
+                      return `<div class="flex flex-col space-y-3 opacity-70">
                         ${allLinks.join('')}
                       </div>`;
                     })()}
@@ -581,14 +580,14 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
 
                 <div class="space-y-6">
                   <h4 class="text-lg font-bold">Contact Us</h4>
-                  <div class="space-y-3 text-gray-400 text-sm">
+                  <div class="space-y-3 opacity-70 text-sm">
                     <p>${section.content.email || ''}</p>
                     <p>${section.content.phone || ''}</p>
                     <p>${section.content.address || ''}</p>
                   </div>
                 </div>
               </div>
-              <div class="pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
+              <div class="pt-8 border-t border-gray-800 text-center opacity-50 text-sm" style="border-color: color-mix(in srgb, var(--text-color) 10%, transparent)">
                 <p>${copyright}</p>
               </div>
             </div>
