@@ -74,7 +74,6 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
           let heroCount = 0;
           const linkSections = sections.filter(s => s.templateId !== 'navbar-1' && s.templateId !== 'footer-1' && s.templateId !== 'footer-advanced');
           return linkSections
-            .slice(0, 5)
             .map(s => {
                 let label = s.content.title;
                 if (s.templateId.includes('hero')) {

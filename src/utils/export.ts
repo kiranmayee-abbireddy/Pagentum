@@ -457,8 +457,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
             let heroCount = 0;
             const linkSections = sections.filter(s => s.templateId !== 'navbar-1' && s.templateId !== 'footer-1' && s.templateId !== 'footer-advanced');
             
-            // Limit to first 5 meaningful sections to prevent overflow
-            return linkSections.slice(0, 5).map(s => {
+            return linkSections.map(s => {
                 let label = s.content.title;
                 if (s.templateId.includes('hero')) {
                   heroCount++;
@@ -550,6 +549,24 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                 <div class="space-y-6">
                   <h4 class="text-lg font-bold">Quick Links</h4>
                   <div class="flex flex-col space-y-3 text-gray-400">
+                    ${(() => {
+                      let heroCount = 0;
+                      const linkSections = sections.filter(s => s.templateId !== 'navbar-1' && s.templateId !== 'footer-1' && s.templateId !== 'footer-advanced');
+                      
+                      return linkSections.map(s => {
+                          let label = s.content.title;
+                          if (s.templateId.includes('hero')) {
+                            heroCount++;
+                            if (heroCount === 1) label = 'Home';
+                            else if (heroCount === 2) label = 'About';
+                            else return null;
+                          }
+                          if (!label) return null;
+                          return `<a href="#section-${s.id}" class="hover:text-white transition-colors text-sm">${label}</a>`;
+                        })
+                        .filter(Boolean)
+                        .join('');
+                    })()}
                     ${['link1', 'link2', 'link3', 'link4'].map(key => {
                       const label = section.content[key as keyof typeof section.content];
                       return label ? `<a href="#" class="hover:text-white transition-colors text-sm">${label}</a>` : '';
