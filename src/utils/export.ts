@@ -546,8 +546,8 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
             `;
 
           return `
-            <div class="group relative overflow-hidden rounded-3xl shadow-lg bg-white border border-gray-100 transition-all hover:shadow-2xl hover:-translate-y-2">
-              <div class="h-72 overflow-hidden relative bg-gray-50">
+            <div class="group relative overflow-hidden rounded-3xl shadow-lg bg-white border border-gray-100 transition-all hover:shadow-2xl hover:-translate-y-2 h-full flex flex-col">
+              <div class="h-72 overflow-hidden relative bg-gray-50 flex-none">
                 ${thumbHTML}
                 <a href="${link}" class="absolute inset-0 bg-gray-900/40 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center backdrop-blur-sm z-20">
                   <div class="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
@@ -555,7 +555,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                   </div>
                 </a>
               </div>
-              <div class="p-8">
+              <div class="p-8 flex-1 flex flex-col">
                 <h3 class="text-2xl font-bold text-gray-900 mb-4">${title}</h3>
                 <p class="opacity-70 leading-relaxed line-clamp-3">${desc}</p>
               </div>
@@ -597,32 +597,32 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
               ${section.content.email ? `
-                <div class="p-10 rounded-3xl border border-gray-100 bg-white/50 backdrop-blur-sm shadow-sm hover:shadow-md transition-shadow">
-                  <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <div class="p-10 rounded-3xl border border-gray-100 bg-white/50 backdrop-blur-sm shadow-sm hover:shadow-md transition-shadow h-full flex flex-col">
+                  <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-6 flex-none">
                     <span class="text-blue-600 font-bold text-xl">@</span>
                   </div>
-                  <h3 class="text-2xl font-bold mb-3 text-center">Email</h3>
-                  <p class="text-lg opacity-70 text-center">${section.content.email}</p>
+                  <h3 class="text-2xl font-bold mb-3 text-center flex-none">Email</h3>
+                  <p class="text-lg opacity-70 text-center flex-1">${section.content.email}</p>
                 </div>
               ` : ''}
               
               ${section.content.phone ? `
-                <div class="p-10 rounded-3xl border border-gray-100 bg-white/50 backdrop-blur-sm shadow-sm hover:shadow-md transition-shadow">
-                  <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <div class="p-10 rounded-3xl border border-gray-100 bg-white/50 backdrop-blur-sm shadow-sm hover:shadow-md transition-shadow h-full flex flex-col">
+                  <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-6 flex-none">
                     <span class="text-green-600 font-bold text-xl">#</span>
                   </div>
-                  <h3 class="text-2xl font-bold mb-3 text-center">Phone</h3>
-                  <p class="text-lg opacity-70 text-center">${section.content.phone}</p>
+                  <h3 class="text-2xl font-bold mb-3 text-center flex-none">Phone</h3>
+                  <p class="text-lg opacity-70 text-center flex-1">${section.content.phone}</p>
                 </div>
               ` : ''}
               
               ${section.content.address ? `
-                <div class="p-10 rounded-3xl border border-gray-100 bg-white/50 backdrop-blur-sm shadow-sm hover:shadow-md transition-shadow">
-                  <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <div class="p-10 rounded-3xl border border-gray-100 bg-white/50 backdrop-blur-sm shadow-sm hover:shadow-md transition-shadow h-full flex flex-col">
+                  <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-6 flex-none">
                     <span class="text-purple-600 font-bold text-xl">^</span>
                   </div>
-                  <h3 class="text-2xl font-bold mb-3 text-center">Address</h3>
-                  <p class="text-lg opacity-70 text-center">${section.content.address}</p>
+                  <h3 class="text-2xl font-bold mb-3 text-center flex-none">Address</h3>
+                  <p class="text-lg opacity-70 text-center flex-1">${section.content.address}</p>
                 </div>
               ` : ''}
             </div>
