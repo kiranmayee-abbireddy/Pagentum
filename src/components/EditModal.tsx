@@ -134,11 +134,11 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
           {activeTab === 'content' ? (
             <div className="space-y-8 animate-in slide-in-from-right-2 fade-in duration-300">
               {/* Image Group */}
-              {['hero-image-advanced', 'product-carousel', 'navbar-1'].includes(section.templateId) && (
+              {['hero-image-advanced', 'product-carousel', 'portfolio-grid', 'navbar-1'].includes(section.templateId) && (
                 <section>
                   <div className="flex items-center space-x-2 mb-4 border-b pb-2">
                     <ImageIcon className="w-4 h-4 text-gray-400" />
-                    <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Images</h3>
+                    <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Gallery & Assets</h3>
                   </div>
                   
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -149,7 +149,7 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                         onChange={(e) => handleFileChange(e, false)}
                         className="hidden"
                         id="image-upload"
-                        multiple={section.templateId === 'product-carousel'}
+                        multiple={['product-carousel', 'portfolio-grid'].includes(section.templateId)}
                       />
                       <label 
                         htmlFor="image-upload" 
@@ -307,6 +307,44 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                                 className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-[10px] font-medium text-gray-500 focus:border-blue-300 outline-none"
                               />
                             </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </section>
+              )}
+              {/* Portfolio Entries */}
+              {section.templateId === 'portfolio-grid' && images.length > 0 && (
+                <section>
+                  <div className="flex items-center space-x-2 mb-4 border-b pb-2">
+                    <Layout className="w-4 h-4 text-gray-400" />
+                    <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest text-left">Portfolio Showcase</h3>
+                  </div>
+                  <div className="space-y-3">
+                    {images.map((_, idx) => {
+                      const num = idx + 1;
+                      return (
+                        <div key={num} className="p-4 bg-gray-50/50 rounded-xl border border-gray-100 hover:border-blue-200 transition-colors shadow-sm">
+                          <div className="flex items-center space-x-2 mb-3">
+                               <span className="w-6 h-6 bg-gray-900 text-white rounded flex items-center justify-center font-bold text-[10px]">{num.toString().padStart(2, '0')}</span>
+                               <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Project Details</span>
+                          </div>
+                          <div className="space-y-3">
+                            <input
+                              type="text"
+                              placeholder="Project Title"
+                              value={content[`proj${num}Title`] || ''}
+                              onChange={handleContentChange(`proj${num}Title`)}
+                              className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-xs font-bold text-gray-900 focus:border-blue-300 outline-none"
+                            />
+                            <textarea
+                              rows={2}
+                              placeholder="Describe the project..."
+                              value={content[`proj${num}Desc`] || ''}
+                              onChange={handleContentChange(`proj${num}Desc`)}
+                              className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-[10px] font-medium text-gray-500 focus:border-blue-300 outline-none"
+                            />
                           </div>
                         </div>
                       );
