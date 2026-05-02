@@ -422,11 +422,14 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
       }).join('');
 
       html = html.replace('{{featuresHTML}}', cardsHTML);
+      // Reduce title size for canvas
+      html = html.replace('text-4xl md:text-5xl font-black', 'text-xl font-bold');
     }
 
     // Standard replacements
     Object.entries(section.content).forEach(([key, value]) => {
-      html = html.replace(new RegExp(`{{${key}}}`, 'g'), value);
+      // Handle potential spaces in template placeholders like {{ subtitle }}
+      html = html.replace(new RegExp(`{{\\s*${key}\\s*}}`, 'g'), value);
     });
 
     // Simplified Canvas view: No colors/gradients (reserved for preview only)
