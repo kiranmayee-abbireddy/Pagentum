@@ -529,73 +529,66 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
       }
 
       if (section.templateId === 'portfolio-grid') {
-        const itemCount = parseInt(section.content.itemCount || '0') || 0;
-        const items = [];
-        for (let i = 1; i <= itemCount; i++) {
-          const title = section.content[`proj${i}Title`];
-          if (!title) continue;
+        const count = parseInt(section.content.projectCount || '0');
+        const itemsHTML = Array.from({ length: count }).map((_, idx) => {
+          const num = idx + 1;
+          const title = section.content[`proj${num}Title`] || `Project ${num}`;
+          const desc = section.content[`proj${num}Desc`] || '';
+          const link = section.content[`proj${num}Link`] || '#';
+          const thumb = section.content[`proj${num}Thumb`];
           
-          const desc = section.content[`proj${i}Desc`] || '';
-          const link = section.content[`proj${i}Link`] || '#';
-          const thumbnail = section.content[`proj${i}Thumbnail`];
-          
-          const fallbackPatterns = [
-            'linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%)',
-            'radial-gradient(circle at top left, var(--primary-color) 0%, transparent 70%), radial-gradient(circle at bottom right, var(--secondary-color) 0%, transparent 70%)',
-            'conic-gradient(from 180deg at 50% 50%, var(--primary-color) 0deg, var(--secondary-color) 180deg, var(--primary-color) 360deg)'
-          ];
-          const pattern = fallbackPatterns[(i - 1) % fallbackPatterns.length];
-
-          items.push(`
-            <a href="${link}" class="group relative block overflow-hidden rounded-[2.5rem] shadow-lg bg-white border border-gray-100 transition-all hover:shadow-2xl hover:-translate-y-2">
-              <div class="h-72 overflow-hidden relative">
-                ${thumbnail ? `
-                  <img src="${thumbnail}" alt="${title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                ` : `
-                  <div class="w-full h-full flex items-center justify-center relative overflow-hidden" style="background: ${pattern}; opacity: 0.1;">
-                    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(var(--text-color) 1px, transparent 1px); background-size: 24px 24px;"></div>
-                  </div>
-                  <div class="absolute inset-0 flex items-center justify-center">
-                    <span class="text-5xl font-black opacity-10 uppercase tracking-tighter" style="color: var(--primary-color)">${title.substring(0, 2)}</span>
-                  </div>
-                `}
-                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300"></div>
+          const thumbHTML = thumb 
+            ? `<img src="${thumb}" alt="${title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />`
+            : `
+              <div class="w-full h-full flex flex-col items-center justify-center p-6 text-center" style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--bg-color) 100%); opacity: 0.1; position: relative;">
+                <div style="position: absolute; inset: 0; opacity: 0.2; background-image: radial-gradient(var(--primary-color) 1px, transparent 1px); background-size: 20px 20px;"></div>
               </div>
-              <div class="p-10">
-                <div class="flex items-center justify-between mb-4">
-                   <h3 class="text-2xl font-black text-gray-900 transition-colors" style="color: inherit;">${title}</h3>
-                   <div class="w-12 h-12 rounded-2xl bg-gray-50 flex items-center justify-center transition-all group-hover:text-white" 
-                        style="background: color-mix(in srgb, var(--primary-color) 10%, transparent); color: var(--primary-color);"
-                        onmouseover="this.style.background='var(--primary-color)';"
-                        onmouseout="this.style.background='color-mix(in srgb, var(--primary-color) 10%, transparent)';"
-                   >
-                      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7-7 7M3 12h18"></path></svg>
-                   </div>
+              <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center z-10">
+                <div class="w-16 h-16 rounded-2xl flex items-center justify-center mb-4" style="background: color-mix(in srgb, var(--primary-color) 15%, transparent); color: var(--primary-color);">
+                  <span class="text-2xl font-black">${title.charAt(0).toUpperCase()}</span>
                 </div>
-                <p class="opacity-70 leading-relaxed text-lg line-clamp-3">${desc}</p>
+                <span class="text-[10px] font-black uppercase tracking-widest opacity-40" style="color: var(--text-color)">Project ${num}</span>
               </div>
-            </a>
-          `);
-        }
+            `;
 
-        const itemsHTML = items.join('') || `
-          <div class="col-span-full py-32 text-center bg-gray-50 rounded-[40px] border-4 border-dashed border-gray-100">
-             <div class="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6 text-gray-400">
-                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+          return `
+            <div class="group relative overflow-hidden rounded-3xl shadow-lg bg-white border border-gray-100 transition-all hover:shadow-2xl hover:-translate-y-2">
+              <div class="h-72 overflow-hidden relative bg-gray-50">
+                ${thumbHTML}
+                <a href="${link}" class="absolute inset-0 bg-gray-900/40 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center backdrop-blur-sm z-20">
+                  <div class="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-xl transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                  </div>
+                </a>
+              </div>
+              <div class="p-8">
+                <div class="flex items-center justify-between mb-4">
+                   <h3 class="text-2xl font-bold text-gray-900">${title}</h3>
+                   <a href="${link}" class="text-blue-600 hover:text-blue-700 font-bold text-sm flex items-center gap-1">
+                     View Case <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                   </a>
+                </div>
+                <p class="opacity-70 leading-relaxed line-clamp-3">${desc}</p>
+              </div>
+            </div>
+          `;
+        }).join('') || `
+          <div class="col-span-full py-24 text-center bg-gray-50 rounded-[2rem] border-4 border-dashed border-gray-100">
+             <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg class="w-10 h-10 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
              </div>
-             <p class="text-gray-500 font-bold text-xl uppercase tracking-widest">Portfolio Showcase Empty</p>
-             <p class="text-gray-400 mt-2">Add projects in the editor to showcase your work.</p>
+            <p class="text-gray-400 text-xl font-bold uppercase tracking-widest">No Projects Yet</p>
+            <p class="text-gray-400 mt-2">Add your amazing work from the builder editor.</p>
           </div>
         `;
 
         return `
-          <section class="portfolio-section py-32 px-6" ${combinedStyle}>
+          <section id="section-${section.id}" class="portfolio-section py-28 px-6" ${combinedStyle}>
             ${bgHTML}
             <div class="max-w-7xl mx-auto relative z-10">
-              <div class="text-center mb-24">
-                <h2 class="text-5xl md:text-7xl font-black mb-8 tracking-tighter">${section.content.title || ''}</h2>
-                <div class="w-24 h-2 mx-auto mb-8 rounded-full" style="background: var(--primary-color)"></div>
-                <p class="text-2xl opacity-80 max-w-3xl mx-auto leading-relaxed">${section.content.subtitle || ''}</p>
+              <div class="text-center mb-20">
+                <h2 class="text-4xl md:text-7xl font-bold mb-8 tracking-tight">${section.content.title || ''}</h2>
+                <p class="text-2xl opacity-70 max-w-3xl mx-auto font-medium">${section.content.subtitle || ''}</p>
               </div>
               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
                 ${itemsHTML}

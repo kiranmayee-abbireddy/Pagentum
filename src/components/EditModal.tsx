@@ -322,132 +322,129 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                       <Layout className="w-4 h-4 text-gray-400" />
                       <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest text-left">Portfolio Projects</h3>
                     </div>
-                    <button 
+                    <button
                       onClick={() => {
-                        const nextNum = (parseInt(content.itemCount || '0') || 0) + 1;
-                        setContent(prev => ({ ...prev, itemCount: nextNum.toString() }));
+                        const count = parseInt(content.projectCount || '0') + 1;
+                        setContent(prev => ({ ...prev, projectCount: count.toString() }));
                       }}
-                      className="flex items-center space-x-1 px-2 py-1 bg-blue-600 text-white rounded-lg text-[8px] font-bold hover:bg-blue-700 transition-colors"
+                      className="flex items-center space-x-1 px-2 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
                     >
-                      <Plus className="w-2 h-2" />
-                      <span>ADD PROJECT</span>
+                      <Plus className="w-3 h-3" />
+                      <span className="text-[8px] font-bold uppercase">Add Project</span>
                     </button>
                   </div>
                   
                   <div className="space-y-4">
-                    {Array.from({ length: parseInt(content.itemCount || '0') || 0 }).map((_, idx) => {
+                    {Array.from({ length: parseInt(content.projectCount || '0') }).map((_, idx) => {
                       const num = idx + 1;
-                      if (!content[`proj${num}Title`] && num > 1 && !content[`proj${num-1}Title`]) return null; // Simple safety
-                      
                       return (
-                        <div key={num} className="p-4 bg-gray-50/50 rounded-xl border border-gray-100 hover:border-blue-200 transition-colors shadow-sm relative group">
-                          <button 
-                            onClick={() => {
-                              // Just empty the title to effectively 'delete' for now, or we could do a real shift
-                              setContent(prev => ({ 
-                                ...prev, 
-                                [`proj${num}Title`]: '', 
-                                [`proj${num}Desc`]: '',
-                                [`proj${num}Link`]: '',
-                                [`proj${num}Thumbnail`]: ''
-                              }));
-                            }}
-                            className="absolute top-2 right-2 p-1 text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"
-                          >
-                            <Trash2 className="w-3 h-3" />
-                          </button>
-
-                          <div className="flex items-center space-x-2 mb-3">
-                               <span className="w-6 h-6 bg-gray-900 text-white rounded flex items-center justify-center font-bold text-[10px]">{num.toString().padStart(2, '0')}</span>
-                               <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Project Configuration</span>
+                        <div key={num} className="p-4 bg-gray-50/50 rounded-xl border border-gray-100 hover:border-blue-200 transition-colors shadow-sm relative group/item">
+                          <div className="flex items-center justify-between mb-4">
+                            <div className="flex items-center space-x-2">
+                              <span className="w-6 h-6 bg-gray-900 text-white rounded flex items-center justify-center font-bold text-[10px]">{num.toString().padStart(2, '0')}</span>
+                              <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Project Specification</span>
+                            </div>
+                            <button
+                              onClick={() => {
+                                const newContent = { ...content };
+                                // Shift items up to fill gap
+                                const count = parseInt(content.projectCount || '0');
+                                for (let i = num; i < count; i++) {
+                                  newContent[`proj${i}Title`] = newContent[`proj${i+1}Title`];
+                                  newContent[`proj${i}Desc`] = newContent[`proj${i+1}Desc`];
+                                  newContent[`proj${i}Link`] = newContent[`proj${i+1}Link`];
+                                  newContent[`proj${i}Thumb`] = newContent[`proj${i+1}Thumb`];
+                                }
+                                delete newContent[`proj${count}Title`];
+                                delete newContent[`proj${count}Desc`];
+                                delete newContent[`proj${count}Link`];
+                                delete newContent[`proj${count}Thumb`];
+                                newContent.projectCount = (count - 1).toString();
+                                setContent(newContent);
+                              }}
+                              className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-md transition-all opacity-0 group-hover/item:opacity-100"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
                           </div>
                           
-                          <div className="space-y-3">
-                            <div className="grid grid-cols-2 gap-3">
-                              <div className="space-y-1">
-                                <label className="text-[8px] font-bold text-gray-400 uppercase ml-1">Title</label>
-                                <input
-                                  type="text"
-                                  placeholder="Project Name"
-                                  value={content[`proj${num}Title`] || ''}
-                                  onChange={handleContentChange(`proj${num}Title`)}
-                                  className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-xs font-bold text-gray-900 focus:border-blue-300 outline-none"
-                                />
-                              </div>
-                              <div className="space-y-1">
-                                <label className="text-[8px] font-bold text-gray-400 uppercase ml-1">Live Link</label>
-                                <input
-                                  type="text"
-                                  placeholder="https://..."
-                                  value={content[`proj${num}Link`] || ''}
-                                  onChange={handleContentChange(`proj${num}Link`)}
-                                  className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-xs font-bold text-gray-900 focus:border-blue-300 outline-none"
-                                />
-                              </div>
-                            </div>
-
-                            <div className="space-y-1">
-                              <label className="text-[8px] font-bold text-gray-400 uppercase ml-1">Description</label>
-                              <textarea
-                                rows={2}
-                                placeholder="Brief overview of the work..."
-                                value={content[`proj${num}Desc`] || ''}
-                                onChange={handleContentChange(`proj${num}Desc`)}
-                                className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-[10px] font-medium text-gray-500 focus:border-blue-300 outline-none"
-                              />
-                            </div>
-
-                            <div className="space-y-1">
-                              <label className="text-[8px] font-bold text-gray-400 uppercase ml-1">Thumbnail Image (Optional)</label>
-                              <div className="flex items-center space-x-3">
-                                {content[`proj${num}Thumbnail`] && (
-                                  <div className="w-12 h-12 rounded-lg overflow-hidden border border-gray-200 flex-none">
-                                    <img src={content[`proj${num}Thumbnail`]} className="w-full h-full object-cover" />
+                          <div className="grid grid-cols-1 md:grid-cols-1 gap-3">
+                            <div className="flex gap-3 items-start">
+                              <div className="flex-none w-20 h-20 relative group/thumb overflow-hidden rounded-xl bg-white border border-gray-100 flex items-center justify-center">
+                                {content[`proj${num}Thumb`] ? (
+                                  <img src={content[`proj${num}Thumb`]} className="w-full h-full object-cover" />
+                                ) : (
+                                  <div className="w-full h-full bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col items-center justify-center gap-1">
+                                    <ImageIcon className="w-4 h-4 text-gray-300" />
+                                    <span className="text-[6px] font-bold text-gray-400">NO THUMB</span>
                                   </div>
                                 )}
-                                <div className="flex-1">
-                                  <input
-                                    type="file"
-                                    accept="image/*"
-                                    id={`thumb-${num}`}
-                                    className="hidden"
+                                <label className="absolute inset-0 bg-gray-900/60 flex items-center justify-center opacity-0 group-hover/thumb:opacity-100 transition-opacity cursor-pointer">
+                                  <input 
+                                    type="file" 
+                                    accept="image/*" 
+                                    className="hidden" 
                                     onChange={(e) => {
-                                      if (e.target.files?.[0]) {
-                                        const reader = new FileReader();
-                                        reader.onload = () => {
-                                          setContent(prev => ({ ...prev, [`proj${num}Thumbnail`]: reader.result as string }));
-                                        };
-                                        reader.readAsDataURL(e.target.files[0]);
-                                      }
+                                      if (!e.target.files?.[0]) return;
+                                      const reader = new FileReader();
+                                      reader.onload = () => {
+                                        setContent(prev => ({ ...prev, [`proj${num}Thumb`]: reader.result as string }));
+                                      };
+                                      reader.readAsDataURL(e.target.files[0]);
                                     }}
                                   />
-                                  <label 
-                                    htmlFor={`thumb-${num}`}
-                                    className="w-full flex items-center justify-center space-x-2 px-3 py-2 bg-white border-2 border-dashed border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all cursor-pointer"
-                                  >
-                                    <ImageIcon className="w-3 h-3 text-blue-600" />
-                                    <span className="text-[8px] font-bold text-gray-500 uppercase">Upload</span>
-                                  </label>
-                                </div>
-                                {content[`proj${num}Thumbnail`] && (
+                                  <Plus className="w-4 h-4 text-white" />
+                                </label>
+                                {content[`proj${num}Thumb`] && (
                                   <button 
-                                    onClick={() => setContent(prev => ({ ...prev, [`proj${num}Thumbnail`]: '' }))}
-                                    className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                                    onClick={() => setContent(prev => ({ ...prev, [`proj${num}Thumb`]: '' }))}
+                                    className="absolute top-1 right-1 p-1 bg-red-500 text-white rounded-md opacity-0 group-hover/thumb:opacity-100 transition-opacity"
                                   >
-                                    <Trash2 className="w-3 h-3" />
+                                    <X className="w-2.5 h-2.5" />
                                   </button>
                                 )}
                               </div>
+                              
+                              <div className="flex-1 space-y-3">
+                                <input
+                                  type="text"
+                                  placeholder="Project Title"
+                                  value={content[`proj${num}Title`] || ''}
+                                  onChange={handleContentChange(`proj${num}Title`)}
+                                  className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-xs font-bold text-gray-900 focus:border-blue-300 outline-none shadow-sm"
+                                />
+                                <div className="flex gap-2">
+                                  <div className="flex-none flex items-center px-2 bg-gray-100 rounded-lg">
+                                    <MousePointer2 className="w-3 h-3 text-gray-400" />
+                                  </div>
+                                  <input
+                                    type="text"
+                                    placeholder="Live Link (e.g. https://...)"
+                                    value={content[`proj${num}Link`] || ''}
+                                    onChange={handleContentChange(`proj${num}Link`)}
+                                    className="flex-1 px-3 py-2 bg-white border border-gray-200 rounded-lg text-[10px] font-bold text-blue-600 focus:border-blue-300 outline-none shadow-sm"
+                                  />
+                                </div>
+                              </div>
                             </div>
+                            
+                            <textarea
+                              rows={2}
+                              placeholder="Describe the project achievements or details..."
+                              value={content[`proj${num}Desc`] || ''}
+                              onChange={handleContentChange(`proj${num}Desc`)}
+                              className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-[10px] font-medium text-gray-500 focus:border-blue-300 outline-none shadow-sm"
+                            />
                           </div>
                         </div>
                       );
                     })}
 
-                    {(!content.itemCount || content.itemCount === '0') && (
-                      <div className="py-12 text-center bg-gray-50 rounded-2xl border-2 border-dashed border-gray-100">
-                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">No Projects Added Yet</p>
-                        <p className="text-[8px] text-gray-400 mt-1">Click the button above to start building your portfolio.</p>
+                    {parseInt(content.projectCount || '0') === 0 && (
+                      <div className="py-12 text-center bg-gray-50/50 rounded-2xl border-2 border-dashed border-gray-200">
+                        <Layout className="w-8 h-8 text-gray-300 mx-auto mb-3" />
+                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">No Projects Added</p>
+                        <p className="text-[9px] text-gray-400 mt-1">Click the "Add Project" button to start your showcase</p>
                       </div>
                     )}
                   </div>
