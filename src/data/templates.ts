@@ -42,7 +42,7 @@ export const sectionTemplates: SectionTemplate[] = [
           </div>
           <div class="feature-card">
             <div class="feature-icon">🚀</div>
-            <h3 class="feature-title">{{feature3Title}}</h3>
+            <h3 class="feature-title">{{feature2Title}}</h3>
             <p class="feature-description">{{feature3Desc}}</p>
           </div>
         </div>
@@ -313,45 +313,51 @@ export const sectionTemplates: SectionTemplate[] = [
   },
   {
     id: 'contact-section',
-    name: 'Contact Form',
+    name: 'Contact Section',
     category: 'cta',
-    description: 'A contact section with info and a message form',
+    description: 'A direct contact section with info and call to action',
     html: `
-      <section class="py-12 md:py-20 px-4 md:px-6 max-w-7xl mx-auto overflow-hidden">
-        <div class="text-center mb-10 md:mb-16">
-          <h2 class="text-2xl md:text-5xl font-bold mb-4">{{title}}</h2>
-          <p class="text-lg md:text-xl opacity-80 max-w-2xl mx-auto">{{subtitle}}</p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-          <div class="flex flex-col justify-center text-center md:text-left">
-            <h3 class="text-xl md:text-2xl font-semibold mb-4 md:mb-6">{{infoTitle}}</h3>
-            <p class="text-base md:text-lg opacity-80 mb-6 md:mb-8">{{infoDesc}}</p>
-            <div class="space-y-3 md:space-y-4 text-base md:text-lg mb-8 md:mb-0">
-              <p><strong>Email:</strong> {{email}}</p>
-              <p><strong>Phone:</strong> {{phone}}</p>
-              <p><strong>Address:</strong> {{address}}</p>
+      <section class="py-16 md:py-24 px-4 md:px-6 overflow-hidden">
+        <div class="max-w-4xl mx-auto">
+          <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-5xl font-bold mb-6">{{title}}</h2>
+            <p class="text-lg md:text-xl opacity-70 max-w-2xl mx-auto leading-relaxed">{{description}}</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+            <div class="p-8 rounded-2xl border text-center transition-transform hover:scale-105" style="background: color-mix(in srgb, var(--bg-color) 95%, var(--text-color) 5%); border-color: color-mix(in srgb, var(--text-color) 10%, transparent)">
+              <div class="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4" style="background: color-mix(in srgb, var(--primary-color) 15%, transparent); color: var(--primary-color);">📧</div>
+              <h3 class="text-xl font-bold mb-2">Email Us</h3>
+              <p class="opacity-70 break-all">{{email}}</p>
+            </div>
+            <div class="p-8 rounded-2xl border text-center transition-transform hover:scale-105" style="background: color-mix(in srgb, var(--bg-color) 95%, var(--text-color) 5%); border-color: color-mix(in srgb, var(--text-color) 10%, transparent)">
+              <div class="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4" style="background: color-mix(in srgb, var(--primary-color) 15%, transparent); color: var(--primary-color);">📞</div>
+              <h3 class="text-xl font-bold mb-2">Call Us</h3>
+              <p class="opacity-70">{{phone}}</p>
+            </div>
+            <div class="p-8 rounded-2xl border text-center transition-transform hover:scale-105" style="background: color-mix(in srgb, var(--bg-color) 95%, var(--text-color) 5%); border-color: color-mix(in srgb, var(--text-color) 10%, transparent)">
+              <div class="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4" style="background: color-mix(in srgb, var(--primary-color) 15%, transparent); color: var(--primary-color);">📍</div>
+              <h3 class="text-xl font-bold mb-2">Visit Us</h3>
+              <p class="opacity-70 leading-snug">{{address}}</p>
             </div>
           </div>
-          <div class="p-5 md:p-8 rounded-2xl shadow-xl border w-full box-border" style="background: color-mix(in srgb, var(--bg-color) 95%, var(--text-color) 5%); border-color: color-mix(in srgb, var(--text-color) 10%, transparent)">
-            <form class="flex flex-col space-y-4" onsubmit="event.preventDefault();">
-              <input type="text" placeholder="Your Name" class="p-3 md:p-4 rounded-lg border focus:outline-none focus:ring-2 w-full box-border" style="background: var(--bg-color); border-color: color-mix(in srgb, var(--text-color) 20%, transparent); color: var(--text-color); --tw-ring-color: var(--primary-color);" />
-              <input type="email" placeholder="Your Email" class="p-3 md:p-4 rounded-lg border focus:outline-none focus:ring-2 w-full box-border" style="background: var(--bg-color); border-color: color-mix(in srgb, var(--text-color) 20%, transparent); color: var(--text-color); --tw-ring-color: var(--primary-color);" />
-              <textarea rows="4" placeholder="Your Message" class="p-3 md:p-4 rounded-lg border focus:outline-none focus:ring-2 w-full box-border" style="background: var(--bg-color); border-color: color-mix(in srgb, var(--text-color) 20%, transparent); color: var(--text-color); --tw-ring-color: var(--primary-color);"></textarea>
-              <button type="submit" class="text-white font-bold py-3 md:py-4 rounded-lg transition-colors w-full" style="background: var(--primary-color);">{{buttonText}}</button>
-            </form>
+          <div class="mt-16 text-center">
+            <div class="inline-block p-6 md:p-10 rounded-[2rem] border-2 border-dashed" style="border-color: color-mix(in srgb, var(--primary-color) 30%, transparent); background: color-mix(in srgb, var(--bg-color) 98%, var(--text-color) 2%);">
+              <h4 class="text-xl md:text-2xl font-bold mb-4">Have a specific query?</h4>
+              <p class="text-lg opacity-70 mb-8">{{queryText}}</p>
+              <a href="mailto:{{email}}" class="inline-block py-4 px-10 rounded-xl font-bold text-white transition-all hover:scale-105 shadow-lg" style="background: var(--primary-color);">{{buttonText}}</a>
+            </div>
           </div>
         </div>
       </section>
     `,
     defaultContent: {
       title: 'Get in Touch',
-      subtitle: 'We would love to hear from you. Drop us a message below.',
-      infoTitle: 'Contact Information',
-      infoDesc: 'Feel free to reach out for collaborations or just a friendly hello.',
+      description: 'We are here to help and answer any questions you might have. We look forward to hearing from you.',
       email: 'hello@example.com',
       phone: '+1 (555) 123-4567',
       address: '123 Creative Street, Design City',
-      buttonText: 'Send Message'
+      queryText: 'For business inquiries or urgent matters, feel free to reach out directly via email.',
+      buttonText: 'Send an Email'
     }
   },
   {

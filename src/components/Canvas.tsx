@@ -162,19 +162,25 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
     }
 
     if (section.templateId === 'contact-section') {
-      html = html.replace('class="py-12 md:py-20 px-4 md:px-6 max-w-7xl mx-auto overflow-hidden"', 'class="py-4 px-2"');
-      html = html.replace('class="text-center mb-10 md:mb-16"', 'class="text-center mb-4"');
-      html = html.replace('class="text-2xl md:text-5xl font-bold mb-4"', 'class="text-sm font-bold mb-1"');
-      html = html.replace('class="text-lg md:text-xl opacity-80 max-w-2xl mx-auto"', 'class="text-[8px] opacity-60"');
-      html = html.replace('class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12"', 'class="grid grid-cols-2 gap-4"');
-      html = html.replace('class="text-xl md:text-2xl font-semibold mb-4 md:mb-6"', 'class="text-[10px] font-bold mb-2"');
-      html = html.replace('class="text-base md:text-lg opacity-80 mb-6 md:mb-8"', 'class="text-[7px] opacity-60 mb-2"');
-      html = html.replace('class="space-y-3 md:space-y-4 text-base md:text-lg mb-8 md:mb-0"', 'class="space-y-1 text-[7px]"');
-      html = html.replace(/style="background: color-mix\(in srgb, var\(--bg-color\) 95%, var\(--text-color\) 5%\); border-color: color-mix\(in srgb, var\(--text-color\) 10%, transparent\)"/g, 'class="bg-gray-50 p-3 rounded-lg border border-gray-100"');
-      html = html.replace(/class="p-5 md:p-8 rounded-2xl shadow-xl border w-full box-border"/g, 'class="bg-gray-50 p-3 rounded-lg border border-gray-100"');
-      html = html.replace('class="flex flex-col space-y-4"', 'class="space-y-2"');
-      html = html.replace(/class="p-3 md:p-4 rounded-lg border focus:outline-none focus:ring-2 w-full box-border"/g, 'class="p-1.5 text-[8px] rounded-md bg-white border border-gray-200 w-full"');
-      html = html.replace('class="text-white font-bold py-3 md:py-4 rounded-lg transition-colors w-full"', 'class="bg-blue-600 text-white text-[8px] font-bold py-1.5 rounded-md w-full"');
+      html = html.replace('class="py-16 md:py-24 px-4 md:px-6 overflow-hidden"', 'class="py-4 px-2"');
+      html = html.replace('class="max-w-4xl mx-auto"', 'class="max-w-full"');
+      html = html.replace('class="text-center mb-16"', 'class="text-center mb-4"');
+      html = html.replace('class="text-3xl md:text-5xl font-bold mb-6"', 'class="text-sm font-bold mb-1"');
+      html = html.replace('class="text-lg md:text-xl opacity-70 max-w-2xl mx-auto leading-relaxed"', 'class="text-[8px] opacity-60"');
+      html = html.replace('class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12"', 'class="grid grid-cols-3 gap-4"');
+      
+      html = html.replace(/class="p-8 rounded-2xl border text-center transition-transform hover:scale-105"/g, 'class="p-3 rounded-xl border border-gray-100 text-center bg-gray-50"');
+      html = html.replace(/class="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4"/g, 'class="w-6 h-6 rounded-full flex items-center justify-center mx-auto mb-1"');
+      html = html.replace(/class="text-xl font-bold mb-2"/g, 'class="text-[8px] font-bold mb-0.5"');
+      html = html.replace(/class="opacity-70 break-all"/g, 'class="text-[6px] opacity-60"');
+      html = html.replace(/class="opacity-70"/g, 'class="text-[6px] opacity-60"');
+      html = html.replace(/class="opacity-70 leading-snug"/g, 'class="text-[6px] opacity-60"');
+      
+      html = html.replace('class="mt-16 text-center"', 'class="mt-4 text-center"');
+      html = html.replace('class="inline-block p-6 md:p-10 rounded-[2rem] border-2 border-dashed"', 'class="inline-block p-3 rounded-2xl border border-dashed"');
+      html = html.replace('class="text-xl md:text-2xl font-bold mb-4"', 'class="text-[10px] font-bold mb-1"');
+      html = html.replace('class="text-lg opacity-70 mb-8"', 'class="text-[7px] opacity-60 mb-2"');
+      html = html.replace('class="inline-block py-4 px-10 rounded-xl font-bold text-white transition-all hover:scale-105 shadow-lg"', 'class="inline-block py-1.5 px-4 rounded-lg bg-blue-600 text-white text-[8px] font-bold"');
     }
 
     if (section.templateId === 'portfolio-grid') {
