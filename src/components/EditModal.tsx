@@ -820,7 +820,14 @@ function FeatureIconPicker({ index, content, setContent }: { index: number, cont
     { id: 'clock', label: 'Speed', path: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z' },
     { id: 'globe', label: 'Global', path: 'M12 21a9 9 0 100-18 9 9 0 000 18z M12 21V3 M21 12H3' },
     { id: 'monitor', label: 'Desktop', path: 'M2 3h20v14H2V3zm6 18h8m-4-4v4' },
-    { id: 'mouse', label: 'Click', path: 'M12 2a5 5 0 00-5 5v10a5 5 0 0010 0V7a5 5 0 00-5-5z M12 7V5' }
+    { id: 'mouse', label: 'Click', path: 'M12 2a5 5 0 00-5 5v10a5 5 0 0010 0V7a5 5 0 00-5-5z M12 7V5' },
+    { id: 'star', label: 'Star', path: 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z' },
+    { id: 'heart', label: 'Loved', path: 'M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z' },
+    { id: 'coffee', label: 'Energy', path: 'M18 8h1a4 4 0 010 8h-1 M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z M6 1v3 M10 1v3 M14 1v3' },
+    { id: 'code', label: 'Code', path: 'M16 18l6-6-6-6 M8 6l-6 6 6 6' },
+    { id: 'database', label: 'Data', path: 'M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5 M3 5c0 1.66 4 3 9 3s9-1.34 9-3 M3 5c0-1.66 4-3 9-3s9 1.34 9 3 M3 12c0 1.66 4 3 9 3s9-1.34 9-3' },
+    { id: 'cpu', label: 'Logic', path: 'M4 4h16v16H4V4z M9 9h6v6H9V9z M9 1v3 M15 1v3 M9 20v3 M15 20v3 M20 9h3 M20 15h3 M1 9h3 M1 15h3' },
+    { id: 'layers', label: 'Stack', path: 'M12 2L2 7l10 5 10-5-10-5z M2 17l10 5 10-5 M2 12l10 5 10-5' }
   ];
 
   return (

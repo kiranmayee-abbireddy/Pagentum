@@ -34,16 +34,8 @@ export const sectionTemplates: SectionTemplate[] = [
             <h2 class="text-4xl md:text-5xl font-black mb-4">{{title}}</h2>
             <p class="text-xl text-gray-500 max-w-2xl mx-auto">{{subtitle}}</p>
           </div>
-          <div class="features-grid grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="feature-card-wrapper">
-              {{feature1HTML}}
-            </div>
-            <div class="feature-card-wrapper">
-              {{feature2HTML}}
-            </div>
-            <div class="feature-card-wrapper">
-              {{feature3HTML}}
-            </div>
+          <div class="features-grid grid grid-cols-1 md:grid-cols-3 gap-10">
+            {{featuresHTML}}
           </div>
         </div>
       </section>
