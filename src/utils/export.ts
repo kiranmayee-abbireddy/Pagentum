@@ -613,13 +613,15 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
             <style>
               #${cardId} {
                 transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-                background: white;
-                border: 1px solid rgba(0,0,0,0.05);
+                background: color-mix(in srgb, var(--text-color) 5%, var(--bg-color));
+                backdrop-filter: blur(10px);
+                border: 1px solid color-mix(in srgb, var(--text-color) 10%, transparent);
               }
               #${cardId}:hover {
                 transform: translateY(-10px) scale(1.02);
                 box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
                 border-color: var(--primary-color);
+                background: color-mix(in srgb, var(--primary-color) 5%, var(--bg-color));
               }
               #${cardId} .icon-glow {
                 transition: all 0.5s ease;

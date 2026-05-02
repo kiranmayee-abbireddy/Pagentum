@@ -807,9 +807,6 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
   );
 }
 
-  );
-}
-
 function FeatureIconPicker({ index, content, setContent }: { index: number, content: any, setContent: any }) {
   const [showPicker, setShowPicker] = useState(false);
   const iconKey = `feature${index}Icon`;

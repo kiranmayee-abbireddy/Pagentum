@@ -402,7 +402,8 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
         const iconPath = featureIcons[iconKey] || featureIcons.zap;
 
         return `
-          <div class="p-4 rounded-3xl border border-gray-100 flex flex-col items-center text-center group hover:bg-blue-50/30 transition-all duration-300">
+          <div class="p-4 rounded-3xl border border-gray-100 flex flex-col items-center text-center group hover:bg-blue-50/30 transition-all duration-300"
+               style="background: #ffffff10; backdrop-filter: blur(5px); border-color: rgba(0,0,0,0.05);">
             <div class="w-12 h-12 mb-4 flex items-center justify-center text-blue-600 bg-blue-50 rounded-2xl group-hover:scale-110 transition-transform">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
                 <path d="${iconPath}"></path>
