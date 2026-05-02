@@ -215,10 +215,16 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
             <span class="text-[14px] font-black text-white opacity-30 uppercase">${title.substring(0, 2)}</span>
           </div>`;
         } else if (patternType === 'waves') {
-          patternHTML = `<div class="w-full h-full flex items-center justify-center bg-blue-600 relative overflow-hidden">
-            <div class="absolute inset-0 opacity-40 animate-pulse bg-gradient-to-t from-white/20 to-transparent"></div>
-            <span class="text-[14px] font-black text-white opacity-40 uppercase z-10">${title.substring(0, 2)}</span>
-          </div>`;
+          patternHTML = `
+            <div class="w-full h-full flex items-center justify-center relative overflow-hidden bg-blue-600">
+              <div class="absolute inset-0 opacity-40" style="width: 200%; animation: wave-motion 10s linear infinite;">
+                <svg viewBox="0 0 120 28" preserveAspectRatio="none" class="w-full h-full">
+                  <path d="M-160 44c30 0 58-18 88-18s58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" fill="rgba(255,255,255,0.5)" />
+                </svg>
+              </div>
+              <span class="text-[14px] font-black text-white opacity-40 uppercase z-10">${title.substring(0, 2)}</span>
+            </div>
+          `;
         } else if (patternType === 'pastel') {
           patternHTML = `<div class="w-full h-full flex items-center justify-center bg-blue-50">
             <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(blue 1px, transparent 1px); background-size: 10px 10px;"></div>
