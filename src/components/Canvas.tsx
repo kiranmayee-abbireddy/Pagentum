@@ -170,10 +170,10 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
       html = html.replace('class="text-2xl font-semibold mb-6"', 'class="text-[10px] font-bold mb-2"');
       html = html.replace('class="text-lg opacity-80 mb-8"', 'class="text-[7px] opacity-60 mb-2"');
       html = html.replace('class="space-y-4 text-lg"', 'class="space-y-1 text-[7px]"');
-      html = html.replace('class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100"', 'class="bg-gray-50 p-3 rounded-lg border border-gray-100"');
+      html = html.replace(/style="background: color-mix\(in srgb, var\(--bg-color\) 95%, var\(--text-color\) 5%\); border-color: color-mix\(in srgb, var\(--text-color\) 10%, transparent\)"/g, 'class="bg-gray-50 p-3 rounded-lg border border-gray-100"');
       html = html.replace('class="flex flex-col space-y-4"', 'class="space-y-2"');
-      html = html.replace(/class="p-4 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"/g, 'class="p-1.5 text-[8px] rounded-md bg-white border border-gray-200 w-full"');
-      html = html.replace('class="bg-blue-600 text-white font-bold py-4 rounded-lg hover:bg-blue-700 transition-colors"', 'class="bg-blue-600 text-white text-[8px] font-bold py-1.5 rounded-md w-full"');
+      html = html.replace(/class="p-4 rounded-lg border focus:outline-none focus:ring-2 w-full"/g, 'class="p-1.5 text-[8px] rounded-md bg-white border border-gray-200 w-full"');
+      html = html.replace('class="text-white font-bold py-4 rounded-lg transition-colors"', 'class="bg-blue-600 text-white text-[8px] font-bold py-1.5 rounded-md w-full"');
     }
 
     if (section.templateId === 'portfolio-grid') {
@@ -182,8 +182,8 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
       html = html.replace('class="text-3xl md:text-5xl font-bold mb-4"', 'class="text-sm font-bold mb-1"');
       html = html.replace('class="text-xl opacity-80 max-w-2xl mx-auto"', 'class="text-[8px] opacity-60"');
       html = html.replace('class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"', 'class="grid grid-cols-3 gap-3"');
-      html = html.replace(/class="group relative overflow-hidden rounded-2xl shadow-lg bg-white border border-gray-100"/g, 'class="bg-gray-50 rounded-lg overflow-hidden border border-gray-100"');
-      html = html.replace(/class="h-64 bg-gray-200 flex items-center justify-center text-gray-500 font-bold uppercase tracking-widest text-xs"/g, 'class="h-16 bg-gray-200 flex items-center justify-center text-[6px] font-bold text-gray-400"');
+      html = html.replace(/class="group relative overflow-hidden rounded-2xl shadow-lg border" style="background: color-mix\(in srgb, var\(--bg-color\) 95%, var\(--text-color\) 5%\); border-color: color-mix\(in srgb, var\(--text-color\) 10%, transparent\)"/g, 'class="bg-gray-50 rounded-lg overflow-hidden border border-gray-100"');
+      html = html.replace(/class="h-64 flex items-center justify-center font-bold uppercase tracking-widest text-xs" style="background: color-mix\(in srgb, var\(--bg-color\) 90%, var\(--text-color\) 10%\); color: color-mix\(in srgb, var\(--text-color\) 40%, transparent\)"/g, 'class="h-16 bg-gray-200 flex items-center justify-center text-[6px] font-bold text-gray-400"');
       html = html.replace(/class="p-6"/g, 'class="p-2"');
       html = html.replace(/class="text-xl font-bold mb-2"/g, 'class="text-[9px] font-bold mb-0.5"');
       html = html.replace(/class="opacity-80"/g, 'class="text-[7px] opacity-60"');

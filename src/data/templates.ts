@@ -332,12 +332,12 @@ export const sectionTemplates: SectionTemplate[] = [
               <p><strong>Address:</strong> {{address}}</p>
             </div>
           </div>
-          <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
+          <div class="p-8 rounded-2xl shadow-xl border" style="background: color-mix(in srgb, var(--bg-color) 95%, var(--text-color) 5%); border-color: color-mix(in srgb, var(--text-color) 10%, transparent)">
             <form class="flex flex-col space-y-4" onsubmit="event.preventDefault();">
-              <input type="text" placeholder="Your Name" class="p-4 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full" />
-              <input type="email" placeholder="Your Email" class="p-4 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full" />
-              <textarea rows="4" placeholder="Your Message" class="p-4 rounded-lg bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"></textarea>
-              <button type="submit" class="bg-blue-600 text-white font-bold py-4 rounded-lg hover:bg-blue-700 transition-colors">{{buttonText}}</button>
+              <input type="text" placeholder="Your Name" class="p-4 rounded-lg border focus:outline-none focus:ring-2 w-full" style="background: var(--bg-color); border-color: color-mix(in srgb, var(--text-color) 20%, transparent); color: var(--text-color); --tw-ring-color: var(--primary-color);" />
+              <input type="email" placeholder="Your Email" class="p-4 rounded-lg border focus:outline-none focus:ring-2 w-full" style="background: var(--bg-color); border-color: color-mix(in srgb, var(--text-color) 20%, transparent); color: var(--text-color); --tw-ring-color: var(--primary-color);" />
+              <textarea rows="4" placeholder="Your Message" class="p-4 rounded-lg border focus:outline-none focus:ring-2 w-full" style="background: var(--bg-color); border-color: color-mix(in srgb, var(--text-color) 20%, transparent); color: var(--text-color); --tw-ring-color: var(--primary-color);"></textarea>
+              <button type="submit" class="text-white font-bold py-4 rounded-lg transition-colors" style="background: var(--primary-color);">{{buttonText}}</button>
             </form>
           </div>
         </div>
@@ -366,22 +366,22 @@ export const sectionTemplates: SectionTemplate[] = [
           <p class="text-xl opacity-80 max-w-2xl mx-auto">{{subtitle}}</p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div class="group relative overflow-hidden rounded-2xl shadow-lg bg-white border border-gray-100">
-            <div class="h-64 bg-gray-200 flex items-center justify-center text-gray-500 font-bold uppercase tracking-widest text-xs">Project 1</div>
+          <div class="group relative overflow-hidden rounded-2xl shadow-lg border" style="background: color-mix(in srgb, var(--bg-color) 95%, var(--text-color) 5%); border-color: color-mix(in srgb, var(--text-color) 10%, transparent)">
+            <div class="h-64 flex items-center justify-center font-bold uppercase tracking-widest text-xs" style="background: color-mix(in srgb, var(--bg-color) 90%, var(--text-color) 10%); color: color-mix(in srgb, var(--text-color) 40%, transparent)">Project 1</div>
             <div class="p-6">
               <h3 class="text-xl font-bold mb-2">{{proj1Title}}</h3>
               <p class="opacity-80">{{proj1Desc}}</p>
             </div>
           </div>
-          <div class="group relative overflow-hidden rounded-2xl shadow-lg bg-white border border-gray-100">
-            <div class="h-64 bg-gray-200 flex items-center justify-center text-gray-500 font-bold uppercase tracking-widest text-xs">Project 2</div>
+          <div class="group relative overflow-hidden rounded-2xl shadow-lg border" style="background: color-mix(in srgb, var(--bg-color) 95%, var(--text-color) 5%); border-color: color-mix(in srgb, var(--text-color) 10%, transparent)">
+            <div class="h-64 flex items-center justify-center font-bold uppercase tracking-widest text-xs" style="background: color-mix(in srgb, var(--bg-color) 90%, var(--text-color) 10%); color: color-mix(in srgb, var(--text-color) 40%, transparent)">Project 2</div>
             <div class="p-6">
               <h3 class="text-xl font-bold mb-2">{{proj2Title}}</h3>
               <p class="opacity-80">{{proj2Desc}}</p>
             </div>
           </div>
-          <div class="group relative overflow-hidden rounded-2xl shadow-lg bg-white border border-gray-100">
-            <div class="h-64 bg-gray-200 flex items-center justify-center text-gray-500 font-bold uppercase tracking-widest text-xs">Project 3</div>
+          <div class="group relative overflow-hidden rounded-2xl shadow-lg border" style="background: color-mix(in srgb, var(--bg-color) 95%, var(--text-color) 5%); border-color: color-mix(in srgb, var(--text-color) 10%, transparent)">
+            <div class="h-64 flex items-center justify-center font-bold uppercase tracking-widest text-xs" style="background: color-mix(in srgb, var(--bg-color) 90%, var(--text-color) 10%); color: color-mix(in srgb, var(--text-color) 40%, transparent)">Project 3</div>
             <div class="p-6">
               <h3 class="text-xl font-bold mb-2">{{proj3Title}}</h3>
               <p class="opacity-80">{{proj3Desc}}</p>
