@@ -209,12 +209,8 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
         
         return `
           <div class="bg-gray-50 rounded-lg overflow-hidden border border-gray-100 flex flex-col h-full">
-            <div class="h-16 overflow-hidden bg-gray-100 flex items-center justify-center">
-              ${thumb ? `<img src="${thumb}" class="w-full h-full object-cover" />` : `
-                <div class="flex flex-col items-center gap-1">
-                  <div class="w-6 h-6 bg-gray-200 rounded flex items-center justify-center text-[8px] font-bold text-gray-400">${title.charAt(0).toUpperCase()}</div>
-                </div>
-              `}
+            <div class="h-16 overflow-hidden bg-gray-100 flex items-center justify-center p-2 text-center" style="background: color-mix(in srgb, var(--primary-color) 8%, var(--bg-color));">
+              <span class="text-[10px] font-black uppercase tracking-tighter opacity-10" style="color: var(--primary-color); line-height: 0.8;">${title}</span>
             </div>
             <div class="p-2 flex-1">
               <h3 class="text-[9px] font-bold mb-0.5 line-clamp-1">${title}</h3>

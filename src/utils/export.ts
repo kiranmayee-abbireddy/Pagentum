@@ -540,14 +540,8 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
           const thumbHTML = thumb 
             ? `<img src="${thumb}" alt="${title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />`
             : `
-              <div class="w-full h-full flex flex-col items-center justify-center p-6 text-center" style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--bg-color) 100%); opacity: 0.1; position: relative;">
-                <div style="position: absolute; inset: 0; opacity: 0.2; background-image: radial-gradient(var(--primary-color) 1px, transparent 1px); background-size: 20px 20px;"></div>
-              </div>
-              <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center z-10">
-                <div class="w-16 h-16 rounded-2xl flex items-center justify-center mb-4" style="background: color-mix(in srgb, var(--primary-color) 15%, transparent); color: var(--primary-color);">
-                  <span class="text-2xl font-black">${title.charAt(0).toUpperCase()}</span>
-                </div>
-                <span class="text-[10px] font-black uppercase tracking-widest opacity-40" style="color: var(--text-color)">Project ${num}</span>
+              <div class="w-full h-full flex items-center justify-center p-8 text-center" style="background: color-mix(in srgb, var(--primary-color) 8%, var(--bg-color));">
+                <span class="text-4xl font-black tracking-tighter opacity-10 uppercase" style="color: var(--primary-color); line-height: 0.9;">${title}</span>
               </div>
             `;
 
