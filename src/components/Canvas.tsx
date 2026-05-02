@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { GripVertical, Trash2, Edit3, Palette, Video, Image as ImageIcon } from 'lucide-react';
 import { PageSection } from '../types';
 import { sectionTemplates } from '../data/templates';
+import { socialIcons } from '../data/socialIcons';
 
 interface CanvasProps {
   sections: PageSection[];
@@ -346,6 +347,39 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
       ].join('');
 
       html = html.replace(/<div class="footer-links">[\s\S]*?<\/div>/, `<div class="footer-links flex flex-wrap justify-center py-2">${links}</div>`);
+    }
+
+    if (section.templateId === 'footer-advanced') {
+      const socialHTML = ['social1', 'social2', 'social3', 'social4', 'social5', 'social6'].map((prefix) => {
+        let href = section.content[`${prefix}Link` as keyof typeof section.content];
+        if (!href || href === '#') return '';
+        
+        // Ensure absolute URL
+        if (!href.startsWith('http') && !href.startsWith('mailto:') && !href.startsWith('tel:')) {
+          href = `https://${href}`;
+        }
+
+        const type = (section.content[`${prefix}Type` as keyof typeof section.content] || 'facebook').toLowerCase();
+        const config = socialIcons.find((icon: any) => icon.id === type) || socialIcons[0];
+        const iconId = `social-icon-${section.id}-${prefix}`;
+
+        return `
+          <style>
+            #${iconId}:hover {
+              background: ${config.color} !important;
+              color: white !important;
+              transform: translateY(-2px);
+            }
+          </style>
+          <a id="${iconId}" href="${href}" target="_blank" rel="noopener noreferrer" 
+             class="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm" 
+             style="background: rgba(0,0,0,0.05); color: #666; margin-right: 8px;">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="${config.path}"/></svg>
+          </a>
+        `;
+      }).join('');
+
+      html = html.replace(/<div class="flex justify-start space-x-4">[\s\S]*?<\/div>/, `<div class="flex justify-start flex-wrap gap-y-2">${socialHTML}</div>`);
     }
 
     // Standard replacements
