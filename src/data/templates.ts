@@ -32,7 +32,6 @@ export const sectionTemplates: SectionTemplate[] = [
         <div class="max-w-7xl mx-auto">
           <div class="text-center mb-16">
             <h2 class="text-4xl md:text-5xl font-black mb-4">{{title}}</h2>
-            <p class="text-xl text-gray-500 max-w-2xl mx-auto">{{subtitle}}</p>
           </div>
           <div class="features-grid grid grid-cols-1 md:grid-cols-3 gap-10">
             {{featuresHTML}}
@@ -42,7 +41,6 @@ export const sectionTemplates: SectionTemplate[] = [
     `,
     defaultContent: {
       title: 'Key Features',
-      subtitle: 'Experience the next generation of web building with our powerful toolset.',
       feature1Title: 'Lightning Fast',
       feature1Desc: 'Build pages in minutes, not hours with our optimized workflow.',
       feature1Icon: 'zap',

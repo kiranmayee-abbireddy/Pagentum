@@ -409,21 +409,24 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
         const iconPath = featureIcons[iconKey] || featureIcons.zap;
 
         return `
-          <div class="flex flex-col items-center text-center p-4">
-            <div class="text-blue-600 mb-3">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
+          <div class="flex flex-col items-center text-center p-2">
+            <div class="text-blue-600 mb-1">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
                 <path d="${iconPath}"></path>
               </svg>
             </div>
-            <h3 class="text-xs font-bold mb-1">${fTitle}</h3>
-            <p class="text-[9px] text-gray-500 line-clamp-2">${fDesc}</p>
+            <h3 class="text-[10px] font-bold mb-0.5">${fTitle}</h3>
+            <p class="text-[8px] text-gray-500 line-clamp-1">${fDesc}</p>
           </div>
         `;
       }).join('');
 
       html = html.replace('{{featuresHTML}}', cardsHTML);
-      // Reduce title size for canvas
-      html = html.replace('text-4xl md:text-5xl font-black', 'text-xl font-bold');
+      // Strip large layout classes for builder view
+      html = html.replace('py-24 px-6', 'py-4 px-2');
+      html = html.replace('mb-16', 'mb-4');
+      html = html.replace('text-4xl md:text-5xl font-black', 'text-sm font-bold');
+      html = html.replace('gap-10', 'gap-4');
     }
 
     // Standard replacements
