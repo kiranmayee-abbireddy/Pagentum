@@ -3,6 +3,7 @@ import { X, Layout, Type as TypeIcon, Image as ImageIcon, Palette, Settings2, Tr
 import { PageSection, SectionLayout, PageImage } from '../types';
 import { sectionTemplates } from '../data/templates';
 import { themePresets } from '../data/themes';
+import { socialIcons } from '../data/socialIcons';
 
 interface EditModalProps {
   section: PageSection;
@@ -223,43 +224,15 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                     <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest text-left">Social Presence</h3>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {[1, 2, 3, 4].map(i => {
-                      const typeKey = `social${i}Type`;
-                      const linkKey = `social${i}Link`;
-                      const currentType = content[typeKey] || 'facebook';
-
-                      return (
-                        <div key={i} className="p-4 bg-gray-50/50 rounded-xl border border-gray-100 space-y-3">
-                          <div className="flex items-center justify-between">
-                            <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Platform {i}</span>
-                            <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-[8px]">
-                              {currentType.substring(0, 2).toUpperCase()}
-                            </div>
-                          </div>
-                          <div className="space-y-2">
-                            <select 
-                              className="w-full p-2 bg-white border border-gray-200 rounded-lg text-[10px] font-bold focus:border-blue-400 outline-none"
-                              value={currentType}
-                              onChange={(e) => setContent(prev => ({ ...prev, [typeKey]: e.target.value }))}
-                            >
-                              <option value="facebook">Facebook</option>
-                              <option value="twitter">Twitter (X)</option>
-                              <option value="instagram">Instagram</option>
-                              <option value="linkedin">LinkedIn</option>
-                              <option value="youtube">YouTube</option>
-                              <option value="github">GitHub</option>
-                            </select>
-                            <input
-                              type="text"
-                              placeholder="Profile URL"
-                              className="w-full p-2 bg-white border border-gray-200 rounded-lg text-[10px] font-bold focus:border-blue-400 outline-none"
-                              value={content[linkKey] || ''}
-                              onChange={handleContentChange(linkKey)}
-                            />
-                          </div>
-                        </div>
-                      );
-                    })}
+                    {[1, 2, 3, 4].map(i => (
+                      <SocialItem 
+                        key={i} 
+                        index={i} 
+                        content={content} 
+                        setContent={setContent} 
+                        handleContentChange={handleContentChange} 
+                      />
+                    ))}
                   </div>
                 </section>
               )}
@@ -799,6 +772,76 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
             <span className="font-black text-[10px] uppercase tracking-[0.2em]">Finalize</span>
             <ArrowRight className="w-3.5 h-3.5 text-blue-400" />
           </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SocialItem({ index, content, setContent, handleContentChange }: { 
+  index: number, 
+  content: any, 
+  setContent: any, 
+  handleContentChange: any 
+}) {
+  const [showPicker, setShowPicker] = useState(false);
+  const typeKey = `social${index}Type`;
+  const linkKey = `social${index}Link`;
+  const currentType = content[typeKey] || 'facebook';
+  const currentIcon = socialIcons.find(i => i.id === currentType) || socialIcons[0];
+
+  return (
+    <div className="p-4 bg-gray-50/50 rounded-xl border border-gray-100 space-y-3 relative">
+      <div className="flex items-center justify-between">
+        <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Social Link {index}</span>
+        <button 
+          onClick={() => setShowPicker(!showPicker)}
+          className="w-10 h-10 rounded-full flex items-center justify-center transition-all shadow-sm hover:scale-110 active:scale-95"
+          style={{ 
+            background: currentIcon.color,
+            color: 'white'
+          }}
+        >
+          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d={currentIcon.path} />
+          </svg>
+        </button>
+      </div>
+
+      {showPicker && (
+        <div className="absolute z-50 top-full left-0 right-0 mt-2 p-3 bg-white rounded-2xl shadow-2xl border border-gray-100 grid grid-cols-5 gap-2 animate-in fade-in zoom-in duration-200 overflow-y-auto max-h-48">
+          {socialIcons.map(icon => (
+            <button
+              key={icon.id}
+              onClick={() => {
+                setContent((prev: any) => ({ ...prev, [typeKey]: icon.id }));
+                setShowPicker(false);
+              }}
+              className={`w-9 h-9 rounded-full flex items-center justify-center transition-all hover:scale-110 ${currentType === icon.id ? 'ring-2 ring-blue-500 ring-offset-2' : 'opacity-40 hover:opacity-100'}`}
+              style={{ 
+                background: icon.color,
+                color: 'white'
+              }}
+              title={icon.name}
+            >
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d={icon.path} />
+              </svg>
+            </button>
+          ))}
+        </div>
+      )}
+
+      <div className="space-y-2">
+        <div className="flex items-center space-x-2 p-2 bg-white border border-gray-200 rounded-lg">
+          <span className="text-[10px] font-black text-gray-400 uppercase min-w-[60px]">{currentIcon.name}</span>
+          <input
+            type="text"
+            placeholder="Profile URL"
+            className="flex-1 bg-transparent text-[10px] font-bold outline-none"
+            value={content[linkKey] || ''}
+            onChange={handleContentChange(linkKey)}
+          />
         </div>
       </div>
     </div>
