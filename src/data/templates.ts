@@ -42,7 +42,7 @@ export const sectionTemplates: SectionTemplate[] = [
           </div>
           <div class="feature-card">
             <div class="feature-icon">🚀</div>
-            <h3 class="feature-title">{{feature2Title}}</h3>
+            <h3 class="feature-title">{{feature3Title}}</h3>
             <p class="feature-description">{{feature3Desc}}</p>
           </div>
         </div>
@@ -313,38 +313,38 @@ export const sectionTemplates: SectionTemplate[] = [
   },
   {
     id: 'contact-section',
-    name: 'Contact Section',
+    name: 'Contact Form',
     category: 'cta',
-    description: 'A direct contact section with info and call to action',
+    description: 'A contact section with info and a message form',
     html: `
-      <section class="py-16 md:py-24 px-4 md:px-6 overflow-hidden">
-        <div class="max-w-4xl mx-auto">
-          <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-5xl font-bold mb-6">{{title}}</h2>
-            <p class="text-lg md:text-xl opacity-70 max-w-2xl mx-auto leading-relaxed">{{description}}</p>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-            <div class="p-8 rounded-2xl border text-center transition-transform hover:scale-105" style="background: color-mix(in srgb, var(--bg-color) 95%, var(--text-color) 5%); border-color: color-mix(in srgb, var(--text-color) 10%, transparent)">
-              <div class="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4" style="background: color-mix(in srgb, var(--primary-color) 15%, transparent); color: var(--primary-color);">📧</div>
-              <h3 class="text-xl font-bold mb-2">Email Us</h3>
-              <p class="opacity-70 break-all">{{email}}</p>
+      <section class="py-20 px-6 max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-5xl font-bold mb-4">{{title}}</h2>
+          <p class="text-xl opacity-80 max-w-2xl mx-auto mb-12">{{subtitle}}</p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            <div class="p-8 rounded-2xl border border-gray-100 bg-white/50 backdrop-blur-sm shadow-sm">
+              <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span class="text-blue-600 font-bold">@</span>
+              </div>
+              <h3 class="text-xl font-bold mb-2">Email</h3>
+              <p class="opacity-70">{{email}}</p>
             </div>
-            <div class="p-8 rounded-2xl border text-center transition-transform hover:scale-105" style="background: color-mix(in srgb, var(--bg-color) 95%, var(--text-color) 5%); border-color: color-mix(in srgb, var(--text-color) 10%, transparent)">
-              <div class="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4" style="background: color-mix(in srgb, var(--primary-color) 15%, transparent); color: var(--primary-color);">📞</div>
-              <h3 class="text-xl font-bold mb-2">Call Us</h3>
+            
+            <div class="p-8 rounded-2xl border border-gray-100 bg-white/50 backdrop-blur-sm shadow-sm">
+              <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span class="text-green-600 font-bold">#</span>
+              </div>
+              <h3 class="text-xl font-bold mb-2">Phone</h3>
               <p class="opacity-70">{{phone}}</p>
             </div>
-            <div class="p-8 rounded-2xl border text-center transition-transform hover:scale-105" style="background: color-mix(in srgb, var(--bg-color) 95%, var(--text-color) 5%); border-color: color-mix(in srgb, var(--text-color) 10%, transparent)">
-              <div class="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4" style="background: color-mix(in srgb, var(--primary-color) 15%, transparent); color: var(--primary-color);">📍</div>
-              <h3 class="text-xl font-bold mb-2">Visit Us</h3>
-              <p class="opacity-70 leading-snug">{{address}}</p>
-            </div>
-          </div>
-          <div class="mt-16 text-center">
-            <div class="inline-block p-6 md:p-10 rounded-[2rem] border-2 border-dashed" style="border-color: color-mix(in srgb, var(--primary-color) 30%, transparent); background: color-mix(in srgb, var(--bg-color) 98%, var(--text-color) 2%);">
-              <h4 class="text-xl md:text-2xl font-bold mb-4">Have a specific query?</h4>
-              <p class="text-lg opacity-70 mb-8">{{queryText}}</p>
-              <a href="mailto:{{email}}" class="inline-block py-4 px-10 rounded-xl font-bold text-white transition-all hover:scale-105 shadow-lg" style="background: var(--primary-color);">{{buttonText}}</a>
+            
+            <div class="p-8 rounded-2xl border border-gray-100 bg-white/50 backdrop-blur-sm shadow-sm">
+              <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span class="text-purple-600 font-bold">^</span>
+              </div>
+              <h3 class="text-xl font-bold mb-2">Address</h3>
+              <p class="opacity-70">{{address}}</p>
             </div>
           </div>
         </div>
@@ -352,12 +352,10 @@ export const sectionTemplates: SectionTemplate[] = [
     `,
     defaultContent: {
       title: 'Get in Touch',
-      description: 'We are here to help and answer any questions you might have. We look forward to hearing from you.',
+      subtitle: 'We would love to hear from you. Reach out through any of these channels.',
       email: 'hello@example.com',
       phone: '+1 (555) 123-4567',
-      address: '123 Creative Street, Design City',
-      queryText: 'For business inquiries or urgent matters, feel free to reach out directly via email.',
-      buttonText: 'Send an Email'
+      address: '123 Creative Street, Design City'
     }
   },
   {
@@ -366,31 +364,31 @@ export const sectionTemplates: SectionTemplate[] = [
     category: 'features',
     description: 'A grid showcasing projects or portfolio items',
     html: `
-      <section class="py-12 md:py-20 px-4 md:px-6 max-w-7xl mx-auto overflow-hidden">
-        <div class="text-center mb-10 md:mb-16">
-          <h2 class="text-2xl md:text-5xl font-bold mb-4">{{title}}</h2>
-          <p class="text-lg md:text-xl opacity-80 max-w-2xl mx-auto">{{subtitle}}</p>
+      <section class="py-20 px-6 max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-5xl font-bold mb-4">{{title}}</h2>
+          <p class="text-xl opacity-80 max-w-2xl mx-auto">{{subtitle}}</p>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          <div class="group relative overflow-hidden rounded-2xl shadow-lg border" style="background: color-mix(in srgb, var(--bg-color) 95%, var(--text-color) 5%); border-color: color-mix(in srgb, var(--text-color) 10%, transparent)">
-            <div class="h-48 md:h-64 flex items-center justify-center font-bold uppercase tracking-widest text-xs" style="background: color-mix(in srgb, var(--bg-color) 90%, var(--text-color) 10%); color: color-mix(in srgb, var(--text-color) 40%, transparent)">Project 1</div>
-            <div class="p-4 md:p-6">
-              <h3 class="text-lg md:text-xl font-bold mb-2">{{proj1Title}}</h3>
-              <p class="text-sm md:text-base opacity-80">{{proj1Desc}}</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="group relative overflow-hidden rounded-2xl shadow-lg bg-white border border-gray-100">
+            <div class="h-64 bg-gray-200 flex items-center justify-center text-gray-500 font-bold uppercase tracking-widest text-xs">Project 1</div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2">{{proj1Title}}</h3>
+              <p class="opacity-80">{{proj1Desc}}</p>
             </div>
           </div>
-          <div class="group relative overflow-hidden rounded-2xl shadow-lg border" style="background: color-mix(in srgb, var(--bg-color) 95%, var(--text-color) 5%); border-color: color-mix(in srgb, var(--text-color) 10%, transparent)">
-            <div class="h-48 md:h-64 flex items-center justify-center font-bold uppercase tracking-widest text-xs" style="background: color-mix(in srgb, var(--bg-color) 90%, var(--text-color) 10%); color: color-mix(in srgb, var(--text-color) 40%, transparent)">Project 2</div>
-            <div class="p-4 md:p-6">
-              <h3 class="text-lg md:text-xl font-bold mb-2">{{proj2Title}}</h3>
-              <p class="text-sm md:text-base opacity-80">{{proj2Desc}}</p>
+          <div class="group relative overflow-hidden rounded-2xl shadow-lg bg-white border border-gray-100">
+            <div class="h-64 bg-gray-200 flex items-center justify-center text-gray-500 font-bold uppercase tracking-widest text-xs">Project 2</div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2">{{proj2Title}}</h3>
+              <p class="opacity-80">{{proj2Desc}}</p>
             </div>
           </div>
-          <div class="group relative overflow-hidden rounded-2xl shadow-lg border" style="background: color-mix(in srgb, var(--bg-color) 95%, var(--text-color) 5%); border-color: color-mix(in srgb, var(--text-color) 10%, transparent)">
-            <div class="h-48 md:h-64 flex items-center justify-center font-bold uppercase tracking-widest text-xs" style="background: color-mix(in srgb, var(--bg-color) 90%, var(--text-color) 10%); color: color-mix(in srgb, var(--text-color) 40%, transparent)">Project 3</div>
-            <div class="p-4 md:p-6">
-              <h3 class="text-lg md:text-xl font-bold mb-2">{{proj3Title}}</h3>
-              <p class="text-sm md:text-base opacity-80">{{proj3Desc}}</p>
+          <div class="group relative overflow-hidden rounded-2xl shadow-lg bg-white border border-gray-100">
+            <div class="h-64 bg-gray-200 flex items-center justify-center text-gray-500 font-bold uppercase tracking-widest text-xs">Project 3</div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2">{{proj3Title}}</h3>
+              <p class="opacity-80">{{proj3Desc}}</p>
             </div>
           </div>
         </div>
@@ -413,30 +411,30 @@ export const sectionTemplates: SectionTemplate[] = [
     category: 'footer',
     description: 'Footer with description, links, and social icons',
     html: `
-      <footer class="footer-advanced py-12 md:py-16 px-4 md:px-6 overflow-hidden">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 mb-10 md:mb-12 text-left">
-          <div class="space-y-4 md:space-y-6">
-            <h3 class="text-xl md:text-2xl font-bold mb-3 md:mb-4">{{companyName}}</h3>
-            <p class="text-sm md:text-base text-gray-400 max-w-md leading-relaxed">{{description}}</p>
-            <div class="flex justify-start space-x-3 md:space-x-4">
-              <a href="{{social1Link}}" class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-500 transition-colors">
-                <span class="text-[10px] md:text-xs font-bold">FB</span>
+      <footer class="footer-advanced py-16 px-6">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-12 text-left">
+          <div class="space-y-6">
+            <h3 class="text-2xl font-bold mb-4">{{companyName}}</h3>
+            <p class="text-gray-400 max-w-md leading-relaxed">{{description}}</p>
+            <div class="flex justify-start space-x-4">
+              <a href="{{social1Link}}" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-500 transition-colors">
+                <span class="text-xs font-bold">FB</span>
               </a>
-              <a href="{{social2Link}}" class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-400 transition-colors">
-                <span class="text-[10px] md:text-xs font-bold">TW</span>
+              <a href="{{social2Link}}" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-400 transition-colors">
+                <span class="text-xs font-bold">TW</span>
               </a>
-              <a href="{{social3Link}}" class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-pink-500 transition-colors">
-                <span class="text-[10px] md:text-xs font-bold">IG</span>
+              <a href="{{social3Link}}" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-pink-500 transition-colors">
+                <span class="text-xs font-bold">IG</span>
               </a>
-              <a href="{{social4Link}}" class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 transition-colors">
-                <span class="text-[10px] md:text-xs font-bold">IN</span>
+              <a href="{{social4Link}}" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-600 transition-colors">
+                <span class="text-xs font-bold">IN</span>
               </a>
             </div>
           </div>
           
           <div class="space-y-4">
-            <h4 class="text-base md:text-lg font-bold mb-3 md:mb-4">Quick Links</h4>
-            <div class="flex flex-col space-y-2 text-sm md:text-base text-gray-400">
+            <h4 class="text-lg font-bold mb-4">Quick Links</h4>
+            <div class="flex flex-col space-y-2 text-gray-400">
               <a href="#" class="hover:text-white transition-colors">{{link1}}</a>
               <a href="#" class="hover:text-white transition-colors">{{link2}}</a>
               <a href="#" class="hover:text-white transition-colors">{{link3}}</a>
@@ -445,15 +443,15 @@ export const sectionTemplates: SectionTemplate[] = [
           </div>
 
           <div class="space-y-4">
-            <h4 class="text-base md:text-lg font-bold mb-3 md:mb-4">Contact Us</h4>
-            <div class="space-y-2 text-sm md:text-base text-gray-400">
+            <h4 class="text-lg font-bold mb-4">Contact Us</h4>
+            <div class="space-y-2 text-gray-400">
               <p>{{email}}</p>
               <p>{{phone}}</p>
               <p>{{address}}</p>
             </div>
           </div>
         </div>
-        <div class="max-w-7xl mx-auto pt-6 md:pt-8 border-t border-gray-800 text-center text-xs md:text-sm text-gray-500">
+        <div class="max-w-7xl mx-auto pt-8 border-t border-gray-800 text-center text-gray-500">
           <p>{{copyright}}</p>
         </div>
       </footer>
