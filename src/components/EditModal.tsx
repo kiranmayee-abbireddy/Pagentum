@@ -186,7 +186,7 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-2">
                   {Object.entries(template.defaultContent)
-                    .filter(([key]) => !key.includes('nav') && !key.includes('link')) // Filter out nav/footer links
+                    .filter(([key]) => !key.includes('nav') && !key.includes('link') && !key.includes('social')) // Filter out nav/footer/social links
                     .map(([key, defaultValue]) => {
                       const isHref = key.toLowerCase().includes('href');
                       return (
