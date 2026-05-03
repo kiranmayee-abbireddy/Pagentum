@@ -940,6 +940,9 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Anton|Bangers|Bebas+Neue|Berkshire+Swash|Bungee+Shade|Cinzel+Decorative|Creepster|Fredoka+One|Great+Vibes|Lobster|Luckiest+Guy|Monoton|Orbitron:900|Pacifico|Permanent+Marker|Press+Start+2P|Righteous|Russo+One|Sacramento&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
