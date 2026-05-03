@@ -350,14 +350,12 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                     
                     if (panels) panels.style.display = 'block';
                     intro.style.background = 'transparent';
-                    // Hide content immediately when split starts
-                    content.style.opacity = '0';
-                    content.style.transition = 'opacity 0.3s ease-out';
+                    content.style.display = 'none'; // Instant hide for split
                     
                     if (topPanel && bottomPanel) {
                       const animType = exitAnim === 'split-wobble' ? 'splitWobble' : 'split';
-                      topPanel.style.animation = animType + 'Top 1s forwards cubic-bezier(0.65, 0, 0.35, 1)';
-                      bottomPanel.style.animation = animType + 'Bottom 1s forwards cubic-bezier(0.65, 0, 0.35, 1)';
+                      topPanel.style.animation = animType + 'Top 0.8s forwards ease-in';
+                      bottomPanel.style.animation = animType + 'Bottom 0.8s forwards ease-in';
                     }
                   } else {
                     content.classList.add('intro-content-exit');
@@ -366,7 +364,6 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                     }, 600);
                   }
                   
-                  // Final removal
                   setTimeout(() => {
                      if (intro && intro.parentNode) intro.parentNode.removeChild(intro);
                   }, 1500);
