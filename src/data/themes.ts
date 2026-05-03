@@ -374,10 +374,10 @@ section {
 }
 .loader-circle-around circle {
   fill: none;
-  stroke-width: 6;
+  stroke-width: 1.5;
   stroke-linecap: round;
 }
-.loader-circle-around .track { stroke: rgba(0,0,0,0.03); }
+.loader-circle-around .track { stroke: rgba(0,0,0,0.02); }
 .loader-circle-around .fill { 
   stroke: var(--primary-color); 
   stroke-dasharray: 283; 
@@ -385,8 +385,8 @@ section {
   animation: introCircleProgress 3.5s forwards ease-in-out; 
 }
 
-.loader-circle-thick circle { stroke-width: 14; }
-.loader-circle-dashed .fill { stroke-dasharray: 12, 6; }
+.loader-circle-thick circle { stroke-width: 3.5; }
+.loader-circle-dashed .fill { stroke-dasharray: 8, 4; }
 
 .loader-dots { display: flex; gap: 12px; margin-top: 2rem; }
 .loader-dots .dot { width: 14px; height: 14px; border-radius: 50%; background: var(--primary-color); animation: introDots 0.6s infinite alternate; }

@@ -675,18 +675,18 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                                   )}
                                   {loader.id.startsWith('circle') && (
                                     <svg className="w-10 h-10 -rotate-90" viewBox="0 0 100 100">
-                                      <circle cx="50" cy="50" r="45" stroke="#e2e8f0" strokeWidth={loader.id === 'circle-thick' ? "12" : "6"} fill="none" />
+                                      <circle cx="50" cy="50" r="45" stroke="#e2e8f0" strokeWidth={loader.id === 'circle-thick' ? "4" : "1.5"} fill="none" />
                                       <circle 
                                         cx="50" cy="50" r="45" 
                                         stroke="#3b82f6" 
-                                        strokeWidth={loader.id === 'circle-thick' ? "12" : "6"} 
+                                        strokeWidth={loader.id === 'circle-thick' ? "4" : "1.5"} 
                                         fill="none" 
                                         strokeDasharray="283"
                                         strokeDashoffset="283"
                                         strokeLinecap="round"
                                         style={{ 
                                           animation: 'introCircleProgress 2s infinite ease-in-out',
-                                          strokeDasharray: loader.id === 'circle-dashed' ? '10 5' : '283'
+                                          strokeDasharray: loader.id === 'circle-dashed' ? '8 4' : '283'
                                         }}
                                       />
                                     </svg>
