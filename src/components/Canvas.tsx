@@ -187,6 +187,9 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
       } else {
         html = html.replace(/{{\s*#if logoSrc\s*}}([\s\S]*?){{\s*\/if\s*}}/, '$1');
       }
+      
+      const fontClass = layout?.introFont || 'font-sans';
+      html = html.replace('class="intro-title', `class="intro-title ${fontClass}`);
     }
 
     if (section.templateId === 'contact-section') {

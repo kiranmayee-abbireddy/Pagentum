@@ -18,6 +18,7 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
   const [content, setContent] = useState<Record<string, string>>({});
   const [images, setImages] = useState<PageImage[]>([]);
   const [layout, setLayout] = useState<SectionLayout>({});
+  const [introAnimationTab, setIntroAnimationTab] = useState<'text' | 'logo' | 'font' | 'intro' | 'loaders'>('font');
   const template = sectionTemplates.find(t => t.id === section.templateId);
 
   useEffect(() => {
@@ -256,6 +257,70 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                     })}
                 </div>
               </section>
+
+              {/* Intro Animations Manager */}
+              {section.templateId === 'intro-loader' && (
+                <section className="mt-8 border-t pt-6">
+                  <div className="flex items-center space-x-2 mb-4">
+                    <Settings2 className="w-4 h-4 text-gray-400" />
+                    <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest text-left">Intro Customizations</h3>
+                  </div>
+                  
+                  {/* Tabs */}
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {(['font', 'text', 'logo', 'intro', 'loaders'] as const).map(tab => (
+                      <button
+                        key={tab}
+                        onClick={() => setIntroAnimationTab(tab)}
+                        className={`px-4 py-2 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-all ${
+                          introAnimationTab === tab 
+                            ? 'bg-blue-600 text-white shadow-md' 
+                            : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                        }`}
+                      >
+                        {tab === 'text' ? 'Text Animations' :
+                         tab === 'logo' ? 'Logo Animations' :
+                         tab === 'font' ? 'Fonts' :
+                         tab === 'intro' ? 'Intro Styles' : 'Loaders'}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Tab Content */}
+                  <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    {introAnimationTab === 'font' && (
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        {[
+                          { id: 'font-sans', name: 'Modern Sans', className: 'font-sans' },
+                          { id: 'font-serif', name: 'Elegant Serif', className: 'font-serif' },
+                          { id: 'font-mono', name: 'Tech Mono', className: 'font-mono' }
+                        ].map(font => (
+                          <button
+                            key={font.id}
+                            onClick={() => handleLayoutChange('introFont')(font.id)}
+                            className={`p-4 rounded-xl border-2 text-center transition-all ${
+                              layout.introFont === font.id
+                                ? 'border-blue-600 bg-blue-50 text-blue-700 shadow-sm'
+                                : 'border-gray-200 bg-white hover:border-blue-300'
+                            }`}
+                          >
+                            <span className={`text-3xl block mb-3 text-gray-900 ${font.className} ${layout.introFont === font.id ? 'text-blue-700' : ''}`}>Ag</span>
+                            <span className="text-[9px] font-bold uppercase tracking-widest">{font.name}</span>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+
+                    {introAnimationTab !== 'font' && (
+                      <div className="py-12 text-center">
+                        <Palette className="w-8 h-8 text-gray-300 mx-auto mb-3" />
+                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Templates Coming Soon</p>
+                        <p className="text-[9px] text-gray-400 mt-1">We will add these animations one by one</p>
+                      </div>
+                    )}
+                  </div>
+                </section>
+              )}
 
               {/* Social Links Manager */}
               {section.templateId === 'footer-advanced' && (
