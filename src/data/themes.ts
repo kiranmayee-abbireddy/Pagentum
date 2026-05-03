@@ -386,38 +386,7 @@ section {
 }
 
 .loader-circle-thick circle { stroke-width: 3.5; }
-.loader-circle-dashed {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 320px;
-  height: 320px;
-  display: grid;
-  border-radius: 50%;
-  background:
-    linear-gradient(0deg ,rgba(59, 130, 246, 0.2) 30%,transparent 0 70%,rgba(59, 130, 246, 0.4) 0) 50%/2% 100%,
-    linear-gradient(90deg,rgba(59, 130, 246, 0.1) 30%,transparent 0 70%,rgba(59, 130, 246, 0.3) 0) 50%/100% 2%;
-  background-repeat: no-repeat;
-  animation: introRotateSegments 1.2s infinite steps(12);
-  pointer-events: none;
-}
-.loader-circle-dashed::before,
-.loader-circle-dashed::after {
-   content: "";
-   grid-area: 1/1;
-   border-radius: 50%;
-   background: inherit;
-   opacity: 0.915;
-   transform: rotate(30deg);
-}
-.loader-circle-dashed::after {
-   opacity: 0.83;
-   transform: rotate(60deg);
-}
-@keyframes introRotateSegments {
-  100% {transform: translate(-50%, -50%) rotate(1turn)}
-}
+.loader-circle-dashed .fill { stroke-dasharray: 8, 4; }
 
 .loader-dots { display: flex; gap: 12px; margin-top: 2rem; }
 .loader-dots .dot { width: 14px; height: 14px; border-radius: 50%; background: var(--primary-color); animation: introDots 0.6s infinite alternate; }
@@ -426,6 +395,25 @@ section {
 
 .loader-spinner { width: 50px; height: 50px; border: 5px solid rgba(0,0,0,0.1); border-top-color: var(--primary-color); border-radius: 50%; animation: introSpinner 1s linear infinite; margin-top: 2rem; }
 
+/* Heart Fill Loader */
+.loader-heart-fill {
+  width: 60px;
+  aspect-ratio: 1;
+  background: linear-gradient(var(--primary-color) 0 0) bottom/100% 0% no-repeat #ccc;
+  -webkit-mask: 
+    radial-gradient(circle at 60% 65%, #000 62%, #0000 65%) top left, 
+    radial-gradient(circle at 40% 65%, #000 62%, #0000 65%) top right, 
+    linear-gradient(to bottom left, #000 42%,#0000 43%) bottom left , 
+    linear-gradient(to bottom right,#000 42%,#0000 43%) bottom right;
+  -webkit-mask-size: 50% 50%;
+  -webkit-mask-repeat: no-repeat;
+  animation: heartFillAnim 3s forwards linear;
+  margin-top: 2rem;
+}
+@keyframes heartFillAnim {
+    0% { background-size: 100% 0%; }
+    90%, 100% { background-size: 100% 100%; }
+}
 
 
 /* --- Layout Utilities for Sections --- */

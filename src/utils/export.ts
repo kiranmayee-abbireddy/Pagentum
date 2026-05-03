@@ -282,15 +282,11 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
               <div class="intro-progress-fill fill" ${customTextColor ? `style="background: ${customTextColor};"` : ''}></div>
             </div>`;
         } else if (loaderStyle.startsWith('circle')) {
-          if (loaderStyle === 'circle-dashed') {
-            overlayLoaderHTML = `<div class="loader-circle-dashed" ${customTextColor ? `style="background: linear-gradient(0deg ,${customTextColor}33 30%,transparent 0 70%,${customTextColor}66 0) 50%/2% 100%, linear-gradient(90deg,${customTextColor}1a 30%,transparent 0 70%,${customTextColor}4d 0) 50%/100% 2%;"` : ''}></div>`;
-          } else {
-            overlayLoaderHTML = `
-              <svg class="loader-circle-around loader-${loaderStyle}" viewBox="0 0 100 100">
-                <circle class="track" cx="50" cy="50" r="45" />
-                <circle class="fill" cx="50" cy="50" r="45" ${customTextColor ? `style="stroke: ${customTextColor};"` : ''} />
-              </svg>`;
-          }
+          overlayLoaderHTML = `
+            <svg class="loader-circle-around loader-${loaderStyle}" viewBox="0 0 100 100">
+              <circle class="track" cx="50" cy="50" r="45" />
+              <circle class="fill" cx="50" cy="50" r="45" ${customTextColor ? `style="stroke: ${customTextColor};"` : ''} />
+            </svg>`;
         } else if (loaderStyle === 'dots-bounce') {
           contentLoaderHTML = `
             <div class="loader-dots">
@@ -301,6 +297,9 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
         } else if (loaderStyle === 'spinner-classic') {
           contentLoaderHTML = `
             <div class="loader-spinner" ${customTextColor ? `style="border-top-color: ${customTextColor};"` : ''}></div>`;
+        } else if (loaderStyle === 'heart-fill') {
+          contentLoaderHTML = `
+            <div class="loader-heart-fill" ${customTextColor ? `style="background: linear-gradient(${customTextColor} 0 0) bottom/100% 0% no-repeat #ccc;"` : ''}></div>`;
         }
 
         return `
