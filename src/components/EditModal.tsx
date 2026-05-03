@@ -539,10 +539,6 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                           @keyframes introBlurOut { from { filter: blur(0); opacity: 1; } to { filter: blur(20px); opacity: 0; } }
                           @keyframes introIrisOut { from { clip-path: circle(100% at 50% 50%); } to { clip-path: circle(0% at 50% 50%); } }
                           @keyframes introWipeOut { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(0 0 100% 0); } }
-                          @keyframes splitTop { from { transform: translateY(0); } to { transform: translateY(-100%); } }
-                          @keyframes splitBottom { from { transform: translateY(0); } to { transform: translateY(100%); } }
-                          @keyframes splitWobbleTop { 0% { transform: translateY(0); } 20% { transform: translateY(10px); } 40% { transform: translateY(-5px); } 100% { transform: translateY(-100%); } }
-                          @keyframes splitWobbleBottom { 0% { transform: translateY(0); } 20% { transform: translateY(-10px); } 40% { transform: translateY(5px); } 100% { transform: translateY(100%); } }
 
                           .exit-preview-fix {
                             animation-iteration-count: infinite !important;
@@ -562,11 +558,7 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                             { id: 'zoom-in', name: 'Zoom In' },
                             { id: 'blur', name: 'Blur Out' },
                             { id: 'iris', name: 'Iris Wipe' },
-                            { id: 'wipe', name: 'Wipe Out' },
-                            { id: 'split-straight', name: 'Split Straight' },
-                            { id: 'split-zigzag', name: 'Split Zigzag' },
-                            { id: 'split-curvy', name: 'Split Curvy' },
-                            { id: 'split-wobble', name: 'Split Wobble' }
+                            { id: 'wipe', name: 'Wipe Out' }
                           ].map(anim => {
                             const currentAnim = layout.introExitAnimation || 'slide-up';
                             const isSelected = currentAnim === anim.id;
@@ -581,14 +573,8 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                               'zoom-in': 'introZoomInExit',
                               'blur': 'introBlurOut',
                               'iris': 'introIrisOut',
-                              'wipe': 'introWipeOut',
-                              'split-straight': 'splitTop',
-                              'split-zigzag': 'splitTop',
-                              'split-curvy': 'splitTop',
-                              'split-wobble': 'splitWobbleTop'
+                              'wipe': 'introWipeOut'
                             };
-
-                            const isSplit = anim.id.startsWith('split');
 
                             return (
                               <button
@@ -606,39 +592,20 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                                     <div className="w-full h-2 bg-blue-200 rounded-full"></div>
                                     <div className="w-2/3 h-1.5 bg-gray-200 rounded-full"></div>
                                     <div className="w-1/2 h-1.5 bg-gray-200 rounded-full"></div>
-                                  </div>
-                                  
-                                  {isSplit ? (
-                                    <>
-                                      <div 
-                                        className="absolute inset-0 bg-blue-600 z-10 exit-preview-fix"
-                                        style={{ 
-                                          animationName: anim.id === 'split-wobble' ? 'splitWobbleTop' : 'splitTop',
-                                          clipPath: anim.id === 'split-straight' || anim.id === 'split-wobble' ? 'inset(0 0 50% 0)' : 
-                                                   anim.id === 'split-zigzag' ? 'polygon(0 0, 100% 0, 100% 50%, 80% 45%, 60% 55%, 40% 45%, 20% 55%, 0 50%)' :
-                                                   'polygon(0 0, 100% 0, 100% 50%, 85% 40%, 70% 55%, 50% 45%, 30% 60%, 15% 45%, 0 55%)'
-                                        }}
-                                      ></div>
-                                      <div 
-                                        className="absolute inset-0 bg-blue-600 z-10 exit-preview-fix"
-                                        style={{ 
-                                          animationName: anim.id === 'split-wobble' ? 'splitWobbleBottom' : 'splitBottom',
-                                          clipPath: anim.id === 'split-straight' || anim.id === 'split-wobble' ? 'inset(50% 0 0 0)' : 
-                                                   anim.id === 'split-zigzag' ? 'polygon(0 50%, 20% 55%, 40% 45%, 60% 55%, 80% 45%, 100% 50%, 100% 100%, 0 100%)' :
-                                                   'polygon(0 55%, 15% 45%, 30% 60%, 50% 45%, 70% 55%, 85% 40%, 100% 50%, 100% 100%, 0 100%)'
-                                        }}
-                                      ></div>
-                                    </>
-                                  ) : (
-                                    <div 
-                                      className="absolute inset-0 bg-blue-600 z-10 flex items-center justify-center exit-preview-fix"
-                                      style={{ 
-                                        animationName: keyframeMap[anim.id] || 'none'
-                                      }}
-                                    >
-                                      <div className="w-4 h-4 bg-white/20 rounded-full animate-pulse"></div>
+                                    <div className="mt-auto flex gap-1">
+                                      <div className="w-4 h-4 bg-indigo-200 rounded-sm"></div>
+                                      <div className="w-4 h-4 bg-indigo-200 rounded-sm"></div>
                                     </div>
-                                  )}
+                                  </div>
+                                  {/* Animating Overlay */}
+                                  <div 
+                                    className="absolute inset-0 bg-blue-600 z-10 flex items-center justify-center exit-preview-fix"
+                                    style={{ 
+                                      animationName: keyframeMap[anim.id] || 'none'
+                                    }}
+                                  >
+                                    <div className="w-4 h-4 bg-white/20 rounded-full animate-pulse"></div>
+                                  </div>
                                 </div>
                                 <span className="text-[9px] font-bold uppercase tracking-widest">{anim.name}</span>
                               </button>

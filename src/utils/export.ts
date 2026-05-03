@@ -302,27 +302,11 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
             <div class="loader-heart-fill" ${customTextColor ? `style="background: linear-gradient(${customTextColor} 0 0) bottom/100% 0% no-repeat #ccc; -webkit-mask: radial-gradient(circle at 60% 65%, #000 64%, #0000 65%) top left, radial-gradient(circle at 40% 65%, #000 64%, #0000 65%) top right, linear-gradient(to bottom left, #000 43%,#0000 44%) bottom left , linear-gradient(to bottom right,#000 43%,#0000 44%) bottom right; -webkit-mask-size: 51% 51%;"` : ''}></div>`;
         }
 
-        const exitAnim = "${section.layout?.introExitAnimation || 'slide-up'}";
-        const isSplit = exitAnim.startsWith('split');
-        
         return `
           <div id="section-${section.id}" class="intro-screen" ${finalStyle}>
-            ${isSplit ? `
-              <div class="intro-split-panels" style="position: absolute; inset: 0; z-index: 5; pointer-events: none; display: none;">
-                <div class="intro-split-panel panel-top" style="${sectionRules}; clip-path: ${
-                  exitAnim === 'split-straight' || exitAnim === 'split-wobble' ? 'inset(0 0 50% 0)' : 
-                  exitAnim === 'split-zigzag' ? 'polygon(0 0, 100% 0, 100% 50%, 80% 45%, 60% 55%, 40% 45%, 20% 55%, 0 50%)' :
-                  'polygon(0 0, 100% 0, 100% 50%, 85% 40%, 70% 55%, 50% 45%, 30% 60%, 15% 45%, 0 55%)'
-                }">${bgHTML}</div>
-                <div class="intro-split-panel panel-bottom" style="${sectionRules}; clip-path: ${
-                  exitAnim === 'split-straight' || exitAnim === 'split-wobble' ? 'inset(50% 0 0 0)' : 
-                  exitAnim === 'split-zigzag' ? 'polygon(0 50%, 20% 55%, 40% 45%, 60% 55%, 80% 45%, 100% 50%, 100% 100%, 0 100%)' :
-                  'polygon(0 55%, 15% 45%, 30% 60%, 50% 45%, 70% 55%, 85% 40%, 100% 50%, 100% 100%, 0 100%)'
-                }">${bgHTML}</div>
-              </div>
-            ` : bgHTML}
+            ${bgHTML}
             ${overlayLoaderHTML}
-            <div class="intro-content" style="position: relative; z-index: 10;">
+            <div class="intro-content" style="position: relative; z-index: 1;">
               ${showLogo ? `
               <div class="intro-logo-wrapper ${logoAnimClass}">
                 <img src="${logoSrc}" alt="Logo" class="intro-logo" />
@@ -334,39 +318,17 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
           <script>
             document.addEventListener('DOMContentLoaded', () => {
               const intro = document.getElementById('section-${section.id}');
-              const content = intro ? intro.querySelector('.intro-content') : null;
-              
-              if (intro && content) {
+              if (intro) {
                 const isBuilder = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
                 const duration = isBuilder ? 1200 : 3000;
                 const exitAnim = "${section.layout?.introExitAnimation || 'slide-up'}";
-                const isSplit = exitAnim.startsWith('split');
+                const exitClass = "intro-exit-" + exitAnim;
                 
                 setTimeout(() => {
-                  if (isSplit) {
-                    const panels = intro.querySelector('.intro-split-panels');
-                    const topPanel = intro.querySelector('.panel-top');
-                    const bottomPanel = intro.querySelector('.panel-bottom');
-                    
-                    if (panels) panels.style.display = 'block';
-                    intro.style.background = 'transparent';
-                    content.style.display = 'none'; // Instant hide for split
-                    
-                    if (topPanel && bottomPanel) {
-                      const animType = exitAnim === 'split-wobble' ? 'splitWobble' : 'split';
-                      topPanel.style.animation = animType + 'Top 0.8s forwards ease-in';
-                      bottomPanel.style.animation = animType + 'Bottom 0.8s forwards ease-in';
-                    }
-                  } else {
-                    content.classList.add('intro-content-exit');
-                    setTimeout(() => {
-                      intro.classList.add('intro-exit-' + exitAnim);
-                    }, 600);
-                  }
-                  
+                  intro.classList.add(exitClass);
                   setTimeout(() => {
                      if (intro && intro.parentNode) intro.parentNode.removeChild(intro);
-                  }, 1500);
+                  }, 1000);
                 }, duration);
               }
             });
