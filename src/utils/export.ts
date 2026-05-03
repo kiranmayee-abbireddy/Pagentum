@@ -156,7 +156,7 @@ export function generateHTML(sections: PageSection[], theme: ThemeConfig): strin
         } else {
           html = html.replace(new RegExp(`{{\\s*#if ${key}\\s*}}([\\s\\S]*?){{\\s*/if\\s*}}`, 'g'), '$1');
         }
-        
+
         html = html.replace(new RegExp(`{{${key}}}`, 'g'), value as string);
       });
 
@@ -261,6 +261,48 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
         `;
       }
 
+      if (section.templateId === 'intro-loader') {
+        const logoSrc = section.content.logoSrc;
+        const showLogo = logoSrc && logoSrc !== '' && logoSrc !== 'https://cdn-icons-png.flaticon.com/512/3665/3665247.png';
+        // Force fixed position to ensure it covers everything even with backgrounds
+        const finalStyle = `style="${sectionRules} position: fixed !important; z-index: 100000; overflow: hidden;"`;
+        const customTextColor = section.layout?.textColor;
+        const titleStyle = customTextColor ? `style="background: none; -webkit-text-fill-color: ${customTextColor}; color: ${customTextColor};"` : '';
+        
+        return `
+          <div id="section-${section.id}" class="intro-screen" ${finalStyle}>
+            ${bgHTML}
+            <div class="intro-content" style="position: relative; z-index: 1;">
+              ${showLogo ? `
+              <div class="intro-logo-wrapper">
+                <img src="${logoSrc}" alt="Logo" class="intro-logo" />
+              </div>` : ''}
+              <h1 class="intro-title text-center" ${titleStyle}>${section.content.siteName}</h1>
+              <div class="intro-progress-bar">
+                <div class="intro-progress-fill" ${customTextColor ? `style="background: ${customTextColor};"` : ''}></div>
+              </div>
+            </div>
+          </div>
+          <script>
+            document.addEventListener('DOMContentLoaded', () => {
+              const intro = document.getElementById('section-${section.id}');
+              if (intro) {
+                const isBuilder = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+                const duration = isBuilder ? 1200 : 3000;
+                
+                setTimeout(() => {
+                  intro.style.opacity = '0';
+                  intro.style.visibility = 'hidden';
+                  setTimeout(() => {
+                     if (intro && intro.parentNode) intro.parentNode.removeChild(intro);
+                  }, 1000);
+                }, duration);
+              }
+            });
+          </script>
+        `;
+      }
+
       if (section.templateId === 'video-section') {
         const variant = (section.layout as any)?.variant || 'video-right';
         const videoUrl = section.content.videoUrl || '';
@@ -347,43 +389,6 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                 </div>
               </div>
             </section>
-          `;
-        }
-        
-        if (section.templateId === 'intro-loader') {
-          const logoSrc = section.content.logoSrc;
-          const showLogo = logoSrc && logoSrc !== '' && logoSrc !== 'https://cdn-icons-png.flaticon.com/512/3665/3665247.png';
-          
-          return `
-            <div id="intro-screen" class="intro-screen" ${combinedStyle}>
-              <div class="intro-content">
-                ${showLogo ? `
-                <div class="intro-logo-wrapper">
-                  <img src="${logoSrc}" alt="Logo" class="intro-logo" />
-                </div>` : ''}
-                <h1 class="intro-title text-center">${section.content.siteName}</h1>
-                <div class="intro-progress-bar">
-                  <div class="intro-progress-fill"></div>
-                </div>
-              </div>
-            </div>
-            <script>
-              document.addEventListener('DOMContentLoaded', () => {
-                const intro = document.getElementById('intro-screen');
-                if (intro) {
-                  const isBuilder = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-                  const duration = isBuilder ? 1200 : 3000;
-                  
-                  setTimeout(() => {
-                    intro.style.opacity = '0';
-                    intro.style.visibility = 'hidden';
-                    setTimeout(() => {
-                       if (intro && intro.parentNode) intro.parentNode.removeChild(intro);
-                    }, 1000);
-                  }, duration);
-                }
-              });
-            </script>
           `;
         }
 
@@ -656,7 +661,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
       if (section.templateId === 'features-3col') {
         const title = section.content.title || 'Key Features';
         const subtitle = section.content.subtitle || '';
-        
+
         const cardsHTML = [1, 2, 3].map(i => {
           const fTitle = section.content[`feature${i}Title`] || `Feature ${i}`;
           const fDesc = section.content[`feature${i}Desc`] || '';
@@ -781,19 +786,19 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                   <p class="opacity-70 leading-relaxed max-w-md">${section.content.description || ''}</p>
                   <div class="flex justify-start space-x-4">
                     ${(() => {
-          const socialHTML = ['social1', 'social2', 'social3', 'social4', 'social5', 'social6'].map((prefix) => {
-            let href = section.content[`${prefix}Link` as keyof typeof section.content];
-            if (!href || href === '#') return ''; 
-            
-            if (!href.startsWith('http') && !href.startsWith('mailto:') && !href.startsWith('tel:')) {
-              href = `https://${href}`;
-            }
-            
-            const type = (section.content[`${prefix}Type` as keyof typeof section.content] || 'facebook').toLowerCase();
-            const config = socialIcons.find((icon: any) => icon.id === type) || socialIcons[0];
-            const iconId = `social-icon-${section.id}-${prefix}`;
+            const socialHTML = ['social1', 'social2', 'social3', 'social4', 'social5', 'social6'].map((prefix) => {
+              let href = section.content[`${prefix}Link` as keyof typeof section.content];
+              if (!href || href === '#') return '';
 
-            return `
+              if (!href.startsWith('http') && !href.startsWith('mailto:') && !href.startsWith('tel:')) {
+                href = `https://${href}`;
+              }
+
+              const type = (section.content[`${prefix}Type` as keyof typeof section.content] || 'facebook').toLowerCase();
+              const config = socialIcons.find((icon: any) => icon.id === type) || socialIcons[0];
+              const iconId = `social-icon-${section.id}-${prefix}`;
+
+              return `
                       <style>
                         #${iconId}:hover {
                           background: ${config.color} !important;
@@ -806,9 +811,9 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                          style="background: color-mix(in srgb, var(--text-color) 10%, transparent); color: var(--text-color);">
                           <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="${config.path}"/></svg>
                       </a>`;
-          }).join('');
-          return socialHTML;
-        })()}
+            }).join('');
+            return socialHTML;
+          })()}
                   </div>
                 </div>
                 

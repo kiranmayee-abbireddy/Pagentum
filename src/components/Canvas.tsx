@@ -187,9 +187,6 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
       } else {
         html = html.replace(/{{\s*#if logoSrc\s*}}([\s\S]*?){{\s*\/if\s*}}/, '$1');
       }
-      
-      const sectionRules = `background: ${layout.backgroundColor || 'var(--bg-color)'} !important; color: ${layout.textColor || 'var(--text-color)'} !important;`;
-      html = html.replace('class="intro-screen"', `class="intro-screen" style="${sectionRules}"`);
     }
 
     if (section.templateId === 'contact-section') {
