@@ -458,6 +458,7 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                           @keyframes logoFlipIn { from { transform: perspective(400px) rotateY(90deg); opacity: 0; } to { transform: perspective(400px) rotateY(0deg); opacity: 1; } }
                           @keyframes logoSpinIn { from { transform: rotate(-180deg) scale(0.5); opacity: 0; } to { transform: rotate(0deg) scale(1); opacity: 1; } }
                           @keyframes logoBounceIn { 0% { transform: translateY(-50px); opacity: 0; } 50% { transform: translateY(0); opacity: 1; } 70% { transform: translateY(-15px); } 90% { transform: translateY(0); } 100% { transform: translateY(0); opacity: 1; } }
+                          @keyframes introLogoIn { from { transform: scale(0) rotate(-45deg); opacity: 0; } to { transform: scale(1) rotate(0); opacity: 1; } }
                         `}</style>
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 h-64 overflow-y-auto pr-2 custom-scrollbar">
                           {[
