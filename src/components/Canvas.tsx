@@ -188,7 +188,7 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
         html = html.replace(/{{\s*#if logoSrc\s*}}([\s\S]*?){{\s*\/if\s*}}/, '$1');
       }
       
-      const fontStyle = layout?.introFont ? `style="font-family: ${layout.introFont};"` : '';
+      const fontStyle = layout?.introFont ? `style="font-family: '${layout.introFont}', cursive;"` : '';
       html = html.replace('class="intro-title', `${fontStyle} class="intro-title`);
     }
 

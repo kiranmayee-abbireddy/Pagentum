@@ -267,7 +267,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
         // Force fixed position to ensure it covers everything even with backgrounds
         const finalStyle = `style="${sectionRules} position: fixed !important; z-index: 100000; overflow: hidden;"`;
         const customTextColor = section.layout?.textColor;
-        const fontStyle = section.layout?.introFont ? `font-family: ${section.layout.introFont};` : '';
+        const fontStyle = section.layout?.introFont ? `font-family: '${section.layout.introFont}', cursive;` : '';
         const titleStyle = `style="${fontStyle} ${customTextColor ? `background: none; -webkit-text-fill-color: ${customTextColor}; color: ${customTextColor};` : ''}"`;
         
         return `
