@@ -190,7 +190,10 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
       
       const fontStyle = layout?.introFont ? `style="font-family: '${layout.introFont}', cursive;"` : '';
       const animClass = layout?.introTextAnimation ? `intro-text-${layout.introTextAnimation}` : 'intro-text-slide-up';
+      const logoAnimClass = layout?.introLogoAnimation ? `intro-logo-${layout.introLogoAnimation}` : 'intro-logo-rotate-fade';
+      
       html = html.replace('class="intro-title', `${fontStyle} class="intro-title ${animClass}`);
+      html = html.replace('class="intro-logo-wrapper', `class="intro-logo-wrapper ${logoAnimClass}`);
     }
 
     if (section.templateId === 'contact-section') {
