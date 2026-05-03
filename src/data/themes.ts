@@ -1432,11 +1432,12 @@ div[style*="background"] > section {
     padding: 0 calc(var(--spacing) * 2);
   }
 
-  .rail-card-box {
-    width: 100%;
-    max-width: 360px;
-    height: 400px;
-    margin: 0 auto;
+  .rail-card-box, .book-card {
+    width: 100% !important;
+    max-width: 360px !important;
+    min-height: 440px !important;
+    height: auto !important;
+    margin: 0 auto !important;
   }
 
   .product-track {
@@ -1472,9 +1473,11 @@ div[style*="background"] > section {
   
   .card {
     flex: 1 1 100% !important;
-    max-width: 400px;
-    margin: 0 auto;
-    margin-bottom: calc(var(--spacing) * 2);
+    max-width: 400px !important;
+    margin: 0 auto !important;
+    min-height: 440px !important;
+    height: auto !important;
+    margin-bottom: calc(var(--spacing) * 2) !important;
   }
 
   .bookshelf-grid, .cards, .rail-grid {
