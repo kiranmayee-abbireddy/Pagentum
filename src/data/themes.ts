@@ -401,11 +401,11 @@ section {
   aspect-ratio: 1;
   background: linear-gradient(var(--primary-color) 0 0) bottom/100% 0% no-repeat #ccc;
   -webkit-mask: 
-    radial-gradient(circle at 60% 65%, #000 62%, #0000 65%) top left, 
-    radial-gradient(circle at 40% 65%, #000 62%, #0000 65%) top right, 
-    linear-gradient(to bottom left, #000 42%,#0000 43%) bottom left , 
-    linear-gradient(to bottom right,#000 42%,#0000 43%) bottom right;
-  -webkit-mask-size: 50% 50%;
+    radial-gradient(circle at 60% 65%, #000 64%, #0000 65%) top left, 
+    radial-gradient(circle at 40% 65%, #000 64%, #0000 65%) top right, 
+    linear-gradient(to bottom left, #000 43%,#0000 44%) bottom left , 
+    linear-gradient(to bottom right,#000 43%,#0000 44%) bottom right;
+  -webkit-mask-size: 51% 51%;
   -webkit-mask-repeat: no-repeat;
   animation: heartFillAnim 3s forwards linear;
   margin-top: 2rem;

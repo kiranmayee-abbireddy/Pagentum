@@ -622,6 +622,7 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                           @keyframes introCircleProgress { 0% { stroke-dashoffset: 283; } 100% { stroke-dashoffset: 0; } }
                           @keyframes introSpinner { to { transform: rotate(360deg); } }
                           @keyframes introDots { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+                          @keyframes heartFillAnim { 0% { background-size: 100% 0%; } 100% { background-size: 100% 100%; } }
                           
                           .loader-preview-box {
                             height: 64px;
@@ -711,11 +712,11 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                                       className="w-8 h-8 bg-gray-200"
                                       style={{
                                         WebkitMask: `
-                                          radial-gradient(circle at 60% 65%, #000 62%, #0000 65%) top left, 
-                                          radial-gradient(circle at 40% 65%, #000 62%, #0000 65%) top right, 
-                                          linear-gradient(to bottom left, #000 42%,#0000 43%) bottom left , 
-                                          linear-gradient(to bottom right,#000 42%,#0000 43%) bottom right`,
-                                        WebkitMaskSize: '50% 50%',
+                                          radial-gradient(circle at 60% 65%, #000 64%, #0000 65%) top left, 
+                                          radial-gradient(circle at 40% 65%, #000 64%, #0000 65%) top right, 
+                                          linear-gradient(to bottom left, #000 43%,#0000 44%) bottom left , 
+                                          linear-gradient(to bottom right,#000 43%,#0000 44%) bottom right`,
+                                        WebkitMaskSize: '51% 51%',
                                         WebkitMaskRepeat: 'no-repeat',
                                         background: `linear-gradient(#3b82f6 0 0) bottom/100% 0% no-repeat #ccc`,
                                         animation: 'heartFillAnim 2s infinite linear'

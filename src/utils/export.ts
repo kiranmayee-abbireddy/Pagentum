@@ -299,7 +299,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
             <div class="loader-spinner" ${customTextColor ? `style="border-top-color: ${customTextColor};"` : ''}></div>`;
         } else if (loaderStyle === 'heart-fill') {
           contentLoaderHTML = `
-            <div class="loader-heart-fill" ${customTextColor ? `style="background: linear-gradient(${customTextColor} 0 0) bottom/100% 0% no-repeat #ccc;"` : ''}></div>`;
+            <div class="loader-heart-fill" ${customTextColor ? `style="background: linear-gradient(${customTextColor} 0 0) bottom/100% 0% no-repeat #ccc; -webkit-mask: radial-gradient(circle at 60% 65%, #000 64%, #0000 65%) top left, radial-gradient(circle at 40% 65%, #000 64%, #0000 65%) top right, linear-gradient(to bottom left, #000 43%,#0000 44%) bottom left , linear-gradient(to bottom right,#000 43%,#0000 44%) bottom right; -webkit-mask-size: 51% 51%;"` : ''}></div>`;
         }
 
         return `
