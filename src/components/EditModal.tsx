@@ -291,27 +291,26 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                     {introAnimationTab === 'font' && (
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 h-64 overflow-y-auto pr-2 custom-scrollbar">
                         {[
-                          { id: 'Inter, sans-serif', name: 'Inter' },
-                          { id: 'Roboto, sans-serif', name: 'Roboto' },
-                          { id: 'Playfair Display, serif', name: 'Playfair' },
-                          { id: 'Montserrat, sans-serif', name: 'Montserrat' },
-                          { id: 'Lato, sans-serif', name: 'Lato' },
-                          { id: 'Oswald, sans-serif', name: 'Oswald' },
-                          { id: 'Raleway, sans-serif', name: 'Raleway' },
-                          { id: 'Poppins, sans-serif', name: 'Poppins' },
-                          { id: 'Nunito, sans-serif', name: 'Nunito' },
-                          { id: 'Ubuntu, sans-serif', name: 'Ubuntu' },
-                          { id: 'Merriweather, serif', name: 'Merriweather' },
-                          { id: 'Pacifico, cursive', name: 'Pacifico' },
-                          { id: 'Caveat, cursive', name: 'Caveat' },
-                          { id: 'Cinzel, serif', name: 'Cinzel' },
-                          { id: 'Bebas Neue, sans-serif', name: 'Bebas Neue' },
-                          { id: 'Righteous, cursive', name: 'Righteous' },
-                          { id: 'Lobster, cursive', name: 'Lobster' },
-                          { id: 'Dancing Script, cursive', name: 'Dancing Script' },
-                          { id: 'Space Mono, monospace', name: 'Space Mono' },
-                          { id: 'Anton, sans-serif', name: 'Anton' },
-                          { id: 'Josefin Sans, sans-serif', name: 'Josefin Sans' }
+                          { id: "'Abril Fatface', serif", name: 'Abril Fatface' },
+                          { id: "'Anton', sans-serif", name: 'Anton' },
+                          { id: "'Bangers', cursive", name: 'Bangers' },
+                          { id: "'Bebas Neue', sans-serif", name: 'Bebas Neue' },
+                          { id: "'Berkshire Swash', cursive", name: 'Berkshire Swash' },
+                          { id: "'Bungee Shade', cursive", name: 'Bungee Shade' },
+                          { id: "'Cinzel Decorative', serif", name: 'Cinzel Decorative' },
+                          { id: "'Creepster', cursive", name: 'Creepster' },
+                          { id: "'Fredoka One', cursive", name: 'Fredoka One' },
+                          { id: "'Great Vibes', cursive", name: 'Great Vibes' },
+                          { id: "'Lobster', cursive", name: 'Lobster' },
+                          { id: "'Luckiest Guy', cursive", name: 'Luckiest Guy' },
+                          { id: "'Monoton', cursive", name: 'Monoton' },
+                          { id: "'Orbitron', sans-serif", name: 'Orbitron' },
+                          { id: "'Pacifico', cursive", name: 'Pacifico' },
+                          { id: "'Permanent Marker', cursive", name: 'Permanent Marker' },
+                          { id: "'Press Start 2P', cursive", name: 'Press Start 2P' },
+                          { id: "'Righteous', cursive", name: 'Righteous' },
+                          { id: "'Russo One', sans-serif", name: 'Russo One' },
+                          { id: "'Sacramento', cursive", name: 'Sacramento' }
                         ].map(font => (
                           <button
                             key={font.id}
