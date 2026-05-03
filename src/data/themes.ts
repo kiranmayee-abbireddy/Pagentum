@@ -1402,16 +1402,63 @@ div[style*="background"] > section {
   color: var(--text-color);
 }
 
-/* RESPONSIVE */
+/* RESPONSIVE IMPROVEMENTS */
+@media (max-width: 1024px) {
+  .rail-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: calc(var(--spacing) * 2);
+  }
+  .rail-card-box {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+}
+
 @media (max-width: 768px) {
   .rail-grid {
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: calc(var(--spacing) * 1.5);
+    grid-template-columns: 1fr;
+    gap: calc(var(--spacing) * 2.5);
+    padding: 0 calc(var(--spacing) * 2);
   }
 
   .rail-card-box {
-    width: 220px;
-    height: 300px;
+    width: 100%;
+    max-width: 360px;
+    height: 400px;
+    margin: 0 auto;
+  }
+
+  .product-track {
+    gap: calc(var(--spacing) * 2);
+    padding-left: calc(var(--spacing) * 1.5);
+    padding-right: calc(var(--spacing) * 1.5);
+  }
+
+  .product-card {
+    flex: 0 0 85vw !important;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .slider {
+    --width: 85vw !important;
+    --height: 460px !important;
+  }
+
+  .auto-card {
+    width: 100% !important;
+  }
+
+  .cards {
+    grid-template-columns: 1fr !important;
+    padding: 0 calc(var(--spacing) * 1.5);
+  }
+  
+  .card {
+    flex: 1 1 100% !important;
+    max-width: 400px;
+    margin: 0 auto;
   }
 }
 
