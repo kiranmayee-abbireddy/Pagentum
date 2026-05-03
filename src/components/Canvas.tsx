@@ -314,8 +314,8 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
               </div>
             </div>
             <div class="p-1.5 flex-1 flex flex-col bg-white">
-              <h3 class="font-bold text-[9px] text-gray-900 mb-0.5 line-clamp-1">${title}</h3>
-              <p class="text-[8px] text-gray-500 line-clamp-1 mb-1.5">${desc}</p>
+              <h3 class="font-bold text-[9px] text-gray-900 mb-0.5 line-clamp-2">${title}</h3>
+              <p class="text-[8px] text-gray-500 line-clamp-3 mb-1.5">${desc}</p>
               ${showButton ? `
                 <div class="mt-auto border-t border-gray-50 pt-1">
                   <a href="${buttonHref}" class="w-full inline-block bg-blue-600 text-white text-[7px] py-1 rounded font-bold text-center">

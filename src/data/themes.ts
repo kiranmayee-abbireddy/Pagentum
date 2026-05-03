@@ -591,7 +591,7 @@ div[style*="background"] > section {
   flex: 0 0 17.5rem;
   scroll-snap-align: center;
   background: ${theme.backgroundColor === '#ffffff' ? '#f8fafc' : 'rgba(255,255,255,0.05)'};
-  border-radius: 1rem;
+  border-radius: 2.5rem 0 2.5rem 0 !important;
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
@@ -600,6 +600,7 @@ div[style*="background"] > section {
   width: 100%;
   height: 12rem;
   object-fit: cover;
+  border-radius: 2.5rem 0 0 0;
 }
 
 .product-info {
@@ -818,8 +819,8 @@ div[style*="background"] > section {
 .bookshelf-grid {
   perspective: 1000px;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: calc(var(--spacing) * 1.5);
+  grid-template-columns: 1fr;
+  gap: calc(var(--spacing) * 2);
 }
 
 @media (min-width: 768px) {
@@ -843,10 +844,11 @@ div[style*="background"] > section {
 .book-card {
   transform-style: preserve-3d;
   position: relative;
-  width: 11rem;
+  width: 16rem;
+  min-height: 28rem;
   display: flex;
   flex-direction: column;
-  border-radius: 1rem;
+  border-radius: 2.5rem 0 2.5rem 0 !important;
   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
   background: ${theme.backgroundColor === '#ffffff' ? 'white' : 'rgba(255,255,255,0.1)'};
   border: 1px solid ${theme.backgroundColor === '#ffffff' ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.2)'};
@@ -868,8 +870,7 @@ div[style*="background"] > section {
   width: 100%;
   height: 10rem;
   object-fit: cover;
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
+  border-radius: 2.5rem 0 0 0;
   transition: transform 500ms ease;
 }
 
@@ -910,7 +911,7 @@ div[style*="background"] > section {
   flex: 1;
   margin-bottom: 1rem;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 6;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -939,11 +940,13 @@ div[style*="background"] > section {
 /* Responsive */
 @media (max-width: 640px) {
   .book-card {
-    width: 9rem;
-    height: 17rem;
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    min-height: 24rem;
   }
   .book-card img {
-    height: 8rem;
+    height: 10rem;
   }
 }
 
@@ -970,8 +973,8 @@ div[style*="background"] > section {
 
 .cards {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: calc(var(--spacing) * 1.5);
+  grid-template-columns: 1fr;
+  gap: calc(var(--spacing) * 2);
 }
 
 @media (min-width: 768px) { .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
@@ -983,7 +986,7 @@ div[style*="background"] > section {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 24rem; /* Matches product-card with 12rem img + padding */
+  min-height: 28rem; /* Matches product-card with 12rem img + padding */
   flex: 1 1 17.5rem; /* EXACT product-card flex */
   
   /* Uiverse base styling */
@@ -992,7 +995,7 @@ div[style*="background"] > section {
   padding: calc(var(--spacing) * 1.5); /* Matches .product-info */
   color: var(--text-color);
   border: 1px solid var(--primary-color);
-  border-radius: 1rem; /* Matches product-card/book-card */
+  border-radius: 2.5rem 0 2.5rem 0 !important;
   position: relative;
   overflow: hidden;
   backdrop-filter: blur(10px);
@@ -1004,7 +1007,7 @@ div[style*="background"] > section {
   margin-bottom: calc(var(--spacing) * 1);
   flex-grow: 1;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 6;
   -webkit-box-orient: vertical;
   overflow: hidden;
   font-size: calc(var(--font-size) * 0.95);
@@ -1025,7 +1028,7 @@ div[style*="background"] > section {
   width: 100%;
   height: 12rem; /* EXACT .product-image img height */
   object-fit: cover;
-  border-radius: 0.5rem; /* Smaller radius for image */
+  border-radius: 2rem 0 0 0;
   margin-bottom: calc(var(--spacing) * 0.5);
 }
 
@@ -1135,7 +1138,7 @@ div[style*="background"] > section {
   height: 100%;
   padding: calc(var(--spacing) * 1);
   background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-  border-radius: 1rem;
+  border-radius: 2.5rem 0 2.5rem 0 !important;
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
   color: white;
   text-align: center;
@@ -1166,7 +1169,7 @@ div[style*="background"] > section {
   width: 100%;
   height: 12rem;
   object-fit: cover;
-  border-radius: 0.75rem;
+  border-radius: 2rem 0 0 0;
   margin-bottom: calc(var(--spacing) * 0.5);
 }
 
@@ -1237,7 +1240,7 @@ div[style*="background"] > section {
 
 .rail-card-box {
   width: 260px;
-  min-height: 376px;
+  min-height: 440px;
   height: auto;
   position: relative;
   display: grid;
@@ -1430,9 +1433,10 @@ div[style*="background"] > section {
   }
 
   .product-track {
-    gap: calc(var(--spacing) * 2);
-    padding-left: calc(var(--spacing) * 1.5);
-    padding-right: calc(var(--spacing) * 1.5);
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: calc(var(--spacing) * 3) !important;
+    padding: 0 calc(var(--spacing) * 1.5);
   }
 
   .product-card {
@@ -1442,8 +1446,12 @@ div[style*="background"] > section {
   }
 
   .slider {
-    --width: 85vw !important;
-    --height: 460px !important;
+    --width: 90vw !important;
+    --height: 480px !important;
+  }
+
+  .slider .list .item {
+    animation-duration: 40s !important;
   }
 
   .auto-card {
@@ -1459,6 +1467,13 @@ div[style*="background"] > section {
     flex: 1 1 100% !important;
     max-width: 400px;
     margin: 0 auto;
+    margin-bottom: calc(var(--spacing) * 2);
+  }
+
+  .bookshelf-grid, .cards, .rail-grid {
+    grid-template-columns: 1fr !important;
+    row-gap: calc(var(--spacing) * 4) !important;
+    column-gap: 0 !important;
   }
 }
 
