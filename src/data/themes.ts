@@ -180,53 +180,76 @@ section {
 }
 
 /* --- Text Animation Variants --- */
-.intro-text-none {
-  animation: none !important;
-  opacity: 1 !important;
+.intro-text-none { animation: none !important; opacity: 1 !important; }
+
+.intro-text-fade { animation: textFadeIn 1s ease-out 0.3s both !important; }
+@keyframes textFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.intro-text-slide-up { animation: introTitleIn 1s ease-out 0.3s both !important; }
+
+.intro-text-slide-down { animation: textSlideDown 1s ease-out 0.3s both !important; }
+@keyframes textSlideDown { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+.intro-text-slide-left { animation: textSlideLeft 1s ease-out 0.3s both !important; }
+@keyframes textSlideLeft { from { transform: translateX(30px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+.intro-text-slide-right { animation: textSlideRight 1s ease-out 0.3s both !important; }
+@keyframes textSlideRight { from { transform: translateX(-30px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+.intro-text-pop { animation: textPopUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both !important; }
+@keyframes textPopUp { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+.intro-text-zoom { animation: textZoomIn 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s both !important; }
+@keyframes textZoomIn { from { transform: scale(1.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+.intro-text-zoom-out { animation: textZoomOut 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s both !important; }
+@keyframes textZoomOut { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+.intro-text-blur { animation: textBlurIn 1.2s ease-out 0.3s both !important; }
+@keyframes textBlurIn { from { filter: blur(20px); opacity: 0; } to { filter: blur(0); opacity: 1; } }
+
+.intro-text-tracking { animation: textTrackingIn 1.2s cubic-bezier(0.215, 0.610, 0.355, 1.000) 0.3s both !important; }
+@keyframes textTrackingIn { from { letter-spacing: -0.5em; opacity: 0; } to { letter-spacing: normal; opacity: 1; } }
+
+.intro-text-tracking-out { animation: textTrackingOut 1.2s cubic-bezier(0.215, 0.610, 0.355, 1.000) 0.3s both !important; }
+@keyframes textTrackingOut { from { letter-spacing: 0.5em; opacity: 0; } to { letter-spacing: normal; opacity: 1; } }
+
+.intro-text-flip { animation: textFlip 1s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both !important; }
+@keyframes textFlip { from { transform: perspective(400px) rotateX(90deg); opacity: 0; } to { transform: perspective(400px) rotateX(0deg); opacity: 1; } }
+
+.intro-text-bounce { animation: textBounce 1.2s cubic-bezier(0.28, 0.84, 0.42, 1) 0.3s both !important; }
+@keyframes textBounce { 
+  0% { transform: translateY(-50px); opacity: 0; } 
+  50% { transform: translateY(0); opacity: 1; } 
+  70% { transform: translateY(-15px); } 
+  90% { transform: translateY(0); } 
+  100% { transform: translateY(0); opacity: 1; } 
 }
 
-.intro-text-fade {
-  animation: textFadeIn 1s ease-out 0.3s both !important;
-}
-@keyframes textFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.intro-text-spin { animation: textSpin 1s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both !important; }
+@keyframes textSpin { from { transform: rotate(-180deg) scale(0.5); opacity: 0; } to { transform: rotate(0deg) scale(1); opacity: 1; } }
+
+.intro-text-swing { animation: textSwing 1s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both !important; }
+@keyframes textSwing { 
+  0% { transform: rotate(15deg); opacity: 0; } 
+  50% { transform: rotate(-10deg); opacity: 1; } 
+  75% { transform: rotate(5deg); } 
+  100% { transform: rotate(0deg); opacity: 1; } 
 }
 
-.intro-text-slide-up {
-  animation: introTitleIn 1s ease-out 0.3s both !important;
-}
+.intro-text-pulse { animation: textPulse 1s ease-in-out 0.3s infinite alternate !important; }
+@keyframes textPulse { from { transform: scale(1); opacity: 1; } to { transform: scale(1.05); opacity: 0.8; } }
 
-.intro-text-pop {
-  animation: textPopUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both !important;
-}
-@keyframes textPopUp {
-  from { transform: scale(0.5); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-.intro-text-zoom {
-  animation: textZoomIn 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s both !important;
-}
-@keyframes textZoomIn {
-  from { transform: scale(1.5); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-.intro-text-blur {
-  animation: textBlurIn 1.2s ease-out 0.3s both !important;
-}
-@keyframes textBlurIn {
-  from { filter: blur(20px); opacity: 0; }
-  to { filter: blur(0); opacity: 1; }
-}
-
-.intro-text-tracking {
-  animation: textTrackingIn 1.2s cubic-bezier(0.215, 0.610, 0.355, 1.000) 0.3s both !important;
-}
-@keyframes textTrackingIn {
-  from { letter-spacing: -0.5em; opacity: 0; }
-  to { letter-spacing: normal; opacity: 1; }
+.intro-text-jello { animation: textJello 1s both !important; }
+@keyframes textJello {
+  0%, 11.1%, 100% { transform: translate3d(0,0,0); }
+  22.2% { transform: skewX(-12.5deg) skewY(-12.5deg); }
+  33.3% { transform: skewX(6.25deg) skewY(6.25deg); }
+  44.4% { transform: skewX(-3.125deg) skewY(-3.125deg); }
+  55.5% { transform: skewX(1.5625deg) skewY(1.5625deg); }
+  66.6% { transform: skewX(-0.78125deg) skewY(-0.78125deg); }
+  77.7% { transform: skewX(0.390625deg) skewY(0.390625deg); }
+  88.8% { transform: skewX(-0.1953125deg) skewY(-0.1953125deg); }
 }
 
 

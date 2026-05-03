@@ -334,15 +334,26 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                     )}
 
                     {introAnimationTab === 'text' && (
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 h-64 overflow-y-auto pr-2 custom-scrollbar">
                         {[
-                          { id: 'none', name: 'None', icon: 'X' },
-                          { id: 'fade', name: 'Fade In', icon: '☀️' },
-                          { id: 'slide-up', name: 'Slide Up', icon: '↑' },
-                          { id: 'pop', name: 'Pop Up', icon: '💥' },
-                          { id: 'zoom', name: 'Zoom In', icon: '🔍' },
-                          { id: 'blur', name: 'Blur In', icon: '🌫️' },
-                          { id: 'tracking', name: 'Tracking', icon: '↔' }
+                          { id: 'none', name: 'None' },
+                          { id: 'fade', name: 'Fade In' },
+                          { id: 'slide-up', name: 'Slide Up' },
+                          { id: 'slide-down', name: 'Slide Down' },
+                          { id: 'slide-left', name: 'Slide Left' },
+                          { id: 'slide-right', name: 'Slide Right' },
+                          { id: 'pop', name: 'Pop Up' },
+                          { id: 'zoom', name: 'Zoom In' },
+                          { id: 'zoom-out', name: 'Zoom Out' },
+                          { id: 'blur', name: 'Blur In' },
+                          { id: 'tracking', name: 'Expand' },
+                          { id: 'tracking-out', name: 'Contract' },
+                          { id: 'flip', name: 'Flip' },
+                          { id: 'bounce', name: 'Bounce' },
+                          { id: 'spin', name: 'Spin' },
+                          { id: 'swing', name: 'Swing' },
+                          { id: 'pulse', name: 'Pulse' },
+                          { id: 'jello', name: 'Jello' }
                         ].map(anim => {
                           const currentAnim = layout.introTextAnimation || 'slide-up';
                           const isSelected = currentAnim === anim.id;
@@ -350,13 +361,27 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                             <button
                               key={anim.id}
                               onClick={() => handleLayoutChange('introTextAnimation')(anim.id)}
-                              className={`p-4 rounded-xl border-2 text-center transition-all ${
+                              className={`p-4 rounded-xl border-2 text-center transition-all group overflow-hidden ${
                                 isSelected
                                   ? 'border-blue-600 bg-blue-50 text-blue-700 shadow-sm'
                                   : 'border-gray-200 bg-white hover:border-blue-300'
                               }`}
                             >
-                              <span className="text-2xl block mb-2">{anim.icon}</span>
+                              <div className="h-10 flex items-center justify-center mb-1 bg-gray-50/50 rounded-lg overflow-hidden border border-gray-100 group-hover:bg-white transition-colors">
+                                <span 
+                                  className={`text-2xl font-black block intro-text-${anim.id}`}
+                                  style={{ 
+                                    animationIterationCount: 'infinite', 
+                                    animationDelay: '0s', 
+                                    animationDuration: '2.5s',
+                                    background: 'linear-gradient(135deg, #3b82f6, #6366f1)',
+                                    WebkitBackgroundClip: 'text',
+                                    WebkitTextFillColor: 'transparent',
+                                  }}
+                                >
+                                  Ag
+                                </span>
+                              </div>
                               <span className="text-[9px] font-bold uppercase tracking-widest">{anim.name}</span>
                             </button>
                           );
