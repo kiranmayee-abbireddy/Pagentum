@@ -295,7 +295,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                   <p class="text-xl opacity-80 max-w-2xl mx-auto text-center mb-12">${section.content.subtitle}</p>
                 </div>
                 
-                <div class="bookshelf-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 items-start justify-items-center">
+                <div class="bookshelf-grid grid gap-12 items-stretch justify-items-center">
                   ${displayImages.map((img, idx) => {
             const productNum = idx + 1;
             const title = section.content[`product${productNum}Title`] || `Product ${productNum}`;
@@ -303,7 +303,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
             const desc = section.content[`product${productNum}Description`] || 'Great product.';
 
             return `
-                      <div class="book-card group relative w-72 min-h-[22rem] flex flex-col shadow-xl
+                      <div class="book-card group relative w-full h-full flex flex-col shadow-xl
             transition-all duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.1)]
             hover:scale-110 hover:-translate-y-3 hover:shadow-2xl hover:z-20
             bg-white border border-gray-100 overflow-hidden">
