@@ -142,6 +142,7 @@ section {
   word-wrap: break-word;
   max-width: 90vw;
   text-align: center;
+  padding: 0.2em 0.3em;
   background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
