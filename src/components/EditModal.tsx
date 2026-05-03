@@ -334,11 +334,21 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                     )}
 
                     {introAnimationTab === 'text' && (
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 h-64 overflow-y-auto pr-2 custom-scrollbar">
-                        {[
-                          { id: 'none', name: 'None' },
-                          { id: 'fade', name: 'Fade In' },
-                          { id: 'slide-up', name: 'Slide Up' },
+                      <div className="relative">
+                        <style>{`
+                          .anim-preview-fix {
+                            animation-iteration-count: infinite !important;
+                            animation-delay: 0s !important;
+                            padding: 0.2em 0.4em !important;
+                            line-height: 1 !important;
+                            display: inline-block !important;
+                          }
+                        `}</style>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 h-64 overflow-y-auto pr-2 custom-scrollbar">
+                          {[
+                            { id: 'none', name: 'None' },
+                            { id: 'fade', name: 'Fade In' },
+                            { id: 'slide-up', name: 'Slide Up' },
                           { id: 'slide-down', name: 'Slide Down' },
                           { id: 'slide-left', name: 'Slide Left' },
                           { id: 'slide-right', name: 'Slide Right' },
@@ -361,22 +371,18 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                             <button
                               key={anim.id}
                               onClick={() => handleLayoutChange('introTextAnimation')(anim.id)}
-                              className={`p-4 rounded-xl border-2 text-center transition-all group overflow-hidden ${
+                              className={`p-4 rounded-xl border-2 text-center transition-all group ${
                                 isSelected
                                   ? 'border-blue-600 bg-blue-50 text-blue-700 shadow-sm'
                                   : 'border-gray-200 bg-white hover:border-blue-300'
                               }`}
                             >
-                              <div className="h-10 flex items-center justify-center mb-1 bg-gray-50/50 rounded-lg overflow-hidden border border-gray-100 group-hover:bg-white transition-colors">
+                              <div className="h-10 flex items-center justify-center mb-1 bg-gray-50/50 rounded-lg border border-gray-100 group-hover:bg-white transition-colors">
                                 <span 
-                                  className={`text-2xl font-black block intro-text-${anim.id}`}
+                                  className={`text-2xl font-black intro-text-${anim.id} anim-preview-fix`}
                                   style={{ 
-                                    animationIterationCount: 'infinite', 
-                                    animationDelay: '0s', 
                                     animationDuration: '2.5s',
-                                    background: 'linear-gradient(135deg, #3b82f6, #6366f1)',
-                                    WebkitBackgroundClip: 'text',
-                                    WebkitTextFillColor: 'transparent',
+                                    color: '#3b82f6'
                                   }}
                                 >
                                   Ag
@@ -386,6 +392,7 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                             </button>
                           );
                         })}
+                        </div>
                       </div>
                     )}
 
