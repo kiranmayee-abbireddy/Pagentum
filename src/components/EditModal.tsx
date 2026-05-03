@@ -315,19 +315,21 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                           <button
                             key={font.id}
                             onClick={() => handleLayoutChange('introFont')(font.id)}
-                            className={`p-4 rounded-xl border-2 text-center transition-all ${
+                            className={`p-3 rounded-xl border-2 text-center transition-all group ${
                               layout.introFont === font.id
                                 ? 'border-blue-600 bg-blue-50 text-blue-700 shadow-sm'
                                 : 'border-gray-200 bg-white hover:border-blue-300'
                             }`}
                           >
-                            <span 
-                              className={`text-3xl block mb-3 text-gray-900 ${layout.introFont === font.id ? 'text-blue-700' : ''}`}
-                              style={{ fontFamily: font.id }}
-                            >
-                              Ag
-                            </span>
-                            <span className="text-[9px] font-bold uppercase tracking-widest">{font.name}</span>
+                            <div className="h-12 flex items-center justify-center mb-1 bg-gray-50 rounded-lg group-hover:bg-white transition-colors overflow-hidden px-2">
+                              <span 
+                                className="text-lg font-bold whitespace-nowrap overflow-hidden text-ellipsis max-w-full text-gray-900"
+                                style={{ fontFamily: font.id }}
+                              >
+                                {content.siteName || 'Title'}
+                              </span>
+                            </div>
+                            <span className="text-[9px] font-bold uppercase tracking-widest block truncate">{font.name}</span>
                           </button>
                         ))}
                       </div>
