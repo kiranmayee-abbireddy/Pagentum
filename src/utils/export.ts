@@ -304,16 +304,25 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
 
         const exitAnim = "${section.layout?.introExitAnimation || 'slide-up'}";
         const isSplit = exitAnim.startsWith('split');
-        const containerClass = isSplit ? "intro-exit-" + exitAnim : "intro-exit-" + exitAnim;
         
         return `
-          <div id="section-${section.id}" class="intro-screen ${containerClass}" ${finalStyle}>
+          <div id="section-${section.id}" class="intro-screen" ${finalStyle}>
             ${isSplit ? `
-              <div class="intro-split-panel panel-top" ${finalStyle}>${bgHTML}</div>
-              <div class="intro-split-panel panel-bottom" ${finalStyle}>${bgHTML}</div>
+              <div class="intro-split-panels" style="position: absolute; inset: 0; z-index: 5; pointer-events: none; display: none;">
+                <div class="intro-split-panel panel-top" style="${sectionRules}; clip-path: ${
+                  exitAnim === 'split-straight' || exitAnim === 'split-wobble' ? 'inset(0 0 50% 0)' : 
+                  exitAnim === 'split-zigzag' ? 'polygon(0 0, 100% 0, 100% 50%, 80% 45%, 60% 55%, 40% 45%, 20% 55%, 0 50%)' :
+                  'polygon(0 0, 100% 0, 100% 50%, 85% 40%, 70% 55%, 50% 45%, 30% 60%, 15% 45%, 0 55%)'
+                }">${bgHTML}</div>
+                <div class="intro-split-panel panel-bottom" style="${sectionRules}; clip-path: ${
+                  exitAnim === 'split-straight' || exitAnim === 'split-wobble' ? 'inset(50% 0 0 0)' : 
+                  exitAnim === 'split-zigzag' ? 'polygon(0 50%, 20% 55%, 40% 45%, 60% 55%, 80% 45%, 100% 50%, 100% 100%, 0 100%)' :
+                  'polygon(0 55%, 15% 45%, 30% 60%, 50% 45%, 70% 55%, 85% 40%, 100% 50%, 100% 100%, 0 100%)'
+                }">${bgHTML}</div>
+              </div>
             ` : bgHTML}
             ${overlayLoaderHTML}
-            <div class="intro-content" style="position: relative; z-index: 1;">
+            <div class="intro-content" style="position: relative; z-index: 10;">
               ${showLogo ? `
               <div class="intro-logo-wrapper ${logoAnimClass}">
                 <img src="${logoSrc}" alt="Logo" class="intro-logo" />
@@ -331,20 +340,36 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                 const isBuilder = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
                 const duration = isBuilder ? 1200 : 3000;
                 const exitAnim = "${section.layout?.introExitAnimation || 'slide-up'}";
+                const isSplit = exitAnim.startsWith('split');
                 
                 setTimeout(() => {
-                  // Phase 1: Blur and Fade out content
-                  content.classList.add('intro-content-exit');
-                  
-                  // Phase 2: Start the background exit animation after a short delay
-                  setTimeout(() => {
-                    intro.classList.add('intro-exit-' + exitAnim);
+                  if (isSplit) {
+                    const panels = intro.querySelector('.intro-split-panels');
+                    const topPanel = intro.querySelector('.panel-top');
+                    const bottomPanel = intro.querySelector('.panel-bottom');
                     
-                    // Final removal
+                    if (panels) panels.style.display = 'block';
+                    intro.style.background = 'transparent';
+                    // Hide content immediately when split starts
+                    content.style.opacity = '0';
+                    content.style.transition = 'opacity 0.3s ease-out';
+                    
+                    if (topPanel && bottomPanel) {
+                      const animType = exitAnim === 'split-wobble' ? 'splitWobble' : 'split';
+                      topPanel.style.animation = animType + 'Top 1s forwards cubic-bezier(0.65, 0, 0.35, 1)';
+                      bottomPanel.style.animation = animType + 'Bottom 1s forwards cubic-bezier(0.65, 0, 0.35, 1)';
+                    }
+                  } else {
+                    content.classList.add('intro-content-exit');
                     setTimeout(() => {
-                       if (intro && intro.parentNode) intro.parentNode.removeChild(intro);
-                    }, 1500);
-                  }, 600);
+                      intro.classList.add('intro-exit-' + exitAnim);
+                    }, 600);
+                  }
+                  
+                  // Final removal
+                  setTimeout(() => {
+                     if (intro && intro.parentNode) intro.parentNode.removeChild(intro);
+                  }, 1500);
                 }, duration);
               }
             });

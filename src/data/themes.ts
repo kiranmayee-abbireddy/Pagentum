@@ -325,20 +325,24 @@ section {
 }
 
 /* --- Split Transitions --- */
+.intro-split-panels {
+  display: none;
+}
+
+.intro-exit-split-straight .intro-split-panels,
+.intro-exit-split-zigzag .intro-split-panels,
+.intro-exit-split-curvy .intro-split-panels,
+.intro-exit-split-wobble .intro-split-panels {
+  display: block;
+}
+
 .intro-split-panel {
   position: absolute;
   inset: 0;
-  z-index: 1;
+  z-index: 5;
   background: inherit;
   pointer-events: none;
-  visibility: hidden;
-}
-
-.intro-exit-split-straight .intro-split-panel,
-.intro-exit-split-zigzag .intro-split-panel,
-.intro-exit-split-curvy .intro-split-panel,
-.intro-exit-split-wobble .intro-split-panel {
-  visibility: visible;
+  overflow: hidden;
 }
 
 .intro-exit-split-straight,
