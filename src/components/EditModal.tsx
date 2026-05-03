@@ -421,7 +421,7 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                             >
                               <div className="h-16 flex items-center justify-center mb-1 bg-gray-50/50 rounded-lg border border-gray-100 group-hover:bg-white transition-colors">
                                 <span 
-                                  className="text-2xl font-black anim-preview-fix"
+                                  className="text-lg font-black anim-preview-fix whitespace-nowrap overflow-hidden text-ellipsis max-w-[90%]"
                                   style={{ 
                                     animationName: keyframeMap[anim.id] || 'none',
                                     animationDuration: '2s',
@@ -429,13 +429,14 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                                     animationTimingFunction: 'ease-in-out',
                                     animationDelay: '0s',
                                     animationFillMode: 'both',
-                                    color: '#3b82f6',
+                                    color: layout.textColor || '#3b82f6',
+                                    fontFamily: layout.introFont || 'inherit',
                                     display: 'inline-block',
                                     padding: '0.2em 0.4em',
-                                    lineHeight: '1'
+                                    lineHeight: '1.2'
                                   }}
                                 >
-                                  Ag
+                                  {content.siteName || 'Title'}
                                 </span>
                               </div>
                               <span className="text-[9px] font-bold uppercase tracking-widest">{anim.name}</span>
