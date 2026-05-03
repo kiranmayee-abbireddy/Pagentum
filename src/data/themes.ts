@@ -591,7 +591,7 @@ div[style*="background"] > section {
   flex: 0 0 17.5rem;
   scroll-snap-align: center;
   background: ${theme.backgroundColor === '#ffffff' ? '#f8fafc' : 'rgba(255,255,255,0.05)'};
-  border-radius: 2.5rem 0 2.5rem 0 !important;
+  border-radius: 1rem;
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
@@ -600,7 +600,7 @@ div[style*="background"] > section {
   width: 100%;
   height: 12rem;
   object-fit: cover;
-  border-radius: 2.5rem 0 0 0;
+  border-radius: 1rem 1rem 0 0;
 }
 
 .product-info {
@@ -1148,7 +1148,7 @@ div[style*="background"] > section {
   height: 100%;
   padding: calc(var(--spacing) * 1);
   background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-  border-radius: 2.5rem 0 2.5rem 0 !important;
+  border-radius: 1rem;
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
   color: white;
   text-align: center;
@@ -1179,7 +1179,7 @@ div[style*="background"] > section {
   width: 100%;
   height: 12rem;
   object-fit: cover;
-  border-radius: 2rem 0 0 0;
+  border-radius: 0.75rem;
   margin-bottom: calc(var(--spacing) * 0.5);
 }
 
@@ -1446,25 +1446,29 @@ div[style*="background"] > section {
   }
 
   .product-track {
-    flex-direction: column !important;
-    align-items: center !important;
-    gap: calc(var(--spacing) * 3) !important;
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    gap: calc(var(--spacing) * 2);
     padding: 0 calc(var(--spacing) * 1.5);
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
   }
 
   .product-card {
     flex: 0 0 85vw !important;
     max-width: 400px;
-    margin: 0 auto;
+    margin-right: 1.5rem;
+    scroll-snap-align: center;
   }
 
   .slider {
-    --width: 90vw !important;
-    --height: 480px !important;
+    --width: 280px !important;
+    --height: 420px !important;
   }
 
   .slider .list .item {
-    animation-duration: 40s !important;
+    animation-duration: 20s !important;
   }
 
   .auto-card {
