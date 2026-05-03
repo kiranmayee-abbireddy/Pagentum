@@ -304,16 +304,14 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
 
         const exitAnim = "${section.layout?.introExitAnimation || 'slide-up'}";
         const isSplit = exitAnim.startsWith('split');
-        const exitClass = isSplit ? "" : "intro-exit-" + exitAnim;
-        const containerClass = isSplit ? "intro-exit-" + exitAnim : "";
+        const containerClass = isSplit ? "intro-exit-" + exitAnim : "intro-exit-" + exitAnim;
         
         return `
           <div id="section-${section.id}" class="intro-screen ${containerClass}" ${finalStyle}>
-            ${bgHTML}
             ${isSplit ? `
-              <div class="intro-split-panel panel-top" ${sectionRules}></div>
-              <div class="intro-split-panel panel-bottom" ${sectionRules}></div>
-            ` : ''}
+              <div class="intro-split-panel panel-top" ${finalStyle}>${bgHTML}</div>
+              <div class="intro-split-panel panel-bottom" ${finalStyle}>${bgHTML}</div>
+            ` : bgHTML}
             ${overlayLoaderHTML}
             <div class="intro-content" style="position: relative; z-index: 1;">
               ${showLogo ? `
@@ -327,22 +325,26 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
           <script>
             document.addEventListener('DOMContentLoaded', () => {
               const intro = document.getElementById('section-${section.id}');
-              if (intro) {
+              const content = intro ? intro.querySelector('.intro-content') : null;
+              
+              if (intro && content) {
                 const isBuilder = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
                 const duration = isBuilder ? 1200 : 3000;
                 const exitAnim = "${section.layout?.introExitAnimation || 'slide-up'}";
-                const isSplit = exitAnim.startsWith('split');
                 
                 setTimeout(() => {
-                  if (isSplit) {
-                    intro.classList.add('intro-exit-' + exitAnim);
-                  } else {
-                    intro.classList.add('intro-exit-' + exitAnim);
-                  }
+                  // Phase 1: Blur and Fade out content
+                  content.classList.add('intro-content-exit');
                   
+                  // Phase 2: Start the background exit animation after a short delay
                   setTimeout(() => {
-                     if (intro && intro.parentNode) intro.parentNode.removeChild(intro);
-                  }, 1500);
+                    intro.classList.add('intro-exit-' + exitAnim);
+                    
+                    // Final removal
+                    setTimeout(() => {
+                       if (intro && intro.parentNode) intro.parentNode.removeChild(intro);
+                    }, 1500);
+                  }, 600);
                 }, duration);
               }
             });

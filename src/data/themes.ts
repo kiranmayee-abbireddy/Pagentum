@@ -328,9 +328,33 @@ section {
 .intro-split-panel {
   position: absolute;
   inset: 0;
-  z-index: -1;
+  z-index: 1;
   background: inherit;
-  transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.intro-exit-split-straight .intro-split-panel,
+.intro-exit-split-zigzag .intro-split-panel,
+.intro-exit-split-curvy .intro-split-panel,
+.intro-exit-split-wobble .intro-split-panel {
+  visibility: visible;
+}
+
+.intro-exit-split-straight,
+.intro-exit-split-zigzag,
+.intro-exit-split-curvy,
+.intro-exit-split-wobble {
+  background: transparent !important;
+}
+
+.intro-content-exit {
+  animation: introContentFadeBlur 0.8s ease-in forwards !important;
+}
+
+@keyframes introContentFadeBlur {
+  from { filter: blur(0); opacity: 1; }
+  to { filter: blur(30px); opacity: 0; visibility: hidden; }
 }
 
 .intro-exit-split-straight .panel-top { clip-path: inset(0 0 50% 0); animation: splitTop 0.8s forwards; }
