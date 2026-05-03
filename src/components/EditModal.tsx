@@ -268,7 +268,7 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                   
                   {/* Tabs */}
                   <div className="flex flex-wrap gap-2 mb-6">
-                    {(['font', 'text', 'logo', 'intro', 'loaders'] as const).map(tab => (
+                    {(['font', 'text', 'logo', 'style', 'loaders'] as const).map(tab => (
                       <button
                         key={tab}
                         onClick={() => setIntroAnimationTab(tab)}
@@ -281,7 +281,7 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                         {tab === 'text' ? 'Text Animations' :
                          tab === 'logo' ? 'Logo Animations' :
                          tab === 'font' ? 'Fonts' :
-                         tab === 'intro' ? 'Intro Styles' : 'Loaders'}
+                         tab === 'style' ? 'Intro Styles' : 'Loaders'}
                       </button>
                     ))}
                   </div>
