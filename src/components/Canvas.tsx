@@ -174,18 +174,18 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
 
       const showButton = layout?.showButton ?? true;
       if (!showButton) {
-        html = html.replace(/{{#if showButton}}[\s\S]*?{{\/if}}/, '');
+        html = html.replace(/{{\s*#if showButton\s*}}[\s\S]*?{{\s*\/if\s*}}/, '');
       } else {
-        html = html.replace(/{{#if showButton}}(.*){{\/if}}/, '$1');
+        html = html.replace(/{{\s*#if showButton\s*}}([\s\S]*?){{\s*\/if\s*}}/, '$1');
       }
     }
 
     if (section.templateId === 'intro-loader') {
       const logoSrc = section.content.logoSrc;
       if (!logoSrc || logoSrc === '' || logoSrc === 'https://via.placeholder.com/150') {
-        html = html.replace(/{{#if logoSrc}}[\s\S]*?{{\/if}}/, '');
+        html = html.replace(/{{\s*#if logoSrc\s*}}[\s\S]*?{{\s*\/if\s*}}/, '');
       } else {
-        html = html.replace(/{{#if logoSrc}}([\s\S]*?){{\/if}}/, '$1');
+        html = html.replace(/{{\s*#if logoSrc\s*}}([\s\S]*?){{\s*\/if\s*}}/, '$1');
       }
     }
 

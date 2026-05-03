@@ -149,7 +149,15 @@ export function generateHTML(sections: PageSection[], theme: ThemeConfig): strin
 
       let html = template.html;
       Object.entries(section.content).forEach(([key, value]) => {
-        html = html.replace(new RegExp(`{{${key}}}`, 'g'), value);
+        // Handle conditional blocks: {{#if field}}...{{/if}}
+        const hasValue = value && value !== '' && value !== 'https://via.placeholder.com/150';
+        if (!hasValue) {
+          html = html.replace(new RegExp(`{{\\s*#if ${key}\\s*}}[\\s\\S]*?{{\\s*/if\\s*}}`, 'g'), '');
+        } else {
+          html = html.replace(new RegExp(`{{\\s*#if ${key}\\s*}}([\\s\\S]*?){{\\s*/if\\s*}}`, 'g'), '$1');
+        }
+        
+        html = html.replace(new RegExp(`{{${key}}}`, 'g'), value as string);
       });
 
       return html;
@@ -893,7 +901,15 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
       if (!template) return '';
       let html = template.html;
       Object.entries(section.content).forEach(([key, value]) => {
-        html = html.replace(new RegExp(`{{${key}}}`, 'g'), value || '');
+        // Handle conditional blocks: {{#if field}}...{{/if}}
+        const hasValue = value && value !== '' && value !== 'https://via.placeholder.com/150';
+        if (!hasValue) {
+          html = html.replace(new RegExp(`{{\\s*#if ${key}\\s*}}[\\s\\S]*?{{\\s*/if\\s*}}`, 'g'), '');
+        } else {
+          html = html.replace(new RegExp(`{{\\s*#if ${key}\\s*}}([\\s\\S]*?){{\\s*/if\\s*}}`, 'g'), '$1');
+        }
+
+        html = html.replace(new RegExp(`{{${key}}}`, 'g'), (value as string) || '');
       });
 
       // Inject styles into the main container if possible
