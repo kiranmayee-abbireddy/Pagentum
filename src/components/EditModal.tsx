@@ -202,6 +202,47 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                               value={content[key] || defaultValue || ''}
                               onChange={handleContentChange(key)}
                             />
+                          ) : key.toLowerCase().includes('logosrc') ? (
+                            <div className="space-y-2">
+                              <div className="flex items-center gap-3">
+                                <div className="w-12 h-12 rounded-lg border border-gray-100 bg-gray-50 flex items-center justify-center overflow-hidden">
+                                  {content[key] ? (
+                                    <img src={content[key]} alt="Logo Preview" className="w-full h-full object-contain" />
+                                  ) : (
+                                    <ImageIcon className="w-4 h-4 text-gray-300" />
+                                  )}
+                                </div>
+                                <div className="flex-1">
+                                  <input
+                                    type="file"
+                                    accept="image/*"
+                                    className="hidden"
+                                    id={`logo-upload-${key}`}
+                                    onChange={(e) => {
+                                      if (e.target.files?.[0]) {
+                                        const reader = new FileReader();
+                                        reader.onload = () => setContent(prev => ({ ...prev, [key]: reader.result as string }));
+                                        reader.readAsDataURL(e.target.files[0]);
+                                      }
+                                    }}
+                                  />
+                                  <label 
+                                    htmlFor={`logo-upload-${key}`}
+                                    className="inline-block px-3 py-1.5 bg-blue-50 text-blue-600 rounded-lg text-[10px] font-bold uppercase tracking-wider cursor-pointer hover:bg-blue-100 transition-colors"
+                                  >
+                                    Upload Logo
+                                  </label>
+                                  {content[key] && (
+                                    <button 
+                                      onClick={() => setContent(prev => ({ ...prev, [key]: '' }))}
+                                      className="ml-2 text-[10px] text-red-400 font-bold uppercase tracking-wider hover:text-red-500"
+                                    >
+                                      Remove
+                                    </button>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
                           ) : (
                             <input
                               type="text"

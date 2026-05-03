@@ -98,6 +98,88 @@ body {
 
 section {
   padding: calc(var(--spacing) * 4) calc(var(--spacing) * 2);
+  position: relative;
+}
+
+/* --- Intro / Preloader Styles --- */
+.intro-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  background: var(--bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.intro-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 90vw;
+}
+
+.intro-logo-wrapper {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 2rem;
+  animation: introLogoIn 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.intro-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.intro-title {
+  font-size: 3.5rem;
+  font-weight: 950;
+  letter-spacing: -0.06em;
+  margin-bottom: 2.5rem;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: introTitleIn 1s ease-out 0.3s both;
+}
+
+.intro-progress-bar {
+  width: 240px;
+  height: 4px;
+  background: color-mix(in srgb, var(--text-color) 10%, transparent);
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.intro-progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: var(--primary-color);
+  transform-origin: left;
+  animation: introProgress 2.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes introLogoIn {
+  from { transform: scale(0) rotate(-45deg); opacity: 0; }
+  to { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+@keyframes introTitleIn {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes introProgress {
+  0% { transform: scaleX(0); }
+  25% { transform: scaleX(0.3); }
+  50% { transform: scaleX(0.5); }
+  85% { transform: scaleX(0.9); }
+  100% { transform: scaleX(1); }
 }
 
 /* --- Layout Utilities for Sections --- */

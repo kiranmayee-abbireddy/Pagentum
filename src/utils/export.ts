@@ -341,6 +341,44 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
             </section>
           `;
         }
+        
+        if (section.templateId === 'intro-loader') {
+          const logoSrc = section.content.logoSrc;
+          const showLogo = logoSrc && logoSrc !== '' && logoSrc !== 'https://cdn-icons-png.flaticon.com/512/3665/3665247.png';
+          
+          return `
+            <div id="intro-screen" class="intro-screen">
+              <div class="intro-content">
+                ${showLogo ? `
+                <div class="intro-logo-wrapper">
+                  <img src="${logoSrc}" alt="Logo" class="intro-logo" />
+                </div>` : ''}
+                <h1 class="intro-title text-center">${section.content.siteName}</h1>
+                <div class="intro-progress-bar">
+                  <div class="intro-progress-fill"></div>
+                </div>
+              </div>
+            </div>
+            <script>
+              document.addEventListener('DOMContentLoaded', () => {
+                const intro = document.getElementById('intro-screen');
+                if (intro) {
+                  const isBuilder = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+                  const duration = isBuilder ? 1200 : 3000;
+                  
+                  setTimeout(() => {
+                    intro.style.opacity = '0';
+                    intro.style.visibility = 'hidden';
+                    setTimeout(() => {
+                       if (intro && intro.parentNode) intro.parentNode.removeChild(intro);
+                    }, 1000);
+                  }, duration);
+                }
+              });
+            </script>
+          `;
+        }
+
         if (carouselStyle === 'glowing') {
           return `
             <section id="section-${section.id}" class="glowing-bookshelf py-20 px-4" ${combinedStyle}>

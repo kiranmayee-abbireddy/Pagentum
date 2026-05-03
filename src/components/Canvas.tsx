@@ -180,6 +180,15 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
       }
     }
 
+    if (section.templateId === 'intro-loader') {
+      const logoSrc = section.content.logoSrc;
+      if (!logoSrc || logoSrc === '' || logoSrc === 'https://via.placeholder.com/150') {
+        html = html.replace(/{{#if logoSrc}}[\s\S]*?{{\/if}}/, '');
+      } else {
+        html = html.replace(/{{#if logoSrc}}([\s\S]*?){{\/if}}/, '$1');
+      }
+    }
+
     if (section.templateId === 'contact-section') {
       const emailHTML = section.content.email ? `
         <div class="p-2 rounded-lg border border-gray-100 bg-gray-50">

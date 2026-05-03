@@ -113,6 +113,48 @@ export const sectionTemplates: SectionTemplate[] = [
       buttonHref: '#',
     }
   },
+  {
+    id: 'intro-loader',
+    name: 'Intro Splash Screen',
+    category: 'hero',
+    description: 'Animated preloader/splash screen with logo reveal and fade-out transition',
+    html: `
+      <div id="intro-screen" class="intro-screen">
+        <div class="intro-content">
+          {{#if logoSrc}}
+          <div class="intro-logo-wrapper">
+            <img src="{{logoSrc}}" alt="Logo" class="intro-logo" />
+          </div>
+          {{/if}}
+          <h1 class="intro-title text-center">{{siteName}}</h1>
+          <div class="intro-progress-bar">
+            <div class="intro-progress-fill"></div>
+          </div>
+        </div>
+      </div>
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const intro = document.getElementById('intro-screen');
+          if (intro) {
+            const isBuilder = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+            const duration = isBuilder ? 1200 : 3000;
+            
+            setTimeout(() => {
+              intro.style.opacity = '0';
+              intro.style.visibility = 'hidden';
+              setTimeout(() => {
+                 if (intro.parentNode) intro.parentNode.removeChild(intro);
+              }, 1000);
+            }, duration);
+          }
+        });
+      </script>
+    `,
+    defaultContent: {
+      siteName: 'Pagentum',
+      logoSrc: '',
+    }
+  },
 
   // Product Carousel
   {
