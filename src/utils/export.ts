@@ -306,7 +306,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                       <div class="book-card group relative w-full h-full flex flex-col shadow-xl
             transition-all duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.1)]
             hover:scale-110 hover:-translate-y-3 hover:shadow-2xl hover:z-20
-            bg-white border border-gray-100 overflow-hidden">
+            overflow-hidden">
                         
                         <div class="img-container">
                           <img src="${img.src}" alt="${img.alt || title}" 
@@ -314,9 +314,9 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                         </div>
                         
                         <div class="p-5 flex-1 flex flex-col">
-                          <h3 class="font-bold text-lg text-gray-900 mb-2 line-clamp-2 leading-tight">${title}</h3>
+                          <h3 class="font-bold text-lg mb-2 line-clamp-2 leading-tight">${title}</h3>
                           <p class="text-2xl font-black text-primary mb-3">${price}</p>
-                          <p class="text-sm text-gray-600 leading-relaxed line-clamp-6 flex-1 mb-4">${desc}</p>
+                          <p class="text-sm leading-relaxed line-clamp-6 flex-1 mb-4">${desc}</p>
                           ${showButton ?
                 `<a href="${buttonHref}" class="mt-auto inline-flex items-center justify-center
                                     bg-primary hover:bg-primary/90 text-white

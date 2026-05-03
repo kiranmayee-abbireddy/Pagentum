@@ -372,7 +372,7 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
         .map((prefix) => {
           let href = section.content[`${prefix}Link` as keyof typeof section.content];
           if (!href || href === '#') return '';
-          
+
           if (!href.startsWith('http') && !href.startsWith('mailto:') && !href.startsWith('tel:')) {
             href = `https://${href}`;
           }
