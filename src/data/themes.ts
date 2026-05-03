@@ -136,7 +136,7 @@ section {
 .intro-title {
   font-size: clamp(2.5rem, 8vw, 5rem);
   font-weight: 950;
-  letter-spacing: -0.06em;
+  letter-spacing: normal;
   margin-bottom: 2.5rem;
   line-height: 1.1;
   word-wrap: break-word;
