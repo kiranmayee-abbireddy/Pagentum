@@ -336,12 +336,30 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                     {introAnimationTab === 'text' && (
                       <div className="relative">
                         <style>{`
+                          @keyframes introTitleIn { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+                          @keyframes textFadeIn { from { opacity: 0; } to { opacity: 1; } }
+                          @keyframes textSlideDown { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+                          @keyframes textSlideLeft { from { transform: translateX(30px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+                          @keyframes textSlideRight { from { transform: translateX(-30px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+                          @keyframes textPopUp { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+                          @keyframes textZoomIn { from { transform: scale(1.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+                          @keyframes textZoomOut { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+                          @keyframes textBlurIn { from { filter: blur(20px); opacity: 0; } to { filter: blur(0); opacity: 1; } }
+                          @keyframes textTrackingIn { from { letter-spacing: -0.5em; opacity: 0; } to { letter-spacing: normal; opacity: 1; } }
+                          @keyframes textTrackingOut { from { letter-spacing: 0.5em; opacity: 0; } to { letter-spacing: normal; opacity: 1; } }
+                          @keyframes textFlip { from { transform: perspective(400px) rotateX(90deg); opacity: 0; } to { transform: perspective(400px) rotateX(0deg); opacity: 1; } }
+                          @keyframes textBounce { 0% { transform: translateY(-50px); opacity: 0; } 50% { transform: translateY(0); opacity: 1; } 70% { transform: translateY(-15px); } 90% { transform: translateY(0); } 100% { transform: translateY(0); opacity: 1; } }
+                          @keyframes textSpin { from { transform: rotate(-180deg) scale(0.5); opacity: 0; } to { transform: rotate(0deg) scale(1); opacity: 1; } }
+                          @keyframes textSwing { 0% { transform: rotate(15deg); opacity: 0; } 50% { transform: rotate(-10deg); opacity: 1; } 75% { transform: rotate(5deg); } 100% { transform: rotate(0deg); opacity: 1; } }
+                          @keyframes textPulse { from { transform: scale(1); opacity: 1; } to { transform: scale(1.05); opacity: 0.8; } }
+                          @keyframes textJello { 0%, 11.1%, 100% { transform: translate3d(0,0,0); } 22.2% { transform: skewX(-12.5deg) skewY(-12.5deg); } 33.3% { transform: skewX(6.25deg) skewY(6.25deg); } 44.4% { transform: skewX(-3.125deg) skewY(-3.125deg); } 55.5% { transform: skewX(1.5625deg) skewY(1.5625deg); } 66.6% { transform: skewX(-0.78125deg) skewY(-0.78125deg); } 77.7% { transform: skewX(0.390625deg) skewY(0.390625deg); } 88.8% { transform: skewX(-0.1953125deg) skewY(-0.1953125deg); } }
+
                           .anim-preview-fix {
                             animation-iteration-count: infinite !important;
                             animation-delay: 0s !important;
                             animation-fill-mode: both !important;
                             padding: 0.2em 0.4em !important;
-                            line-height: 1 !important;
+                            lineHeight: 1 !important;
                             display: inline-block !important;
                           }
                         `}</style>
@@ -368,6 +386,29 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                         ].map(anim => {
                           const currentAnim = layout.introTextAnimation || 'slide-up';
                           const isSelected = currentAnim === anim.id;
+                          
+                          // Direct keyframe mapping for reliable preview
+                          const keyframeMap: Record<string, string> = {
+                            'none': 'none',
+                            'fade': 'textFadeIn',
+                            'slide-up': 'introTitleIn',
+                            'slide-down': 'textSlideDown',
+                            'slide-left': 'textSlideLeft',
+                            'slide-right': 'textSlideRight',
+                            'pop': 'textPopUp',
+                            'zoom': 'textZoomIn',
+                            'zoom-out': 'textZoomOut',
+                            'blur': 'textBlurIn',
+                            'tracking': 'textTrackingIn',
+                            'tracking-out': 'textTrackingOut',
+                            'flip': 'textFlip',
+                            'bounce': 'textBounce',
+                            'spin': 'textSpin',
+                            'swing': 'textSwing',
+                            'pulse': 'textPulse',
+                            'jello': 'textJello'
+                          };
+
                           return (
                             <button
                               key={anim.id}
@@ -380,10 +421,18 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                             >
                               <div className="h-16 flex items-center justify-center mb-1 bg-gray-50/50 rounded-lg border border-gray-100 group-hover:bg-white transition-colors">
                                 <span 
-                                  className={`text-2xl font-black intro-text-${anim.id} anim-preview-fix`}
+                                  className="text-2xl font-black anim-preview-fix"
                                   style={{ 
-                                    animationDuration: '2.5s',
-                                    color: '#3b82f6'
+                                    animationName: keyframeMap[anim.id] || 'none',
+                                    animationDuration: '2s',
+                                    animationIterationCount: 'infinite',
+                                    animationTimingFunction: 'ease-in-out',
+                                    animationDelay: '0s',
+                                    animationFillMode: 'both',
+                                    color: '#3b82f6',
+                                    display: 'inline-block',
+                                    padding: '0.2em 0.4em',
+                                    lineHeight: '1'
                                   }}
                                 >
                                   Ag
