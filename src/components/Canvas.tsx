@@ -194,6 +194,8 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
       
       html = html.replace('class="intro-title', `${fontStyle} class="intro-title ${animClass}`);
       html = html.replace('class="intro-logo-wrapper', `class="intro-logo-wrapper ${logoAnimClass}`);
+      // Remove progress bar from canvas to keep it clean for editing
+      html = html.replace(/<div class="intro-progress-bar">[\s\S]*?<\/div>/, '');
     }
 
     if (section.templateId === 'contact-section') {

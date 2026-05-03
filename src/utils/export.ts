@@ -272,18 +272,44 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
         const animClass = section.layout?.introTextAnimation ? `intro-text-${section.layout.introTextAnimation}` : 'intro-text-slide-up';
         const logoAnimClass = section.layout?.introLogoAnimation ? `intro-logo-${section.layout.introLogoAnimation}` : 'intro-logo-rotate-fade';
         
+        const loaderStyle = section.layout?.introLoaderStyle || 'bar-classic';
+        let contentLoaderHTML = '';
+        let overlayLoaderHTML = '';
+
+        if (loaderStyle.startsWith('bar')) {
+          contentLoaderHTML = `
+            <div class="intro-progress-bar loader-${loaderStyle}">
+              <div class="intro-progress-fill fill" ${customTextColor ? `style="background: ${customTextColor};"` : ''}></div>
+            </div>`;
+        } else if (loaderStyle.startsWith('circle')) {
+          overlayLoaderHTML = `
+            <svg class="loader-circle-around loader-${loaderStyle}" viewBox="0 0 100 100">
+              <circle class="track" cx="50" cy="50" r="45" />
+              <circle class="fill" cx="50" cy="50" r="45" ${customTextColor ? `style="stroke: ${customTextColor};"` : ''} />
+            </svg>`;
+        } else if (loaderStyle === 'dots-bounce') {
+          contentLoaderHTML = `
+            <div class="loader-dots">
+              <div class="dot" ${customTextColor ? `style="background: ${customTextColor};"` : ''}></div>
+              <div class="dot" ${customTextColor ? `style="background: ${customTextColor};"` : ''}></div>
+              <div class="dot" ${customTextColor ? `style="background: ${customTextColor};"` : ''}></div>
+            </div>`;
+        } else if (loaderStyle === 'spinner-classic') {
+          contentLoaderHTML = `
+            <div class="loader-spinner" ${customTextColor ? `style="border-top-color: ${customTextColor};"` : ''}></div>`;
+        }
+
         return `
           <div id="section-${section.id}" class="intro-screen" ${finalStyle}>
             ${bgHTML}
+            ${overlayLoaderHTML}
             <div class="intro-content" style="position: relative; z-index: 1;">
               ${showLogo ? `
               <div class="intro-logo-wrapper ${logoAnimClass}">
                 <img src="${logoSrc}" alt="Logo" class="intro-logo" />
               </div>` : ''}
               <h1 class="intro-title text-center ${animClass}" ${titleStyle}>${section.content.siteName}</h1>
-              <div class="intro-progress-bar">
-                <div class="intro-progress-fill" ${customTextColor ? `style="background: ${customTextColor};"` : ''}></div>
-              </div>
+              ${contentLoaderHTML}
             </div>
           </div>
           <script>

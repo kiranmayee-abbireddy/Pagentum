@@ -334,6 +334,68 @@ section {
   100% { transform: scaleX(1); }
 }
 
+@keyframes introCircleProgress {
+  0% { stroke-dashoffset: 283; }
+  100% { stroke-dashoffset: 0; }
+}
+
+@keyframes introSpinner {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes introPulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+@keyframes introDots {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* --- Loader Variants --- */
+.loader-bar-classic { width: 240px; height: 4px; border-radius: 10px; background: rgba(0,0,0,0.1); overflow: hidden; position: relative; }
+.loader-bar-classic .fill { position: absolute; top: 0; left: 0; height: 100%; width: 100%; background: var(--primary-color); animation: introProgress 3s forwards; transform-origin: left; }
+
+.loader-bar-gradient { width: 240px; height: 6px; border-radius: 10px; background: rgba(0,0,0,0.05); overflow: hidden; position: relative; }
+.loader-bar-gradient .fill { position: absolute; top: 0; left: 0; height: 100%; width: 100%; background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); animation: introProgress 3s forwards; transform-origin: left; }
+
+.loader-bar-pulsing { width: 240px; height: 4px; border-radius: 10px; background: rgba(0,0,0,0.1); overflow: hidden; position: relative; }
+.loader-bar-pulsing .fill { position: absolute; top: 0; left: 0; height: 100%; width: 100%; background: var(--primary-color); animation: introProgress 3s forwards, introPulse 1.5s infinite; transform-origin: left; }
+
+.loader-circle-around {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-90deg);
+  width: 400px;
+  height: 400px;
+  pointer-events: none;
+}
+.loader-circle-around circle {
+  fill: none;
+  stroke-width: 6;
+  stroke-linecap: round;
+}
+.loader-circle-around .track { stroke: rgba(0,0,0,0.03); }
+.loader-circle-around .fill { 
+  stroke: var(--primary-color); 
+  stroke-dasharray: 283; 
+  stroke-dashoffset: 283; 
+  animation: introCircleProgress 3.5s forwards ease-in-out; 
+}
+
+.loader-circle-thick circle { stroke-width: 14; }
+.loader-circle-dashed .fill { stroke-dasharray: 12, 6; }
+
+.loader-dots { display: flex; gap: 12px; margin-top: 2rem; }
+.loader-dots .dot { width: 14px; height: 14px; border-radius: 50%; background: var(--primary-color); animation: introDots 0.6s infinite alternate; }
+.loader-dots .dot:nth-child(2) { animation-delay: 0.2s; }
+.loader-dots .dot:nth-child(3) { animation-delay: 0.4s; }
+
+.loader-spinner { width: 50px; height: 50px; border: 5px solid rgba(0,0,0,0.1); border-top-color: var(--primary-color); border-radius: 50%; animation: introSpinner 1s linear infinite; margin-top: 2rem; }
+
+
 /* --- Layout Utilities for Sections --- */
 .video-section { width: 100%; position: relative; }
 .video-inner { 

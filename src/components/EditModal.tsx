@@ -615,7 +615,107 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                       </div>
                     )}
 
-                    {(introAnimationTab !== 'font' && introAnimationTab !== 'text' && introAnimationTab !== 'logo' && introAnimationTab !== 'style') && (
+                    {introAnimationTab === 'loaders' && (
+                      <div className="relative">
+                        <style>{`
+                          @keyframes introProgress { 0% { transform: scaleX(0); } 100% { transform: scaleX(1); } }
+                          @keyframes introCircleProgress { 0% { stroke-dashoffset: 283; } 100% { stroke-dashoffset: 0; } }
+                          @keyframes introSpinner { to { transform: rotate(360deg); } }
+                          @keyframes introDots { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+                          
+                          .loader-preview-box {
+                            height: 64px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            background: #f8fafc;
+                            border-radius: 12px;
+                            border: 1px solid #f1f5f9;
+                            margin-bottom: 8px;
+                            position: relative;
+                            overflow: hidden;
+                          }
+                        `}</style>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 h-64 overflow-y-auto pr-2 custom-scrollbar">
+                          {[
+                            { id: 'bar-classic', name: 'Classic Bar' },
+                            { id: 'bar-gradient', name: 'Gradient Bar' },
+                            { id: 'bar-pulsing', name: 'Pulsing Bar' },
+                            { id: 'circle-thin', name: 'Circle Thin' },
+                            { id: 'circle-thick', name: 'Circle Thick' },
+                            { id: 'circle-dashed', name: 'Circle Dash' },
+                            { id: 'dots-bounce', name: 'Dots Bounce' },
+                            { id: 'spinner-classic', name: 'Spinner' },
+                            { id: 'none', name: 'No Loader' }
+                          ].map(loader => {
+                            const currentLoader = layout.introLoaderStyle || 'bar-classic';
+                            const isSelected = currentLoader === loader.id;
+                            
+                            return (
+                              <button
+                                key={loader.id}
+                                onClick={() => handleLayoutChange('introLoaderStyle')(loader.id)}
+                                className={`p-4 rounded-xl border-2 text-center transition-all group ${
+                                  isSelected
+                                    ? 'border-blue-600 bg-blue-50 text-blue-700 shadow-sm'
+                                    : 'border-gray-200 bg-white hover:border-blue-300'
+                                }`}
+                              >
+                                <div className="loader-preview-box">
+                                  {loader.id.startsWith('bar') && (
+                                    <div className="w-20 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                                      <div 
+                                        className="h-full bg-blue-600 origin-left"
+                                        style={{ 
+                                          animation: 'introProgress 2s infinite ease-in-out',
+                                          background: loader.id === 'bar-gradient' ? 'linear-gradient(90deg, #3b82f6, #6366f1)' : '#3b82f6'
+                                        }}
+                                      ></div>
+                                    </div>
+                                  )}
+                                  {loader.id.startsWith('circle') && (
+                                    <svg className="w-10 h-10 -rotate-90" viewBox="0 0 100 100">
+                                      <circle cx="50" cy="50" r="45" stroke="#e2e8f0" strokeWidth={loader.id === 'circle-thick' ? "12" : "6"} fill="none" />
+                                      <circle 
+                                        cx="50" cy="50" r="45" 
+                                        stroke="#3b82f6" 
+                                        strokeWidth={loader.id === 'circle-thick' ? "12" : "6"} 
+                                        fill="none" 
+                                        strokeDasharray="283"
+                                        strokeDashoffset="283"
+                                        strokeLinecap="round"
+                                        style={{ 
+                                          animation: 'introCircleProgress 2s infinite ease-in-out',
+                                          strokeDasharray: loader.id === 'circle-dashed' ? '10 5' : '283'
+                                        }}
+                                      />
+                                    </svg>
+                                  )}
+                                  {loader.id === 'dots-bounce' && (
+                                    <div className="flex gap-1.5">
+                                      {[0, 1, 2].map(i => (
+                                        <div 
+                                          key={i}
+                                          className="w-2.5 h-2.5 bg-blue-600 rounded-full"
+                                          style={{ animation: `introDots 0.6s infinite alternate ${i * 0.15}s` }}
+                                        ></div>
+                                      ))}
+                                    </div>
+                                  )}
+                                  {loader.id === 'spinner-classic' && (
+                                    <div className="w-8 h-8 border-4 border-gray-200 border-t-blue-600 rounded-full animate-spin"></div>
+                                  )}
+                                  {loader.id === 'none' && <span className="text-[8px] text-gray-400 font-bold uppercase tracking-widest">None</span>}
+                                </div>
+                                <span className="text-[9px] font-bold uppercase tracking-widest">{loader.name}</span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+
+                    {(introAnimationTab !== 'font' && introAnimationTab !== 'text' && introAnimationTab !== 'logo' && introAnimationTab !== 'style' && introAnimationTab !== 'loaders') && (
                       <div className="py-12 text-center">
                         <Palette className="w-8 h-8 text-gray-300 mx-auto mb-3" />
                         <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Templates Coming Soon</p>
