@@ -302,9 +302,18 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
             <div class="loader-heart-fill" ${customTextColor ? `style="background: linear-gradient(${customTextColor} 0 0) bottom/100% 0% no-repeat #ccc; -webkit-mask: radial-gradient(circle at 60% 65%, #000 64%, #0000 65%) top left, radial-gradient(circle at 40% 65%, #000 64%, #0000 65%) top right, linear-gradient(to bottom left, #000 43%,#0000 44%) bottom left , linear-gradient(to bottom right,#000 43%,#0000 44%) bottom right; -webkit-mask-size: 51% 51%;"` : ''}></div>`;
         }
 
+        const exitAnim = "${section.layout?.introExitAnimation || 'slide-up'}";
+        const isSplit = exitAnim.startsWith('split');
+        const exitClass = isSplit ? "" : "intro-exit-" + exitAnim;
+        const containerClass = isSplit ? "intro-exit-" + exitAnim : "";
+        
         return `
-          <div id="section-${section.id}" class="intro-screen" ${finalStyle}>
+          <div id="section-${section.id}" class="intro-screen ${containerClass}" ${finalStyle}>
             ${bgHTML}
+            ${isSplit ? `
+              <div class="intro-split-panel panel-top" ${sectionRules}></div>
+              <div class="intro-split-panel panel-bottom" ${sectionRules}></div>
+            ` : ''}
             ${overlayLoaderHTML}
             <div class="intro-content" style="position: relative; z-index: 1;">
               ${showLogo ? `
@@ -322,13 +331,18 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
                 const isBuilder = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
                 const duration = isBuilder ? 1200 : 3000;
                 const exitAnim = "${section.layout?.introExitAnimation || 'slide-up'}";
-                const exitClass = "intro-exit-" + exitAnim;
+                const isSplit = exitAnim.startsWith('split');
                 
                 setTimeout(() => {
-                  intro.classList.add(exitClass);
+                  if (isSplit) {
+                    intro.classList.add('intro-exit-' + exitAnim);
+                  } else {
+                    intro.classList.add('intro-exit-' + exitAnim);
+                  }
+                  
                   setTimeout(() => {
                      if (intro && intro.parentNode) intro.parentNode.removeChild(intro);
-                  }, 1000);
+                  }, 1500);
                 }, duration);
               }
             });
