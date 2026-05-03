@@ -386,7 +386,38 @@ section {
 }
 
 .loader-circle-thick circle { stroke-width: 3.5; }
-.loader-circle-dashed .fill { stroke-dasharray: 8, 4; }
+.loader-circle-dashed {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 320px;
+  height: 320px;
+  display: grid;
+  border-radius: 50%;
+  background:
+    linear-gradient(0deg ,rgba(59, 130, 246, 0.2) 30%,transparent 0 70%,rgba(59, 130, 246, 0.4) 0) 50%/2% 100%,
+    linear-gradient(90deg,rgba(59, 130, 246, 0.1) 30%,transparent 0 70%,rgba(59, 130, 246, 0.3) 0) 50%/100% 2%;
+  background-repeat: no-repeat;
+  animation: introRotateSegments 1.2s infinite steps(12);
+  pointer-events: none;
+}
+.loader-circle-dashed::before,
+.loader-circle-dashed::after {
+   content: "";
+   grid-area: 1/1;
+   border-radius: 50%;
+   background: inherit;
+   opacity: 0.915;
+   transform: rotate(30deg);
+}
+.loader-circle-dashed::after {
+   opacity: 0.83;
+   transform: rotate(60deg);
+}
+@keyframes introRotateSegments {
+  100% {transform: translate(-50%, -50%) rotate(1turn)}
+}
 
 .loader-dots { display: flex; gap: 12px; margin-top: 2rem; }
 .loader-dots .dot { width: 14px; height: 14px; border-radius: 50%; background: var(--primary-color); animation: introDots 0.6s infinite alternate; }
@@ -394,6 +425,7 @@ section {
 .loader-dots .dot:nth-child(3) { animation-delay: 0.4s; }
 
 .loader-spinner { width: 50px; height: 50px; border: 5px solid rgba(0,0,0,0.1); border-top-color: var(--primary-color); border-radius: 50%; animation: introSpinner 1s linear infinite; margin-top: 2rem; }
+
 
 
 /* --- Layout Utilities for Sections --- */

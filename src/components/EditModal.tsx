@@ -622,6 +622,7 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                           @keyframes introCircleProgress { 0% { stroke-dashoffset: 283; } 100% { stroke-dashoffset: 0; } }
                           @keyframes introSpinner { to { transform: rotate(360deg); } }
                           @keyframes introDots { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+                          @keyframes introRotateSegments { 100% { transform: rotate(1turn); } }
                           
                           .loader-preview-box {
                             height: 64px;
@@ -673,23 +674,35 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                                       ></div>
                                     </div>
                                   )}
-                                  {loader.id.startsWith('circle') && (
-                                    <svg className="w-10 h-10 -rotate-90" viewBox="0 0 100 100">
-                                      <circle cx="50" cy="50" r="45" stroke="#e2e8f0" strokeWidth={loader.id === 'circle-thick' ? "4" : "1.5"} fill="none" />
-                                      <circle 
-                                        cx="50" cy="50" r="45" 
-                                        stroke="#3b82f6" 
-                                        strokeWidth={loader.id === 'circle-thick' ? "4" : "1.5"} 
-                                        fill="none" 
-                                        strokeDasharray="283"
-                                        strokeDashoffset="283"
-                                        strokeLinecap="round"
+                                  {loader.id === 'circle-dashed' ? (
+                                    <div className="w-10 h-10 relative overflow-hidden flex items-center justify-center">
+                                      <div 
+                                        className="w-10 h-10 rounded-full"
                                         style={{ 
-                                          animation: 'introCircleProgress 2s infinite ease-in-out',
-                                          strokeDasharray: loader.id === 'circle-dashed' ? '8 4' : '283'
+                                          background: 'linear-gradient(0deg, #3b82f633 30%, transparent 0 70%, #3b82f666 0) 50%/8% 100%, linear-gradient(90deg, #3b82f61a 30%, transparent 0 70%, #3b82f64d 0) 50%/100% 8%',
+                                          backgroundRepeat: 'no-repeat',
+                                          animation: 'introRotateSegments 1s infinite steps(12)'
                                         }}
-                                      />
-                                    </svg>
+                                      ></div>
+                                    </div>
+                                  ) : (
+                                    loader.id.startsWith('circle') && (
+                                      <svg className="w-10 h-10 -rotate-90" viewBox="0 0 100 100">
+                                        <circle cx="50" cy="50" r="45" stroke="#e2e8f0" strokeWidth={loader.id === 'circle-thick' ? "4" : "1.5"} fill="none" />
+                                        <circle 
+                                          cx="50" cy="50" r="45" 
+                                          stroke="#3b82f6" 
+                                          strokeWidth={loader.id === 'circle-thick' ? "4" : "1.5"} 
+                                          fill="none" 
+                                          strokeDasharray="283"
+                                          strokeDashoffset="283"
+                                          strokeLinecap="round"
+                                          style={{ 
+                                            animation: 'introCircleProgress 2s infinite ease-in-out'
+                                          }}
+                                        />
+                                      </svg>
+                                    )
                                   )}
                                   {loader.id === 'dots-bounce' && (
                                     <div className="flex gap-1.5">
