@@ -287,6 +287,44 @@ section {
   88.8% { transform: skewX(-0.1953125deg) skewY(-0.1953125deg); }
 }
 
+/* --- Intro Exit Animations (Styles) --- */
+.intro-exit-fade { animation: introFadeOut 0.8s ease-in forwards; }
+@keyframes introFadeOut { from { opacity: 1; } to { opacity: 0; visibility: hidden; } }
+
+.intro-exit-slide-up { animation: introSlideUp 0.8s cubic-bezier(0.65, 0, 0.35, 1) forwards; }
+@keyframes introSlideUp { from { transform: translateY(0); } to { transform: translateY(-100%); visibility: hidden; } }
+
+.intro-exit-slide-down { animation: introSlideDown 0.8s cubic-bezier(0.65, 0, 0.35, 1) forwards; }
+@keyframes introSlideDown { from { transform: translateY(0); } to { transform: translateY(100%); visibility: hidden; } }
+
+.intro-exit-slide-left { animation: introSlideLeft 0.8s cubic-bezier(0.65, 0, 0.35, 1) forwards; }
+@keyframes introSlideLeft { from { transform: translateX(0); } to { transform: translateX(-100%); visibility: hidden; } }
+
+.intro-exit-slide-right { animation: introSlideRight 0.8s cubic-bezier(0.65, 0, 0.35, 1) forwards; }
+@keyframes introSlideRight { from { transform: translateX(0); } to { transform: translateX(100%); visibility: hidden; } }
+
+.intro-exit-zoom-out { animation: introZoomOut 0.8s ease-in forwards; }
+@keyframes introZoomOut { from { transform: scale(1); opacity: 1; } to { transform: scale(2); opacity: 0; visibility: hidden; } }
+
+.intro-exit-zoom-in { animation: introZoomInExit 0.8s ease-in forwards; }
+@keyframes introZoomInExit { from { transform: scale(1); opacity: 1; } to { transform: scale(0); opacity: 0; visibility: hidden; } }
+
+.intro-exit-blur { animation: introBlurOut 0.8s ease-in forwards; }
+@keyframes introBlurOut { from { filter: blur(0); opacity: 1; } to { filter: blur(50px); opacity: 0; visibility: hidden; } }
+
+.intro-exit-iris { animation: introIrisOut 1s cubic-bezier(0.65, 0, 0.35, 1) forwards; }
+@keyframes introIrisOut { 
+  from { clip-path: circle(100% at 50% 50%); } 
+  to { clip-path: circle(0% at 50% 50%); visibility: hidden; } 
+}
+
+.intro-exit-wipe { animation: introWipeOut 0.8s cubic-bezier(0.65, 0, 0.35, 1) forwards; }
+@keyframes introWipeOut { 
+  from { clip-path: inset(0 0 0 0); } 
+  to { clip-path: inset(0 0 100% 0); visibility: hidden; } 
+}
+
+
 
 @keyframes introProgress {
   0% { transform: scaleX(0); }

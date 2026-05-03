@@ -292,10 +292,11 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
               if (intro) {
                 const isBuilder = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
                 const duration = isBuilder ? 1200 : 3000;
+                const exitAnim = "${section.layout?.introExitAnimation || 'slide-up'}";
+                const exitClass = "intro-exit-" + exitAnim;
                 
                 setTimeout(() => {
-                  intro.style.opacity = '0';
-                  intro.style.visibility = 'hidden';
+                  intro.classList.add(exitClass);
                   setTimeout(() => {
                      if (intro && intro.parentNode) intro.parentNode.removeChild(intro);
                   }, 1000);

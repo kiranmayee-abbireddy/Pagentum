@@ -526,7 +526,96 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                       </div>
                     )}
 
-                    {(introAnimationTab !== 'font' && introAnimationTab !== 'text' && introAnimationTab !== 'logo') && (
+                    {introAnimationTab === 'style' && (
+                      <div className="relative">
+                        <style>{`
+                          @keyframes introFadeOut { from { opacity: 1; } to { opacity: 0; } }
+                          @keyframes introSlideUp { from { transform: translateY(0); } to { transform: translateY(-100%); } }
+                          @keyframes introSlideDown { from { transform: translateY(0); } to { transform: translateY(100%); } }
+                          @keyframes introSlideLeft { from { transform: translateX(0); } to { transform: translateX(-100%); } }
+                          @keyframes introSlideRight { from { transform: translateX(0); } to { transform: translateX(100%); } }
+                          @keyframes introZoomOut { from { transform: scale(1); opacity: 1; } to { transform: scale(2); opacity: 0; } }
+                          @keyframes introZoomInExit { from { transform: scale(1); opacity: 1; } to { transform: scale(0); opacity: 0; } }
+                          @keyframes introBlurOut { from { filter: blur(0); opacity: 1; } to { filter: blur(20px); opacity: 0; } }
+                          @keyframes introIrisOut { from { clip-path: circle(100% at 50% 50%); } to { clip-path: circle(0% at 50% 50%); } }
+                          @keyframes introWipeOut { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(0 0 100% 0); } }
+
+                          .exit-preview-fix {
+                            animation-iteration-count: infinite !important;
+                            animation-delay: 0.5s !important;
+                            animation-duration: 2s !important;
+                            animation-fill-mode: both !important;
+                          }
+                        `}</style>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 h-64 overflow-y-auto pr-2 custom-scrollbar">
+                          {[
+                            { id: 'fade', name: 'Fade Out' },
+                            { id: 'slide-up', name: 'Slide Up' },
+                            { id: 'slide-down', name: 'Slide Down' },
+                            { id: 'slide-left', name: 'Slide Left' },
+                            { id: 'slide-right', name: 'Slide Right' },
+                            { id: 'zoom-out', name: 'Zoom Out' },
+                            { id: 'zoom-in', name: 'Zoom In' },
+                            { id: 'blur', name: 'Blur Out' },
+                            { id: 'iris', name: 'Iris Wipe' },
+                            { id: 'wipe', name: 'Wipe Out' }
+                          ].map(anim => {
+                            const currentAnim = layout.introExitAnimation || 'slide-up';
+                            const isSelected = currentAnim === anim.id;
+                            
+                            const keyframeMap: Record<string, string> = {
+                              'fade': 'introFadeOut',
+                              'slide-up': 'introSlideUp',
+                              'slide-down': 'introSlideDown',
+                              'slide-left': 'introSlideLeft',
+                              'slide-right': 'introSlideRight',
+                              'zoom-out': 'introZoomOut',
+                              'zoom-in': 'introZoomInExit',
+                              'blur': 'introBlurOut',
+                              'iris': 'introIrisOut',
+                              'wipe': 'introWipeOut'
+                            };
+
+                            return (
+                              <button
+                                key={anim.id}
+                                onClick={() => handleLayoutChange('introExitAnimation')(anim.id)}
+                                className={`p-4 rounded-xl border-2 text-center transition-all group ${
+                                  isSelected
+                                    ? 'border-blue-600 bg-blue-50 text-blue-700 shadow-sm'
+                                    : 'border-gray-200 bg-white hover:border-blue-300'
+                                }`}
+                              >
+                                <div className="h-16 relative bg-gray-100 rounded-lg border border-gray-100 overflow-hidden mb-1">
+                                  {/* Mock Page Content Behind */}
+                                  <div className="absolute inset-0 p-2 flex flex-col gap-1">
+                                    <div className="w-full h-2 bg-blue-200 rounded-full"></div>
+                                    <div className="w-2/3 h-1.5 bg-gray-200 rounded-full"></div>
+                                    <div className="w-1/2 h-1.5 bg-gray-200 rounded-full"></div>
+                                    <div className="mt-auto flex gap-1">
+                                      <div className="w-4 h-4 bg-indigo-200 rounded-sm"></div>
+                                      <div className="w-4 h-4 bg-indigo-200 rounded-sm"></div>
+                                    </div>
+                                  </div>
+                                  {/* Animating Overlay */}
+                                  <div 
+                                    className="absolute inset-0 bg-blue-600 z-10 flex items-center justify-center exit-preview-fix"
+                                    style={{ 
+                                      animationName: keyframeMap[anim.id] || 'none'
+                                    }}
+                                  >
+                                    <div className="w-4 h-4 bg-white/20 rounded-full animate-pulse"></div>
+                                  </div>
+                                </div>
+                                <span className="text-[9px] font-bold uppercase tracking-widest">{anim.name}</span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+
+                    {(introAnimationTab !== 'font' && introAnimationTab !== 'text' && introAnimationTab !== 'logo' && introAnimationTab !== 'style') && (
                       <div className="py-12 text-center">
                         <Palette className="w-8 h-8 text-gray-300 mx-auto mb-3" />
                         <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Templates Coming Soon</p>
