@@ -269,6 +269,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
         const customTextColor = section.layout?.textColor;
         const fontStyle = section.layout?.introFont ? `font-family: '${section.layout.introFont}', cursive;` : '';
         const titleStyle = `style="${fontStyle} ${customTextColor ? `background: none; -webkit-text-fill-color: ${customTextColor}; color: ${customTextColor};` : ''}"`;
+        const animClass = section.layout?.introTextAnimation ? `intro-text-${section.layout.introTextAnimation}` : 'intro-text-slide-up';
         
         return `
           <div id="section-${section.id}" class="intro-screen" ${finalStyle}>
@@ -278,7 +279,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
               <div class="intro-logo-wrapper">
                 <img src="${logoSrc}" alt="Logo" class="intro-logo" />
               </div>` : ''}
-              <h1 class="intro-title text-center" ${titleStyle}>${section.content.siteName}</h1>
+              <h1 class="intro-title text-center ${animClass}" ${titleStyle}>${section.content.siteName}</h1>
               <div class="intro-progress-bar">
                 <div class="intro-progress-fill" ${customTextColor ? `style="background: ${customTextColor};"` : ''}></div>
               </div>

@@ -179,6 +179,57 @@ section {
   to { transform: translateY(0); opacity: 1; }
 }
 
+/* --- Text Animation Variants --- */
+.intro-text-none {
+  animation: none !important;
+  opacity: 1 !important;
+}
+
+.intro-text-fade {
+  animation: textFadeIn 1s ease-out 0.3s both !important;
+}
+@keyframes textFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.intro-text-slide-up {
+  animation: introTitleIn 1s ease-out 0.3s both !important;
+}
+
+.intro-text-pop {
+  animation: textPopUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both !important;
+}
+@keyframes textPopUp {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.intro-text-zoom {
+  animation: textZoomIn 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s both !important;
+}
+@keyframes textZoomIn {
+  from { transform: scale(1.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.intro-text-blur {
+  animation: textBlurIn 1.2s ease-out 0.3s both !important;
+}
+@keyframes textBlurIn {
+  from { filter: blur(20px); opacity: 0; }
+  to { filter: blur(0); opacity: 1; }
+}
+
+.intro-text-tracking {
+  animation: textTrackingIn 1.2s cubic-bezier(0.215, 0.610, 0.355, 1.000) 0.3s both !important;
+}
+@keyframes textTrackingIn {
+  from { letter-spacing: -0.5em; opacity: 0; }
+  to { letter-spacing: normal; opacity: 1; }
+}
+
+
 @keyframes introProgress {
   0% { transform: scaleX(0); }
   25% { transform: scaleX(0.3); }

@@ -189,7 +189,8 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
       }
       
       const fontStyle = layout?.introFont ? `style="font-family: '${layout.introFont}', cursive;"` : '';
-      html = html.replace('class="intro-title', `${fontStyle} class="intro-title`);
+      const animClass = layout?.introTextAnimation ? `intro-text-${layout.introTextAnimation}` : 'intro-text-slide-up';
+      html = html.replace('class="intro-title', `${fontStyle} class="intro-title ${animClass}`);
     }
 
     if (section.templateId === 'contact-section') {

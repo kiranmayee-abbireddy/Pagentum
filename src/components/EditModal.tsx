@@ -333,7 +333,38 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                       </div>
                     )}
 
-                    {introAnimationTab !== 'font' && (
+                    {introAnimationTab === 'text' && (
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        {[
+                          { id: 'none', name: 'None', icon: 'X' },
+                          { id: 'fade', name: 'Fade In', icon: '☀️' },
+                          { id: 'slide-up', name: 'Slide Up', icon: '↑' },
+                          { id: 'pop', name: 'Pop Up', icon: '💥' },
+                          { id: 'zoom', name: 'Zoom In', icon: '🔍' },
+                          { id: 'blur', name: 'Blur In', icon: '🌫️' },
+                          { id: 'tracking', name: 'Tracking', icon: '↔' }
+                        ].map(anim => {
+                          const currentAnim = layout.introTextAnimation || 'slide-up';
+                          const isSelected = currentAnim === anim.id;
+                          return (
+                            <button
+                              key={anim.id}
+                              onClick={() => handleLayoutChange('introTextAnimation')(anim.id)}
+                              className={`p-4 rounded-xl border-2 text-center transition-all ${
+                                isSelected
+                                  ? 'border-blue-600 bg-blue-50 text-blue-700 shadow-sm'
+                                  : 'border-gray-200 bg-white hover:border-blue-300'
+                              }`}
+                            >
+                              <span className="text-2xl block mb-2">{anim.icon}</span>
+                              <span className="text-[9px] font-bold uppercase tracking-widest">{anim.name}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
+
+                    {(introAnimationTab !== 'font' && introAnimationTab !== 'text') && (
                       <div className="py-12 text-center">
                         <Palette className="w-8 h-8 text-gray-300 mx-auto mb-3" />
                         <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Templates Coming Soon</p>
