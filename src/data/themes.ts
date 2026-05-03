@@ -820,7 +820,7 @@ div[style*="background"] > section {
   perspective: 1000px;
   display: grid;
   grid-template-columns: 1fr;
-  gap: calc(var(--spacing) * 2);
+  gap: calc(var(--spacing) * 3);
 }
 
 @media (min-width: 768px) {
@@ -844,12 +844,13 @@ div[style*="background"] > section {
 .book-card {
   transform-style: preserve-3d;
   position: relative;
-  width: 16rem;
-  min-height: 28rem;
+  width: 18rem;
+  min-height: 22rem;
   display: flex;
   flex-direction: column;
   border-radius: 2.5rem 0 2.5rem 0 !important;
   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  margin: 0.5rem;
   background: ${theme.backgroundColor === '#ffffff' ? 'white' : 'rgba(255,255,255,0.1)'};
   border: 1px solid ${theme.backgroundColor === '#ffffff' ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.2)'};
   overflow: hidden;
@@ -868,10 +869,14 @@ div[style*="background"] > section {
 
 .book-card img {
   width: 100%;
-  height: 10rem;
+  height: 12rem;
   object-fit: cover;
-  border-radius: 2.5rem 0 0 0;
+  border-radius: 2rem 0 2rem 0;
   transition: transform 500ms ease;
+}
+
+.book-card .img-container {
+  padding: 1.25rem 1.25rem 0 1.25rem;
 }
 
 .group:hover .book-card img {
@@ -974,7 +979,7 @@ div[style*="background"] > section {
 .cards {
   display: grid;
   grid-template-columns: 1fr;
-  gap: calc(var(--spacing) * 2);
+  gap: calc(var(--spacing) * 3);
 }
 
 @media (min-width: 768px) { .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
@@ -986,7 +991,7 @@ div[style*="background"] > section {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 28rem; /* Matches product-card with 12rem img + padding */
+  min-height: 22rem; /* Matches product-card with 12rem img + padding */
   flex: 1 1 17.5rem; /* EXACT product-card flex */
   
   /* Uiverse base styling */
@@ -1000,6 +1005,7 @@ div[style*="background"] > section {
   overflow: hidden;
   backdrop-filter: blur(10px);
   transition: all ease-in-out 0.3s;
+  margin: 0.5rem;
 }
   .card__description {
   color: var(--secondary-color);
@@ -1028,8 +1034,9 @@ div[style*="background"] > section {
   width: 100%;
   height: 12rem; /* EXACT .product-image img height */
   object-fit: cover;
-  border-radius: 2rem 0 0 0;
-  margin-bottom: calc(var(--spacing) * 0.5);
+  border-radius: 2rem 0 2rem 0;
+  margin-bottom: calc(var(--spacing) * 1);
+  padding: 0.5rem;
 }
 
 .card__heading {

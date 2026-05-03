@@ -303,13 +303,15 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
             const desc = section.content[`product${productNum}Description`] || 'Great product.';
 
             return `
-                      <div class="book-card group relative w-64 min-h-[28rem] flex flex-col shadow-xl
+                      <div class="book-card group relative w-72 min-h-[22rem] flex flex-col shadow-xl
             transition-all duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.1)]
             hover:scale-110 hover:-translate-y-3 hover:shadow-2xl hover:z-20
             bg-white border border-gray-100 overflow-hidden">
                         
-                        <img src="${img.src}" alt="${img.alt || title}" 
-                            class="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-500" />
+                        <div class="img-container">
+                          <img src="${img.src}" alt="${img.alt || title}" 
+                              class="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-500" />
+                        </div>
                         
                         <div class="p-5 flex-1 flex flex-col">
                           <h3 class="font-bold text-lg text-gray-900 mb-2 line-clamp-2 leading-tight">${title}</h3>
