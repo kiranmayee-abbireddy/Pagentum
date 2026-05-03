@@ -188,8 +188,8 @@ export default function Canvas({ sections, onSectionsChange, onEditSection }: Ca
         html = html.replace(/{{\s*#if logoSrc\s*}}([\s\S]*?){{\s*\/if\s*}}/, '$1');
       }
       
-      const fontClass = layout?.introFont || 'font-sans';
-      html = html.replace('class="intro-title', `class="intro-title ${fontClass}`);
+      const fontStyle = layout?.introFont ? `style="font-family: ${layout.introFont};"` : '';
+      html = html.replace('class="intro-title', `${fontStyle} class="intro-title`);
     }
 
     if (section.templateId === 'contact-section') {

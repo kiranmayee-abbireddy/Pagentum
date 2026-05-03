@@ -289,11 +289,29 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                   {/* Tab Content */}
                   <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
                     {introAnimationTab === 'font' && (
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 h-64 overflow-y-auto pr-2 custom-scrollbar">
                         {[
-                          { id: 'font-sans', name: 'Modern Sans', className: 'font-sans' },
-                          { id: 'font-serif', name: 'Elegant Serif', className: 'font-serif' },
-                          { id: 'font-mono', name: 'Tech Mono', className: 'font-mono' }
+                          { id: 'Inter, sans-serif', name: 'Inter' },
+                          { id: 'Roboto, sans-serif', name: 'Roboto' },
+                          { id: 'Playfair Display, serif', name: 'Playfair' },
+                          { id: 'Montserrat, sans-serif', name: 'Montserrat' },
+                          { id: 'Lato, sans-serif', name: 'Lato' },
+                          { id: 'Oswald, sans-serif', name: 'Oswald' },
+                          { id: 'Raleway, sans-serif', name: 'Raleway' },
+                          { id: 'Poppins, sans-serif', name: 'Poppins' },
+                          { id: 'Nunito, sans-serif', name: 'Nunito' },
+                          { id: 'Ubuntu, sans-serif', name: 'Ubuntu' },
+                          { id: 'Merriweather, serif', name: 'Merriweather' },
+                          { id: 'Pacifico, cursive', name: 'Pacifico' },
+                          { id: 'Caveat, cursive', name: 'Caveat' },
+                          { id: 'Cinzel, serif', name: 'Cinzel' },
+                          { id: 'Bebas Neue, sans-serif', name: 'Bebas Neue' },
+                          { id: 'Righteous, cursive', name: 'Righteous' },
+                          { id: 'Lobster, cursive', name: 'Lobster' },
+                          { id: 'Dancing Script, cursive', name: 'Dancing Script' },
+                          { id: 'Space Mono, monospace', name: 'Space Mono' },
+                          { id: 'Anton, sans-serif', name: 'Anton' },
+                          { id: 'Josefin Sans, sans-serif', name: 'Josefin Sans' }
                         ].map(font => (
                           <button
                             key={font.id}
@@ -304,7 +322,12 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                                 : 'border-gray-200 bg-white hover:border-blue-300'
                             }`}
                           >
-                            <span className={`text-3xl block mb-3 text-gray-900 ${font.className} ${layout.introFont === font.id ? 'text-blue-700' : ''}`}>Ag</span>
+                            <span 
+                              className={`text-3xl block mb-3 text-gray-900 ${layout.introFont === font.id ? 'text-blue-700' : ''}`}
+                              style={{ fontFamily: font.id }}
+                            >
+                              Ag
+                            </span>
                             <span className="text-[9px] font-bold uppercase tracking-widest">{font.name}</span>
                           </button>
                         ))}

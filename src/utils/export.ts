@@ -267,18 +267,18 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
         // Force fixed position to ensure it covers everything even with backgrounds
         const finalStyle = `style="${sectionRules} position: fixed !important; z-index: 100000; overflow: hidden;"`;
         const customTextColor = section.layout?.textColor;
-        const titleStyle = customTextColor ? `style="background: none; -webkit-text-fill-color: ${customTextColor}; color: ${customTextColor};"` : '';
-        const fontClass = section.layout?.introFont || 'font-sans';
+        const fontStyle = section.layout?.introFont ? `font-family: ${section.layout.introFont};` : '';
+        const titleStyle = `style="${fontStyle} ${customTextColor ? `background: none; -webkit-text-fill-color: ${customTextColor}; color: ${customTextColor};` : ''}"`;
         
         return `
-          <div id="section-${section.id}" class="intro-screen ${fontClass}" ${finalStyle}>
+          <div id="section-${section.id}" class="intro-screen" ${finalStyle}>
             ${bgHTML}
             <div class="intro-content" style="position: relative; z-index: 1;">
               ${showLogo ? `
               <div class="intro-logo-wrapper">
                 <img src="${logoSrc}" alt="Logo" class="intro-logo" />
               </div>` : ''}
-              <h1 class="intro-title text-center ${fontClass}" ${titleStyle}>${section.content.siteName}</h1>
+              <h1 class="intro-title text-center" ${titleStyle}>${section.content.siteName}</h1>
               <div class="intro-progress-bar">
                 <div class="intro-progress-fill" ${customTextColor ? `style="background: ${customTextColor};"` : ''}></div>
               </div>

@@ -134,10 +134,14 @@ section {
 }
 
 .intro-title {
-  font-size: 3.5rem;
+  font-size: clamp(2.5rem, 8vw, 5rem);
   font-weight: 950;
   letter-spacing: -0.06em;
   margin-bottom: 2.5rem;
+  line-height: 1.1;
+  word-wrap: break-word;
+  max-width: 90vw;
+  text-align: center;
   background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
