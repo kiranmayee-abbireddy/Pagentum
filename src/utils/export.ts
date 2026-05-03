@@ -355,7 +355,7 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
           const showLogo = logoSrc && logoSrc !== '' && logoSrc !== 'https://cdn-icons-png.flaticon.com/512/3665/3665247.png';
           
           return `
-            <div id="intro-screen" class="intro-screen">
+            <div id="intro-screen" class="intro-screen" ${combinedStyle}>
               <div class="intro-content">
                 ${showLogo ? `
                 <div class="intro-logo-wrapper">
