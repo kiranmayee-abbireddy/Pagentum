@@ -539,6 +539,10 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                           @keyframes introBlurOut { from { filter: blur(0); opacity: 1; } to { filter: blur(20px); opacity: 0; } }
                           @keyframes introIrisOut { from { clip-path: circle(100% at 50% 50%); } to { clip-path: circle(0% at 50% 50%); } }
                           @keyframes introWipeOut { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(0 0 100% 0); } }
+                          @keyframes splitTop { from { transform: translateY(0); } to { transform: translateY(-100%); } }
+                          @keyframes splitBottom { from { transform: translateY(0); } to { transform: translateY(100%); } }
+                          @keyframes splitWobbleTop { 0% { transform: translateY(0); } 20% { transform: translateY(10px); } 40% { transform: translateY(-5px); } 100% { transform: translateY(-100%); } }
+                          @keyframes splitWobbleBottom { 0% { transform: translateY(0); } 20% { transform: translateY(-10px); } 40% { transform: translateY(5px); } 100% { transform: translateY(100%); } }
 
                           .exit-preview-fix {
                             animation-iteration-count: infinite !important;
