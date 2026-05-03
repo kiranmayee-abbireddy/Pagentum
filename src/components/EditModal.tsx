@@ -447,7 +447,83 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                       </div>
                     )}
 
-                    {(introAnimationTab !== 'font' && introAnimationTab !== 'text') && (
+                    {introAnimationTab === 'logo' && (
+                      <div className="relative">
+                        <style>{`
+                          @keyframes logoFadeIn { from { opacity: 0; } to { opacity: 1; } }
+                          @keyframes logoSlideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+                          @keyframes logoSlideDown { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+                          @keyframes logoPopIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+                          @keyframes logoZoomIn { from { transform: scale(1.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+                          @keyframes logoFlipIn { from { transform: perspective(400px) rotateY(90deg); opacity: 0; } to { transform: perspective(400px) rotateY(0deg); opacity: 1; } }
+                          @keyframes logoSpinIn { from { transform: rotate(-180deg) scale(0.5); opacity: 0; } to { transform: rotate(0deg) scale(1); opacity: 1; } }
+                          @keyframes logoBounceIn { 0% { transform: translateY(-50px); opacity: 0; } 50% { transform: translateY(0); opacity: 1; } 70% { transform: translateY(-15px); } 90% { transform: translateY(0); } 100% { transform: translateY(0); opacity: 1; } }
+                        `}</style>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 h-64 overflow-y-auto pr-2 custom-scrollbar">
+                          {[
+                            { id: 'none', name: 'None' },
+                            { id: 'fade', name: 'Fade In' },
+                            { id: 'slide-up', name: 'Slide Up' },
+                            { id: 'slide-down', name: 'Slide Down' },
+                            { id: 'pop', name: 'Pop In' },
+                            { id: 'zoom', name: 'Zoom In' },
+                            { id: 'flip', name: 'Flip' },
+                            { id: 'spin', name: 'Spin' },
+                            { id: 'bounce', name: 'Bounce' },
+                            { id: 'rotate-fade', name: 'Rotate Fade' }
+                          ].map(anim => {
+                            const currentAnim = layout.introLogoAnimation || 'rotate-fade';
+                            const isSelected = currentAnim === anim.id;
+                            
+                            const keyframeMap: Record<string, string> = {
+                              'none': 'none',
+                              'fade': 'logoFadeIn',
+                              'slide-up': 'logoSlideUp',
+                              'slide-down': 'logoSlideDown',
+                              'pop': 'logoPopIn',
+                              'zoom': 'logoZoomIn',
+                              'flip': 'logoFlipIn',
+                              'spin': 'logoSpinIn',
+                              'bounce': 'logoBounceIn',
+                              'rotate-fade': 'introLogoIn'
+                            };
+
+                            const logoSrc = content.logo || 'https://via.placeholder.com/150?text=LOGO';
+
+                            return (
+                              <button
+                                key={anim.id}
+                                onClick={() => handleLayoutChange('introLogoAnimation')(anim.id)}
+                                className={`p-4 rounded-xl border-2 text-center transition-all group ${
+                                  isSelected
+                                    ? 'border-blue-600 bg-blue-50 text-blue-700 shadow-sm'
+                                    : 'border-gray-200 bg-white hover:border-blue-300'
+                                }`}
+                              >
+                                <div className="h-16 flex items-center justify-center mb-1 bg-gray-50/50 rounded-lg border border-gray-100 group-hover:bg-white transition-colors overflow-hidden">
+                                  <img 
+                                    src={logoSrc}
+                                    alt="Logo Preview"
+                                    className="w-10 h-10 object-contain anim-preview-fix"
+                                    style={{ 
+                                      animationName: keyframeMap[anim.id] || 'none',
+                                      animationDuration: '2s',
+                                      animationIterationCount: 'infinite',
+                                      animationTimingFunction: 'ease-in-out',
+                                      animationDelay: '0s',
+                                      animationFillMode: 'both'
+                                    }}
+                                  />
+                                </div>
+                                <span className="text-[9px] font-bold uppercase tracking-widest">{anim.name}</span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+
+                    {(introAnimationTab !== 'font' && introAnimationTab !== 'text' && introAnimationTab !== 'logo') && (
                       <div className="py-12 text-center">
                         <Palette className="w-8 h-8 text-gray-300 mx-auto mb-3" />
                         <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Templates Coming Soon</p>

@@ -174,6 +174,41 @@ section {
   to { transform: scale(1) rotate(0); opacity: 1; }
 }
 
+/* --- Logo Animation Variants --- */
+.intro-logo-none { animation: none; opacity: 1; }
+.intro-logo-fade { animation: logoFadeIn 1s ease-out 0.2s both; }
+@keyframes logoFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.intro-logo-slide-up { animation: logoSlideUp 1s ease-out 0.2s both; }
+@keyframes logoSlideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+.intro-logo-slide-down { animation: logoSlideDown 1s ease-out 0.2s both; }
+@keyframes logoSlideDown { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+.intro-logo-pop { animation: logoPopIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both; }
+@keyframes logoPopIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+.intro-logo-zoom { animation: logoZoomIn 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s both; }
+@keyframes logoZoomIn { from { transform: scale(1.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+.intro-logo-flip { animation: logoFlipIn 1s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both; }
+@keyframes logoFlipIn { from { transform: perspective(400px) rotateY(90deg); opacity: 0; } to { transform: perspective(400px) rotateY(0deg); opacity: 1; } }
+
+.intro-logo-spin { animation: logoSpinIn 1s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both; }
+@keyframes logoSpinIn { from { transform: rotate(-180deg) scale(0.5); opacity: 0; } to { transform: rotate(0deg) scale(1); opacity: 1; } }
+
+.intro-logo-bounce { animation: logoBounceIn 1.2s cubic-bezier(0.28, 0.84, 0.42, 1) 0.2s both; }
+@keyframes logoBounceIn { 
+  0% { transform: translateY(-50px); opacity: 0; } 
+  50% { transform: translateY(0); opacity: 1; } 
+  70% { transform: translateY(-15px); } 
+  90% { transform: translateY(0); } 
+  100% { transform: translateY(0); opacity: 1; } 
+}
+
+.intro-logo-rotate-fade { animation: introLogoIn 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both; }
+
+
 @keyframes introTitleIn {
   from { transform: translateY(30px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }

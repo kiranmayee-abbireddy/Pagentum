@@ -270,13 +270,14 @@ export function generateStandaloneHTML(sections: PageSection[], theme: ThemeConf
         const fontStyle = section.layout?.introFont ? `font-family: '${section.layout.introFont}', cursive;` : '';
         const titleStyle = `style="${fontStyle} ${customTextColor ? `background: none; -webkit-text-fill-color: ${customTextColor}; color: ${customTextColor};` : ''}"`;
         const animClass = section.layout?.introTextAnimation ? `intro-text-${section.layout.introTextAnimation}` : 'intro-text-slide-up';
+        const logoAnimClass = section.layout?.introLogoAnimation ? `intro-logo-${section.layout.introLogoAnimation}` : 'intro-logo-rotate-fade';
         
         return `
           <div id="section-${section.id}" class="intro-screen" ${finalStyle}>
             ${bgHTML}
             <div class="intro-content" style="position: relative; z-index: 1;">
               ${showLogo ? `
-              <div class="intro-logo-wrapper">
+              <div class="intro-logo-wrapper ${logoAnimClass}">
                 <img src="${logoSrc}" alt="Logo" class="intro-logo" />
               </div>` : ''}
               <h1 class="intro-title text-center ${animClass}" ${titleStyle}>${section.content.siteName}</h1>
