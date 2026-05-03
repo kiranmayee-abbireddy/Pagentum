@@ -339,6 +339,7 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                           .anim-preview-fix {
                             animation-iteration-count: infinite !important;
                             animation-delay: 0s !important;
+                            animation-fill-mode: both !important;
                             padding: 0.2em 0.4em !important;
                             line-height: 1 !important;
                             display: inline-block !important;
@@ -377,7 +378,7 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                                   : 'border-gray-200 bg-white hover:border-blue-300'
                               }`}
                             >
-                              <div className="h-10 flex items-center justify-center mb-1 bg-gray-50/50 rounded-lg border border-gray-100 group-hover:bg-white transition-colors">
+                              <div className="h-16 flex items-center justify-center mb-1 bg-gray-50/50 rounded-lg border border-gray-100 group-hover:bg-white transition-colors">
                                 <span 
                                   className={`text-2xl font-black intro-text-${anim.id} anim-preview-fix`}
                                   style={{ 
