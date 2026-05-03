@@ -488,7 +488,7 @@ export default function EditModal({ section, onSave, onClose }: EditModalProps) 
                               'rotate-fade': 'introLogoIn'
                             };
 
-                            const logoSrc = content.logo || 'https://via.placeholder.com/150?text=LOGO';
+                            const logoSrc = content.logoSrc || 'https://via.placeholder.com/150?text=LOGO';
 
                             return (
                               <button
